@@ -6,7 +6,7 @@
 				<content>
 					<VBox fitContainer="true" class="bottomMargin">
 					<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"/>
-					<smartTable:SmartTable height="100%" id="inspectionTable" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C">
+					<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C">
 						<smartTable:customToolbar>
 							<Toolbar>
 										<Button text="Edit" press="onEditPress" type="Transparent" icon="sap-icon://edit">

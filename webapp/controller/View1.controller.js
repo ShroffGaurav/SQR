@@ -22,7 +22,10 @@ sap.ui.define([
 			this.getView().setModel(oModel,"FindingModel");
 			//selectionChange="onSmartTableSelectionChange"
 		},
-
+		onAfterRendering:function(){
+		
+			
+		},
 		onNewInspectionPress: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
 				NavFilters: "text"
@@ -66,6 +69,27 @@ sap.ui.define([
 		onSmartTableSelectionChange:function(oEvent){
 		var context = oEvent.getParameters().rowContext.getObject();
 		oEvent.getSource().getParent().getParent().getParent().getModel("FindingModel").setData(context);
+		},
+		onDataReceived:function(){
+			var table = this.getView().byId("inspectionTable").getTable();
+			table.getColumns().forEach(function(column) {
+				if(column.getTooltip() === "Score" || column.getTooltip() === "Finding Text"){
+					column.setWidth("15rem");
+				}else{
+					column.setWidth("6.5rem");
+				}
+					
+				// if (!column.data("p13nData").columnIndex) {
+				// 	var columnHeadertext = column.getLabel().getText();
+				// 	column.getLabel().destroy();
+				// 	column.setLabel(new sap.m.Text({
+				// 		text: columnHeadertext,
+				// 		wrapping: true
+				// 	})); //setting the type of label to Text to achieve wrapping
+				
+
+			
+		});
 		}
 
 	});
