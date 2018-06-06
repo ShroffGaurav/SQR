@@ -90,13 +90,13 @@
 									<Input value="{/supplier_casual_factor}"/>
 								</f:fields>
 							</f:FormElement>
-							<f:FormElement label="Attachments">
-								<f:fields>
-									<u:FileUploader name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"
-										uploadComplete="handleUploadComplete"/>
+							<!--<f:FormElement label="Attachments">-->
+							<!--	<f:fields>-->
+							<!--		<u:FileUploader name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"-->
+							<!--			uploadComplete="handleUploadComplete"/>-->
 									<!--<Button text="Upload File" press="handleUploadPress"/>-->
-								</f:fields>
-							</f:FormElement>
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
 						</f:formElements>
 					</f:FormContainer>
 				</f:formContainers>
@@ -105,9 +105,9 @@
 		<HBox width="100%" alignItems="Center" alignContent="Center" justifyContent="Center">
 			<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button." id="__collection1">
 					    <items>
-					        <UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018" id="__item3a"/>
-					        <UploadCollectionItem contributor="Contributor1" fileName="fileName2" uploadedDate="Wed Jun 06 2018" id="__item4a"/>
-					        <UploadCollectionItem contributor="Contributor1" fileName="fileName3" uploadedDate="Wed Jun 06 2018" id="__item5a"/></items>
+					        <UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018" id="__item3b"/>
+					        <UploadCollectionItem contributor="Contributor1" fileName="fileName2" uploadedDate="Wed Jun 06 2018" id="__item4b"/>
+					        <UploadCollectionItem contributor="Contributor1" fileName="fileName3" uploadedDate="Wed Jun 06 2018" id="__item5b"/></items>
 					</UploadCollection>
 			
 		</HBox>

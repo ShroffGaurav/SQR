@@ -28,7 +28,7 @@ sap.ui.define([
 		},
 		onNewInspectionPress: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
-				NavFilters: "text"
+				NavFilters: "Button"
 			});
 
 		},
@@ -63,7 +63,7 @@ sap.ui.define([
 		onInspectionPress:function(oEvent){
 		var InspectionId = oEvent.getSource().getText();
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
-				NavFilters: "text"
+				NavFilters: "Link"
 			});
 		},
 		onSmartTableSelectionChange:function(oEvent){

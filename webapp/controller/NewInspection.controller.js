@@ -1,6 +1,7 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"sap/ui/core/mvc/Controller",
+	"sap/ui/model/json/JSONModel"
+], function(Controller,JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
@@ -11,25 +12,85 @@ sap.ui.define([
 		 * @memberOf com.sapZSQRMBWA.view.NewInspection
 		 */
 		onInit: function() {
+			this.getOwnerComponent().getRouter().getRoute("InspectionView").attachPatternMatched(this.onHandleRouteMatched, this);
+		
+		},
+		onHandleRouteMatched:function(oEvent){
+			var Source = oEvent.getParameter("arguments").NavFilters;
+				var arr=[];
+				var oModel = new JSONModel();
+			var selectModdel = new JSONModel();
+				if(Source === "Button"){
+					this.getView().byId("oButtonAddFinding").setVisible(true);
+					this.getView().byId("oButtonViewModify").setVisible(false);
+					
+				oModel.setData("");	
+				}else if(Source === "Link"){
+				this.getView().byId("oButtonAddFinding").setVisible(false);	
+				this.getView().byId("oButtonViewModify").setVisible(true);
+							var array={
+				"subject_id":"test",
+				"category_id":"ELE",
+				"question_id":"Under 3rd party certification?",
+				"Score":"0 - Exceeds Requirements",
+				"Status":"In-Progress",
+				"findings":"Lean/ 5S / Safety",
+				"location":"Chicago"
+			};
+				var array1={
+				"subject_id":"test1",
+				"category_id":"MFG",
+				"question_id":"Under 3rd party certification?",
+				"Score":"0 - Exceeds Requirements",
+				"Status":"Closed",
+				"findings":"Lean/ 5S / Safety",
+				"location":"Banglore"
+			};
+				arr.push(array);
+			arr.push(array1);
+			oModel.setData(arr);
+				
+				}
+			
+		
+		
+			this.getView().setModel(oModel);
+			this.getView().setModel(selectModdel,"selectModdel");
+			this.getView().byId("addInspectionTable").setModel(oModel);
 		},
 		onDialogPress: function(oEvent) {
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
-				this._oDialog.setModel(this.getView().getModel());
+				
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-			
+			this._oDialog.setModel("");
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
 
 			},
+			onViewModifyPress:function(){
+				if (!this._oDialog) {
+				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
+			
+				this._oDialog.setContentHeight("60%");
+				this._oDialog.setContentWidth("90%");
+			}
+				this._oDialog.setModel(this.getView().getModel("selectModdel"));
+
+			// toggle compact style
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
+			this._oDialog.open();	
+			},
 			onDialogCancelButton:function(oEvent){
+				
 					this._oDialog.close();
 			},
 			onDialogSubmitButton:function(oEvent){
+				
 					this._oDialog.close();
 			},
 			onNavBack:function(oEvent){
@@ -41,6 +102,10 @@ sap.ui.define([
 				this.getOwnerComponent().getRouter().navTo("View1",{
 	
 			});	
+			},
+			onSelectionChange:function(oEvent){
+				this.getView().getModel("selectModdel").setData(oEvent.getParameters().listItem.getBindingContext().getObject());
+				
 			}
 			/**
 			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
