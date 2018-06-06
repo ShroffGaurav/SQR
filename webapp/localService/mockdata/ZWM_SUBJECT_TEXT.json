@@ -1,0 +1,81 @@
+[{
+	"ID": "ID 1",
+	"LANGUAGE": "LANGUAGE 1",
+	"NAME": "NAME 1",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%201',LANGUAGE='LANGUAGE%201')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 2",
+	"LANGUAGE": "LANGUAGE 2",
+	"NAME": "NAME 2",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%202',LANGUAGE='LANGUAGE%202')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 3",
+	"LANGUAGE": "LANGUAGE 3",
+	"NAME": "NAME 3",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%203',LANGUAGE='LANGUAGE%203')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 4",
+	"LANGUAGE": "LANGUAGE 4",
+	"NAME": "NAME 4",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%204',LANGUAGE='LANGUAGE%204')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 5",
+	"LANGUAGE": "LANGUAGE 5",
+	"NAME": "NAME 5",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%205',LANGUAGE='LANGUAGE%205')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 6",
+	"LANGUAGE": "LANGUAGE 6",
+	"NAME": "NAME 6",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%206',LANGUAGE='LANGUAGE%206')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 7",
+	"LANGUAGE": "LANGUAGE 7",
+	"NAME": "NAME 7",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%207',LANGUAGE='LANGUAGE%207')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 8",
+	"LANGUAGE": "LANGUAGE 8",
+	"NAME": "NAME 8",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%208',LANGUAGE='LANGUAGE%208')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 9",
+	"LANGUAGE": "LANGUAGE 9",
+	"NAME": "NAME 9",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%209',LANGUAGE='LANGUAGE%209')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}, {
+	"ID": "ID 10",
+	"LANGUAGE": "LANGUAGE 10",
+	"NAME": "NAME 10",
+	"__metadata": {
+		"uri": "ZWM_SUBJECT_TEXT(ID='ID%2010',LANGUAGE='LANGUAGE%2010')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SUBJECT_TEXTType"
+	}
+}]

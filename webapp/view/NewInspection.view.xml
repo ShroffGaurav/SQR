@@ -1,0 +1,136 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.NewInspection">
+	<App id="newinspection">
+		<pages>
+			<Page title="SQRMBWA" showNavButton="true" navButtonPress="onNavBack">
+				<content>
+						<HBox>
+						<VBox class="sapUiSmallMarginBegin " width="25%">
+					    <Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
+					    <Input width="100%" id="__input0" />
+					    <Label text="Vendor Code:" class="sapUiSmallMarginTop"/>
+					    <Text text="Hudson"></Text>
+					    <Label text="Supplier Contact1:" class="sapUiSmallMarginTop"/>
+					    <Text text="123 S Clark Street" class="sapUiSmallMarginBottom"></Text>
+						</VBox>
+						
+						<VBox class="sapUiMediumMarginBegin " width="25%">
+					    <Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
+					    <Input width="100%"  />
+					    <Label text="Supplier Category:" class="sapUiSmallMarginTop"/>
+					    <Text text="ELE"></Text>
+					    <Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>
+					    <Text text="Chicago" class="sapUiSmallMarginBottom"></Text>
+						</VBox>
+						
+						<VBox class="sapUiMediumMarginBegin " width="25%">
+					    <Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
+					    <DatePicker width="100%"  />
+					    <Label text="Commodity:" class="sapUiSmallMarginTop"/>
+					    <Text text="Primary"></Text>
+					    <!--<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>-->
+					    <!--<Text text="populated based on supplier" class="sapUiSmallMarginBottom"></Text>-->
+						</VBox>
+						
+						<VBox class="sapUiMediumMarginBegin " width="25%">
+					    <Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
+					    <DatePicker width="100%"  />
+					    <Label text="Country:" class="sapUiSmallMarginTop"/>
+					    <Text text="populated based on supplier"></Text>
+					    <!--<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>-->
+					    <!--<Text text="populated based on supplier" class="sapUiSmallMarginBottom"></Text>-->
+						</VBox>
+						</HBox>
+					<!--<smartFilterBar:SmartFilterBar entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true">-->
+						<!--<smartFilterBar:controlConfiguration>-->
+						<!--	<smartFilterBar:ControlConfiguration key="Status">-->
+						<!--	<smartFilterBar:defaultFilterValues>-->
+						<!--<smartFilterBar:SelectOption>-->
+						<!--</smartFilterBar:SelectOption>-->
+						<!--		</smartFilterBar:defaultFilterValues>-->
+						<!--	</smartFilterBar:ControlConfiguration>-->
+						<!--	<smartFilterBar:ControlConfiguration key="Gjahr">-->
+						<!--		<smartFilterBar:defaultFilterValues>-->
+						<!--				<smartFilterBar:SelectOption low="2014">-->
+						<!--				</smartFilterBar:SelectOption>-->
+						<!--			</smartFilterBar:defaultFilterValues>-->
+						<!--		</smartFilterBar:ControlConfiguration>-->
+						<!--</smartFilterBar:controlConfiguration>-->
+						<!-- layout data used to make the table growing but the filter bar fixed -->
+						<!--<smartFilterBar:layoutData>-->
+						<!--	<FlexItemData shrinkFactor="0"/>-->
+						<!--</smartFilterBar:layoutData>-->
+				
+					<!--</smartFilterBar:SmartFilterBar>-->
+							<!--<OverflowToolbar class="sapUiMediumMarginTop">-->
+							<!--<ToolbarSpacer />-->
+							<Button text="Add Finding" type="Transparent" press="onDialogPress"/>
+							<Button text="Delete" type="Transparent" icon="sap-icon://delete"/>
+							<Button text="Modify/View" type="Transparent" icon="sap-icon://zoom-in"/>
+						<!--</OverflowToolbar>-->
+					<smartTable:SmartTable height="100%" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf" useVariantManagement="true" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true" enableAutoBinding="true">
+						<Table>
+							<columns>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Subject"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Category"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Question"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Score"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Status"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Findings"/>
+								</Column>
+								<Column width="100px" hAlign="Begin">
+									<customData>
+										<core:CustomData key="p13nData" value="\{}"/>
+									</customData>
+									<Text text="Inspection Location"/>
+								</Column>
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{Dmbtr}"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</smartTable:SmartTable>
+				</content>
+				<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" text="Save" press="onAllInspectionPress"/>
+				<Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
+			</Toolbar>
+		</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>

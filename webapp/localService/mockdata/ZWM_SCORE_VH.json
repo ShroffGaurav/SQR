@@ -1,0 +1,71 @@
+[{
+	"Id": "Id 1",
+	"Text": "Text 1",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%201')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 2",
+	"Text": "Text 2",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%202')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 3",
+	"Text": "Text 3",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%203')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 4",
+	"Text": "Text 4",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%204')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 5",
+	"Text": "Text 5",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%205')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 6",
+	"Text": "Text 6",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%206')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 7",
+	"Text": "Text 7",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%207')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 8",
+	"Text": "Text 8",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%208')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 9",
+	"Text": "Text 9",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%209')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}, {
+	"Id": "Id 10",
+	"Text": "Text 10",
+	"__metadata": {
+		"uri": "ZWM_SCORE_VH('Id%2010')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_SCORE_VHType"
+	}
+}]

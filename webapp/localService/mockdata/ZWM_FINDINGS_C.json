@@ -1,0 +1,771 @@
+[{
+	"id": "id 1",
+	"Score": "Score 1",
+	"StatusId": "StatusId 1",
+	"InspectionDate": "/Date(1534940926000)/",
+	"Status": "Status 1",
+	"findings": "findings 1",
+	"location": "location 1",
+	"supplier_risk_category": "supplier_risk_category 1",
+	"short_term_containment": "short_term_containment 1",
+	"supplier_casual_factor": "supplier_casual_factor 1",
+	"created_by": "created_by 1",
+	"inspection_id": "inspection_id 1",
+	"changed_by": "changed_by 1",
+	"created_on": "created_on 1",
+	"changed_on": "changed_on 1",
+	"subject_id": "subject_id 1",
+	"supplier_id": "supplier_id 1",
+	"Subject": "Subject 1",
+	"category_id": "category_id 1",
+	"Category": "Category 1",
+	"question_id": "question_id 1",
+	"ScoreId": "ScoreId 1",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%201')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%201')/to_subject"
+		}
+	}
+}, {
+	"id": "id 2",
+	"Score": "Score 2",
+	"StatusId": "StatusId 2",
+	"InspectionDate": "/Date(1525955326000)/",
+	"Status": "Status 2",
+	"findings": "findings 2",
+	"location": "location 2",
+	"supplier_risk_category": "supplier_risk_category 2",
+	"short_term_containment": "short_term_containment 2",
+	"supplier_casual_factor": "supplier_casual_factor 2",
+	"created_by": "created_by 2",
+	"inspection_id": "inspection_id 2",
+	"changed_by": "changed_by 2",
+	"created_on": "created_on 2",
+	"changed_on": "changed_on 2",
+	"subject_id": "subject_id 2",
+	"supplier_id": "supplier_id 2",
+	"Subject": "Subject 2",
+	"category_id": "category_id 2",
+	"Category": "Category 2",
+	"question_id": "question_id 2",
+	"ScoreId": "ScoreId 2",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%202')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%202')/to_subject"
+		}
+	}
+}, {
+	"id": "id 3",
+	"Score": "Score 3",
+	"StatusId": "StatusId 3",
+	"InspectionDate": "/Date(1270470526000)/",
+	"Status": "Status 3",
+	"findings": "findings 3",
+	"location": "location 3",
+	"supplier_risk_category": "supplier_risk_category 3",
+	"short_term_containment": "short_term_containment 3",
+	"supplier_casual_factor": "supplier_casual_factor 3",
+	"created_by": "created_by 3",
+	"inspection_id": "inspection_id 3",
+	"changed_by": "changed_by 3",
+	"created_on": "created_on 3",
+	"changed_on": "changed_on 3",
+	"subject_id": "subject_id 3",
+	"supplier_id": "supplier_id 3",
+	"Subject": "Subject 3",
+	"category_id": "category_id 3",
+	"Category": "Category 3",
+	"question_id": "question_id 3",
+	"ScoreId": "ScoreId 3",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%203')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%203')/to_subject"
+		}
+	}
+}, {
+	"id": "id 4",
+	"Score": "Score 4",
+	"StatusId": "StatusId 4",
+	"InspectionDate": "/Date(1026131326000)/",
+	"Status": "Status 4",
+	"findings": "findings 4",
+	"location": "location 4",
+	"supplier_risk_category": "supplier_risk_category 4",
+	"short_term_containment": "short_term_containment 4",
+	"supplier_casual_factor": "supplier_casual_factor 4",
+	"created_by": "created_by 4",
+	"inspection_id": "inspection_id 4",
+	"changed_by": "changed_by 4",
+	"created_on": "created_on 4",
+	"changed_on": "changed_on 4",
+	"subject_id": "subject_id 4",
+	"supplier_id": "supplier_id 4",
+	"Subject": "Subject 4",
+	"category_id": "category_id 4",
+	"Category": "Category 4",
+	"question_id": "question_id 4",
+	"ScoreId": "ScoreId 4",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%204')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%204')/to_subject"
+		}
+	}
+}, {
+	"id": "id 5",
+	"Score": "Score 5",
+	"StatusId": "StatusId 5",
+	"InspectionDate": "/Date(991830526000)/",
+	"Status": "Status 5",
+	"findings": "findings 5",
+	"location": "location 5",
+	"supplier_risk_category": "supplier_risk_category 5",
+	"short_term_containment": "short_term_containment 5",
+	"supplier_casual_factor": "supplier_casual_factor 5",
+	"created_by": "created_by 5",
+	"inspection_id": "inspection_id 5",
+	"changed_by": "changed_by 5",
+	"created_on": "created_on 5",
+	"changed_on": "changed_on 5",
+	"subject_id": "subject_id 5",
+	"supplier_id": "supplier_id 5",
+	"Subject": "Subject 5",
+	"category_id": "category_id 5",
+	"Category": "Category 5",
+	"question_id": "question_id 5",
+	"ScoreId": "ScoreId 5",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%205')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%205')/to_subject"
+		}
+	}
+}, {
+	"id": "id 6",
+	"Score": "Score 6",
+	"StatusId": "StatusId 6",
+	"InspectionDate": "/Date(1561033726000)/",
+	"Status": "Status 6",
+	"findings": "findings 6",
+	"location": "location 6",
+	"supplier_risk_category": "supplier_risk_category 6",
+	"short_term_containment": "short_term_containment 6",
+	"supplier_casual_factor": "supplier_casual_factor 6",
+	"created_by": "created_by 6",
+	"inspection_id": "inspection_id 6",
+	"changed_by": "changed_by 6",
+	"created_on": "created_on 6",
+	"changed_on": "changed_on 6",
+	"subject_id": "subject_id 6",
+	"supplier_id": "supplier_id 6",
+	"Subject": "Subject 6",
+	"category_id": "category_id 6",
+	"Category": "Category 6",
+	"question_id": "question_id 6",
+	"ScoreId": "ScoreId 6",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%206')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%206')/to_subject"
+		}
+	}
+}, {
+	"id": "id 7",
+	"Score": "Score 7",
+	"StatusId": "StatusId 7",
+	"InspectionDate": "/Date(1123417726000)/",
+	"Status": "Status 7",
+	"findings": "findings 7",
+	"location": "location 7",
+	"supplier_risk_category": "supplier_risk_category 7",
+	"short_term_containment": "short_term_containment 7",
+	"supplier_casual_factor": "supplier_casual_factor 7",
+	"created_by": "created_by 7",
+	"inspection_id": "inspection_id 7",
+	"changed_by": "changed_by 7",
+	"created_on": "created_on 7",
+	"changed_on": "changed_on 7",
+	"subject_id": "subject_id 7",
+	"supplier_id": "supplier_id 7",
+	"Subject": "Subject 7",
+	"category_id": "category_id 7",
+	"Category": "Category 7",
+	"question_id": "question_id 7",
+	"ScoreId": "ScoreId 7",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%207')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%207')/to_subject"
+		}
+	}
+}, {
+	"id": "id 8",
+	"Score": "Score 8",
+	"StatusId": "StatusId 8",
+	"InspectionDate": "/Date(1536064126000)/",
+	"Status": "Status 8",
+	"findings": "findings 8",
+	"location": "location 8",
+	"supplier_risk_category": "supplier_risk_category 8",
+	"short_term_containment": "short_term_containment 8",
+	"supplier_casual_factor": "supplier_casual_factor 8",
+	"created_by": "created_by 8",
+	"inspection_id": "inspection_id 8",
+	"changed_by": "changed_by 8",
+	"created_on": "created_on 8",
+	"changed_on": "changed_on 8",
+	"subject_id": "subject_id 8",
+	"supplier_id": "supplier_id 8",
+	"Subject": "Subject 8",
+	"category_id": "category_id 8",
+	"Category": "Category 8",
+	"question_id": "question_id 8",
+	"ScoreId": "ScoreId 8",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%208')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%208')/to_subject"
+		}
+	}
+}, {
+	"id": "id 9",
+	"Score": "Score 9",
+	"StatusId": "StatusId 9",
+	"InspectionDate": "/Date(1530275326000)/",
+	"Status": "Status 9",
+	"findings": "findings 9",
+	"location": "location 9",
+	"supplier_risk_category": "supplier_risk_category 9",
+	"short_term_containment": "short_term_containment 9",
+	"supplier_casual_factor": "supplier_casual_factor 9",
+	"created_by": "created_by 9",
+	"inspection_id": "inspection_id 9",
+	"changed_by": "changed_by 9",
+	"created_on": "created_on 9",
+	"changed_on": "changed_on 9",
+	"subject_id": "subject_id 9",
+	"supplier_id": "supplier_id 9",
+	"Subject": "Subject 9",
+	"category_id": "category_id 9",
+	"Category": "Category 9",
+	"question_id": "question_id 9",
+	"ScoreId": "ScoreId 9",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%209')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%209')/to_subject"
+		}
+	}
+}, {
+	"id": "id 10",
+	"Score": "Score 10",
+	"StatusId": "StatusId 10",
+	"InspectionDate": "/Date(1461760126000)/",
+	"Status": "Status 10",
+	"findings": "findings 10",
+	"location": "location 10",
+	"supplier_risk_category": "supplier_risk_category 10",
+	"short_term_containment": "short_term_containment 10",
+	"supplier_casual_factor": "supplier_casual_factor 10",
+	"created_by": "created_by 10",
+	"inspection_id": "inspection_id 10",
+	"changed_by": "changed_by 10",
+	"created_on": "created_on 10",
+	"changed_on": "changed_on 10",
+	"subject_id": "subject_id 10",
+	"supplier_id": "supplier_id 10",
+	"Subject": "Subject 10",
+	"category_id": "category_id 10",
+	"Category": "Category 10",
+	"question_id": "question_id 10",
+	"ScoreId": "ScoreId 10",
+	"__metadata": {
+		"uri": "ZWM_FINDINGS_C('id%2010')",
+		"type": "ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType"
+	},
+	"to_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_category"
+		}
+	},
+	"to_inspection": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_inspection"
+		}
+	},
+	"to_quality_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_quality_category"
+		}
+	},
+	"to_question": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_question"
+		}
+	},
+	"to_risk_category": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_risk_category"
+		}
+	},
+	"to_score": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_score"
+		}
+	},
+	"to_scoreVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_scoreVH"
+		}
+	},
+	"to_status": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_status"
+		}
+	},
+	"to_statusVH": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_statusVH"
+		}
+	},
+	"to_subject": {
+		"__deferred": {
+			"uri": "ZWM_FINDINGS_C('id%2010')/to_subject"
+		}
+	}
+}]

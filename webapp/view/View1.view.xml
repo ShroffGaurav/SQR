@@ -1,0 +1,45 @@
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:table="sap.ui.table" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.View1" displayBlock="true">
+	<App id="firstView">
+		<pages>
+			<Page title="{i18n>title}">
+				<!--<View>-->
+				<content>
+					<VBox fitContainer="true" class="bottomMargin">
+					<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"/>
+					<smartTable:SmartTable height="100%" id="inspectionTable" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C">
+						<smartTable:customToolbar>
+							<Toolbar>
+										<Button text="Edit" press="onEditPress" type="Transparent" icon="sap-icon://edit">
+										</Button>
+							</Toolbar>
+						</smartTable:customToolbar>
+						<smartTable:layoutData>
+							<FlexItemData growFactor="1" baseSize="0%"/>
+						</smartTable:layoutData>
+						<table:Table rowSelectionChange ="onSmartTableSelectionChange" >
+							<table:columns>
+				<table:Column width="10rem">
+					<table:customData>
+						<core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;inspection_id&quot;, &quot;columnIndex&quot;:&quot;1&quot;, &quot;leadingProperty&quot;: &quot;inspection_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+					</table:customData>
+					<Text text="{/#ZWM_FINDINGS_CType/inspection_id/@sap:label}" wrapping="true"/>
+					<table:template>
+						<Link text="{inspection_id}" wrapping="true" press="onInspectionPress"/>
+					</table:template>
+				</table:Column>
+				</table:columns>
+						</table:Table>
+					</smartTable:SmartTable>
+				</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button type="Accept" text="New Inspection" press="onNewInspectionPress"/>
+					</Toolbar>
+				</footer>
+				<!--</View>-->
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
