@@ -25,6 +25,13 @@
 								<FlexItemData growFactor="1" baseSize="0%"/>
 							</smartTable:layoutData>
 							<table:Table rowSelectionChange="onSmartTableSelectionChange" threshold="100" visibleRowCountMode="Auto" rowActionCount="1">
+									<table:rowActionTemplate>
+										<table:RowAction>
+											<table:items>
+												<table:RowActionItem type="Custom" icon="sap-icon://edit" press="onSmartTableEdit"></table:RowActionItem>
+											</table:items>
+										</table:RowAction>
+									</table:rowActionTemplate>
 								<table:columns>
 									<table:Column width="6rem">
 										<table:customData>
@@ -101,13 +108,7 @@
 										</table:template>
 									</table:Column>
 								</table:columns>
-									<table:rowActionTemplate>
-										<table:RowAction>
-											<table:items>
-												<table:RowActionItem type="Custom" icon="sap-icon://edit" press="onSmartTableEdit"></table:RowActionItem>
-											</table:items>
-										</table:RowAction>
-									</table:rowActionTemplate>
+								
 							</table:Table>
 						</smartTable:SmartTable>
 					</VBox>
