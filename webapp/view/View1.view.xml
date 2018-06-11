@@ -38,12 +38,12 @@
 											<core:CustomData key="p13nData"
 												value="\{&quot;columnKey&quot;: &quot;inspection_id&quot;, &quot;columnIndex&quot;:&quot;2&quot;, &quot;leadingProperty&quot;: &quot;inspection_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
 										</table:customData>
-										<Text text="{/#ZWM_FINDINGS_CType/inspection_id/@sap:label}" wrapping="true"/>
+										<Text text="Insp. ID" wrapping="true"/>
 										<table:template>
 											<Link text="{inspection_id}" wrapping="true" press="onInspectionPress"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="12rem">
+									<table:Column width="9rem">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value="\{&quot;columnKey&quot;: &quot;Subject&quot;, &quot;columnIndex&quot;:&quot;3&quot;, &quot;leadingProperty&quot;: &quot;Subject&quot;,&quot;type&quot;:&quot;string&quot;}"/>
@@ -53,7 +53,7 @@
 											<Text text="{Subject}" wrapping="true"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="12rem">
+									<table:Column width="9rem">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value="\{&quot;columnKey&quot;: &quot;Category&quot;, &quot;columnIndex&quot;:&quot;4&quot;, &quot;leadingProperty&quot;: &quot;Category&quot;,&quot;type&quot;:&quot;string&quot;}"/>
@@ -73,7 +73,7 @@
 											<Text text="{question_content}" wrapping="flase"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="15rem">
+									<table:Column width="11rem">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value="\{&quot;Score&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;6&quot;, &quot;leadingProperty&quot;: &quot;Score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
