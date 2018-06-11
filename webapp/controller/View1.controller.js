@@ -32,7 +32,7 @@ sap.ui.define([
 
 			if (!this._oDialogEdit) {
 				this._oDialogEdit = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
-				this._oDialogEdit.setModel(this.getView().getModel("FindingModel"));
+				this._oDialogEdit.setModel(this.getView().getModel());
 				this._oDialogEdit.setContentHeight("60%");
 				this._oDialogEdit.setContentWidth("90%");
 			}
@@ -48,28 +48,6 @@ sap.ui.define([
 				NavFilters: "Button"
 			});
 
-		},
-		onEditPress: function(oEvent) {
-			var oData = [];
-			var SelectedIndex = this.getView().byId("inspectionTable").getTable().getSelectedIndex();
-
-			if (SelectedIndex !== -1) {
-				if (!this._oDialogEdit) {
-					this._oDialogEdit = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
-					this._oDialogEdit.setModel(this.getView().getModel("FindingModel"));
-					this._oDialogEdit.setContentHeight("60%");
-					this._oDialogEdit.setContentWidth("90%");
-				}
-
-				// toggle compact style
-
-				jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogEdit);
-				this._oDialogEdit.open();
-
-			} else {
-				MessageToast.show("Please select a Row to Edit");
-			}
-			this.getView().byId("inspectionTable").getTable().clearSelection();
 		},
 		onDialogCancelButton: function(oEvent) {
 			this._oDialogEdit.close();

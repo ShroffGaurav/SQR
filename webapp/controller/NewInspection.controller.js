@@ -58,7 +58,7 @@ sap.ui.define([
 
 			}
 
-			this.getView().setModel(oModel);
+		//	this.getView().setModel(oModel);
 			this.getView().setModel(headerModel, "headerModel");
 			this.getView().setModel(selectModdel, "selectModdel");
 			this.getView().byId("addInspectionTable").setModel(oModel);
@@ -66,11 +66,11 @@ sap.ui.define([
 		onDialogPress: function(oEvent) {
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
-
+				this._oDialog.setModel(this.getView().getModel());
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-			this._oDialog.setModel(null);
+
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
@@ -117,13 +117,13 @@ sap.ui.define([
 			var oModel = new JSONModel();
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
-
+				this._oDialog.setModel(this.getView().getModel());
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-			oModel.setData(oEvent.getSource().getBindingContext().getObject());
+			//oModel.setData(oEvent.getSource().getBindingContext().getObject());
 			//this.getView().setModel(oModel);
-			this._oDialog.setModel(oModel);
+			//this._oDialog.setModel(oModel);
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);

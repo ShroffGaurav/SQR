@@ -30,43 +30,43 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{ID}" items="{ path: '/ID', sorter: { path: 'Name' } }">
-													<core:Item key="{/ID}" text="{/ID}"/>
+												<Select forceSelection="true" selectedKey="{ID}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+													<core:Item key="{ID}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'CommodityDesc' } }">
-													<core:Item key="{/Category}" text="{/Category}"/>
+												<Select forceSelection="true" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+													<core:Item key="{id}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/question_id}" items="{ path: '/question_id', sorter: { path: 'Name' } }">
-													<core:Item key="{/question_id}" text="{/question_id}"/>
+												<Select forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+														<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/Score}" items="{ path: '/Score', sorter: { path: 'Name' } }">
-													<core:Item key="{/Score}" text="{/Score}"/>
+												<Select forceSelection="true" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
+														<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/category_id}" items="{}">
+												<Select forceSelection="true" selectedKey="{/category_id}" items="{}">
 													<core:Item text="{Name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select>
-													<core:Item text="{/Status}"/>
+												<Select  items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
