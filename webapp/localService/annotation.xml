@@ -25,43 +25,44 @@
 			<Annotations Target="ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType">
 				<Annotation Term="UI.LineItem">
 					<Collection>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Subject"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Category"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="question_id"/>
-						</Record>
-							<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Score"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Status"/>
-						</Record>
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="id"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="Subject"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="Category"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="question_content"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="Score"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="Status"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="findings"/>-->
+						<!--</Record>-->
+						<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="location"/>-->
+						<!--</Record>-->
 						
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="findings"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="location"/>
-						</Record>
+						
+						
+						
+						
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="inspection_id"/>-->
 						<!--</Record>-->
-						
-					
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="StatusId"/>-->
 						<!--</Record>-->
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="InspectionDate"/>-->
 						<!--</Record>-->
-						
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="supplier_risk_category"/>-->
 						<!--</Record>-->

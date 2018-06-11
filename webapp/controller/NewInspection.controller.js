@@ -29,6 +29,7 @@ sap.ui.define([
 				this.getView().byId("oButtonAddFinding").setVisible(false);	
 				this.getView().byId("oButtonViewModify").setVisible(true);
 							var array={
+				"finding_id":"10053",
 				"subject_id":"test",
 				"category_id":"ELE",
 				"question_id":"Under 3rd party certification?",
@@ -38,6 +39,7 @@ sap.ui.define([
 				"location":"Chicago"
 			};
 				var array1={
+				"finding_id":"10054",
 				"subject_id":"test1",
 				"category_id":"MFG",
 				"question_id":"Under 3rd party certification?",

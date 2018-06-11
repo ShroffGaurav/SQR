@@ -1,36 +1,111 @@
-<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:table="sap.ui.table" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.View1" displayBlock="true">
+<mvc:View xmlns:html="http://www.w3.org/1999/xhtml" height="100%" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:core="sap.ui.core"
+	xmlns:table="sap.ui.table" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.View1"
+	displayBlock="true">
 	<App id="firstView">
 		<pages>
 			<Page title="{i18n>title}">
 				<!--<View>-->
 				<content>
-					<VBox fitContainer="true" class="bottomMargin">
+					<!--<VBox fitContainer="true">-->
 					<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"/>
-					<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C">
+					<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" class="smartTableRow" width="100%"
+						direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true"
+						tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C">
 						<smartTable:customToolbar>
 							<Toolbar>
-										<Button text="Edit" press="onEditPress" type="Transparent" icon="sap-icon://edit">
-										</Button>
+								<Button text="Edit" press="onEditPress" type="Transparent" icon="sap-icon://edit"></Button>
 							</Toolbar>
 						</smartTable:customToolbar>
 						<smartTable:layoutData>
 							<FlexItemData growFactor="1" baseSize="0%"/>
 						</smartTable:layoutData>
-						<table:Table rowSelectionChange ="onSmartTableSelectionChange" >
+						<table:Table rowSelectionChange="onSmartTableSelectionChange">
 							<table:columns>
-				<table:Column width="10rem">
-					<table:customData>
-						<core:CustomData key="p13nData" value="\{&quot;columnKey&quot;: &quot;inspection_id&quot;, &quot;columnIndex&quot;:&quot;1&quot;, &quot;leadingProperty&quot;: &quot;inspection_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
-					</table:customData>
-					<Text text="{/#ZWM_FINDINGS_CType/inspection_id/@sap:label}" wrapping="true"/>
-					<table:template>
-						<Link text="{inspection_id}" wrapping="true" press="onInspectionPress"/>
-					</table:template>
-				</table:Column>
-				</table:columns>
+								<table:Column width="6rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;columnKey&quot;: &quot;id&quot;, &quot;columnIndex&quot;:&quot;1&quot;, &quot;leadingProperty&quot;: &quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/id/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{id}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;columnKey&quot;: &quot;inspection_id&quot;, &quot;columnIndex&quot;:&quot;2&quot;, &quot;leadingProperty&quot;: &quot;inspection_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/inspection_id/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Link text="{inspection_id}" wrapping="true" press="onInspectionPress"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="12rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;columnKey&quot;: &quot;Subject&quot;, &quot;columnIndex&quot;:&quot;3&quot;, &quot;leadingProperty&quot;: &quot;Subject&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/Subject/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{Subject}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="12rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;columnKey&quot;: &quot;Category&quot;, &quot;columnIndex&quot;:&quot;4&quot;, &quot;leadingProperty&quot;: &quot;Category&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/Category/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{Category}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;columnKey&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;5&quot;, &quot;leadingProperty&quot;: &quot;question_content&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/question_content/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{question_content}" wrapping="flase"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="15rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;Score&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;6&quot;, &quot;leadingProperty&quot;: &quot;Score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/Score/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{Score}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="10rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;Status&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;7&quot;, &quot;leadingProperty&quot;: &quot;Status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/Status/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{Status}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+								<table:Column width="6rem">
+									<table:customData>
+										<core:CustomData key="p13nData"
+											value="\{&quot;location&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;8&quot;, &quot;leadingProperty&quot;: &quot;location&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+									</table:customData>
+									<Text text="{/#ZWM_FINDINGS_CType/location/@sap:label}" wrapping="true"/>
+									<table:template>
+										<Text text="{location}" wrapping="true"/>
+									</table:template>
+								</table:Column>
+							</table:columns>
 						</table:Table>
 					</smartTable:SmartTable>
-				</VBox>
+					<!--</VBox>-->
 				</content>
 				<footer>
 					<Toolbar>

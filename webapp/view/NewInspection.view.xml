@@ -1,181 +1,195 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
-	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:table="sap.ui.table"
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
+	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns="sap.uxap" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:table="sap.ui.table"
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.NewInspection">
-	<App id="newinspection">
-		<pages>
-			<Page title="SQRMBWA" showNavButton="true" navButtonPress="onNavBack">
-				<content>
-					<HBox>
-						<VBox class="sapUiSmallMarginBegin " width="25%">
-							<Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-							<Input width="100%" value="GSHROFF" id="__input0"/>
-							<Label text="Vendor Code:" class="sapUiSmallMarginTop"/>
-							<Text text="Hudson"></Text>
-							<Label text="Supplier Contact1:" class="sapUiSmallMarginTop"/>
-							<Text text="123 S Clark Street" class="sapUiSmallMarginBottom"></Text>
-						</VBox>
-						<VBox class="sapUiMediumMarginBegin " width="25%">
-							<Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-							<Input width="100%" value="SAP SE"/>
-							<Label text="Supplier Category:" class="sapUiSmallMarginTop"/>
-							<Text text="ELE"></Text>
-							<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>
-							<Text text="Chicago" class="sapUiSmallMarginBottom"></Text>
-						</VBox>
-						<VBox class="sapUiMediumMarginBegin " width="25%">
-							<Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-							<DatePicker width="100%" displayFormat="DD-MM-YYYY" value="27-10-2017"/>
-							<Label text="Commodity:" class="sapUiSmallMarginTop"/>
-							<Text text="Primary"></Text>
-							<!--<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>-->
-							<!--<Text text="populated based on supplier" class="sapUiSmallMarginBottom"></Text>-->
-						</VBox>
-						<VBox class="sapUiMediumMarginBegin " width="25%">
-							<Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
-							<Input width="100%" value="SAP AG"/>
-							<Label text="Country:" class="sapUiSmallMarginTop"/>
-							<Text text="populated based on supplier"></Text>
-							<!--<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>-->
-							<!--<Text text="populated based on supplier" class="sapUiSmallMarginBottom"></Text>-->
-						</VBox>
-					</HBox>
-					<!--<smartFilterBar:SmartFilterBar entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true">-->
-					<!--<smartFilterBar:controlConfiguration>-->
-					<!--	<smartFilterBar:ControlConfiguration key="Status">-->
-					<!--	<smartFilterBar:defaultFilterValues>-->
-					<!--<smartFilterBar:SelectOption>-->
-					<!--</smartFilterBar:SelectOption>-->
-					<!--		</smartFilterBar:defaultFilterValues>-->
-					<!--	</smartFilterBar:ControlConfiguration>-->
-					<!--	<smartFilterBar:ControlConfiguration key="Gjahr">-->
-					<!--		<smartFilterBar:defaultFilterValues>-->
-					<!--				<smartFilterBar:SelectOption low="2014">-->
-					<!--				</smartFilterBar:SelectOption>-->
-					<!--			</smartFilterBar:defaultFilterValues>-->
-					<!--		</smartFilterBar:ControlConfiguration>-->
-					<!--</smartFilterBar:controlConfiguration>-->
-					<!-- layout data used to make the table growing but the filter bar fixed -->
-					<!--<smartFilterBar:layoutData>-->
-					<!--	<FlexItemData shrinkFactor="0"/>-->
-					<!--</smartFilterBar:layoutData>-->
-					<!--</smartFilterBar:SmartFilterBar>-->
-					<!--<OverflowToolbar class="sapUiMediumMarginTop">-->
-					<!--<ToolbarSpacer />-->
-					<Button text="Add Finding" type="Transparent" press="onDialogPress" id="oButtonAddFinding"/>
-					<Button text="Delete" type="Transparent" icon="sap-icon://delete"/>
-					<Button text="Modify/View" type="Transparent" icon="sap-icon://zoom-in" press="onViewModifyPress" id="oButtonViewModify"/>
-					<!--</OverflowToolbar>-->
-					<Table id="addInspectionTable" inset="false" items="{ path: '/', sorter: { path: 'Name' } }" mode="SingleSelectMaster" selectionChange="onSelectionChange">
-						<columns>
-							<Column width="12em">
-								<Text text="Subject"/>
-							</Column>
-							<Column >
-								<Text text="Category"/>
-							</Column>
-							<Column minScreenWidth="Desktop">
-								<Text text="Question"/>
-							</Column>
-							<Column minScreenWidth="Desktop" >
-								<Text text="Score"/>
-							</Column>
-							<Column hAlign="End">
-								<Text text="Status"/>
-							</Column>
-							<Column hAlign="End">
-								<Text text="Findings"/>
-							</Column>
-								<Column hAlign="End">
-								<Text text="Inspection Location"/>
-							</Column>
-							
-						</columns>
-						<items>
-							<ColumnListItem>
-								<cells>
-									<Text text="{subject_id}"/>
-										<Text text="{category_id}"/>
-										<Text text="{question_id}"/>
-										<Text text="{Score}"/>
-										<Text text="{Status}"/>
-										<Text text="{findings}"/>
-										<Text text="{location}"/>
-								</cells>
-							</ColumnListItem>
-						</items>
-					</Table>
-					<!--<smartTable:SmartTable id="addInspectionTable" height="100%" class="smartTableRow" width="100%" direction="Column" persistencyKey="tableasf"-->
-					<!--	useVariantManagement="true" useTablePersonalisation="true" fitContainer="true" tableType="Table" showFullScreenButton="true"-->
-					<!--	enableAutoBinding="true">-->
-					<!--	<Table items="{ path: '/', sorter: { path: 'Name' } }">-->
-					<!--		<columns>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Subject"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Category"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Question"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Score"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Status"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Findings"/>-->
-					<!--			</Column>-->
-					<!--			<Column width="100px" hAlign="Begin">-->
-					<!--				<customData>-->
-					<!--					<core:CustomData key="p13nData" value="\{}"/>-->
-					<!--				</customData>-->
-					<!--				<Text text="Inspection Location"/>-->
-					<!--			</Column>-->
-					<!--		</columns>-->
-					<!--		<items>-->
-					<!--			<ColumnListItem>-->
-					<!--				<cells>-->
-					<!--					<Text text="{Subject}"/>-->
-					<!--					<Text text="{Category}"/>-->
-					<!--					<Text text="{Question}"/>-->
-					<!--					<Text text="{Score}"/>-->
-					<!--					<Text text="{Status}"/>-->
-					<!--					<Text text="{Findings}"/>-->
-					<!--					<Text text="{InspectionLocation}"/>-->
-					<!--				</cells>-->
-					<!--			</ColumnListItem>-->
-					<!--		</items>-->
-					<!--	</Table>-->
-					<!--</smartTable:SmartTable>-->
-				</content>
-				<footer>
-					<Toolbar>
-						<ToolbarSpacer/>
-						<Button type="Accept" text="Save" press="onAllInspectionPress"/>
-						<Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
-					</Toolbar>
-				</footer>
-			</Page>
-		</pages>
-	</App>
+	<m:App id="newinspection">
+		<m:pages>
+			<m:Page title="SQRMBWA" showNavButton="true" navButtonPress="onNavBack">
+				<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false">
+					<headerTitle>
+						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
+					</headerTitle>
+					<headerContent>
+						<m:ObjectAttribute title="Supplier Code" text="Hudson"/>
+						<m:ObjectAttribute title="Supplier" text="1001553"/>
+						<m:ObjectAttribute title="Supplier Category" text="ELE"/>
+						<m:ObjectAttribute title="Commodity" text="Primary"/>
+						<m:ObjectAttribute title="Country" text="USA"/>
+						<m:ObjectAttribute title="Supplier Contact1" text="123 S Clark Street"/>
+						<m:ObjectAttribute title="Supplier Contact2" text="Chicago"/>
+					</headerContent>
+					<sections>
+						<ObjectPageSection title="Info">
+							<subSections>
+								<ObjectPageSubSection>
+									<blocks>
+										<m:HBox width="100%">
+											<m:VBox class="sapUiSmallMarginBegin" width="25%">
+												<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="GSHROFF" id="__input0"/>
+												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="SAP SE"/>
+											</m:VBox>
+											<m:VBox class="sapUiSmallMarginBegin" width="25%">
+												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:DatePicker width="100%" displayFormat="DD-MM-YYYY" value="27-10-2017"/>
+												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="SAP AG"/>
+											</m:VBox>
+										</m:HBox>
+									</blocks>
+								</ObjectPageSubSection>
+							</subSections>
+						</ObjectPageSection>
+						<ObjectPageSection title="Findings">
+							<subSections>
+								<ObjectPageSubSection title=" ">
+									<blocks>
+										<m:VBox>
+											<m:HBox>
+												<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
+												<m:Button text="Delete" type="Transparent" icon="sap-icon://delete"/>
+												<m:Button text="Modify/View" type="Transparent" icon="sap-icon://zoom-in" press="onViewModifyPress" id="oButtonViewModify"/>
+											</m:HBox>
+											<m:HBox>
+												<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: '/', sorter: { path: 'Name' } }"
+													mode="SingleSelectMaster" selectionChange="onSelectionChange">
+													<m:columns>
+														<m:Column width="12em">
+															<m:Text text="Finding id"/>
+														</m:Column>
+														<m:Column width="12em">
+															<m:Text text="Subject"/>
+														</m:Column>
+														<m:Column >
+															<m:Text text="Category"/>
+														</m:Column>
+														<m:Column minScreenWidth="Desktop">
+															<m:Text text="Question"/>
+														</m:Column>
+														<m:Column minScreenWidth="Desktop">
+															<m:Text text="Score"/>
+														</m:Column>
+														<m:Column hAlign="End">
+															<m:Text text="Status"/>
+														</m:Column>
+														<m:Column hAlign="End">
+															<m:Text text="Findings"/>
+														</m:Column>
+														<m:Column hAlign="End">
+															<m:Text text="Inspection Location"/>
+														</m:Column>
+														<m:Column hAlign="End">
+															<m:Text text="Edit"/>
+														</m:Column>
+														<m:Column hAlign="End">
+															<m:Text text="Delete"/>
+														</m:Column>
+													</m:columns>
+													<m:items>
+														<m:ColumnListItem>
+															<m:cells>
+																<m:Text text="{finding_id}"/>
+																<m:Text text="{subject_id}"/>
+																<m:Text text="{category_id}"/>
+																<m:Text text="{question_id}"/>
+																<m:Text text="{Score}"/>
+																<m:Text text="{Status}"/>
+																<m:Text text="{findings}"/>
+																<m:Text text="{location}"/>
+																<m:Button icon="sap-icon://edit" />
+																<m:Button icon="sap-icon://delete" />
+															</m:cells>
+														</m:ColumnListItem>
+													</m:items>
+												</m:Table>
+											</m:HBox>
+										</m:VBox>
+									</blocks>
+								</ObjectPageSubSection>
+							</subSections>
+						</ObjectPageSection>
+					</sections>
+				</ObjectPageLayout>
+				<!--<HBox class="sapUiCompFilterBar">-->
+				<!--	<VBox class="sapUiSmallMarginBegin " width="25%">-->
+				<!--		<Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>-->
+				<!--		<Input width="100%" value="GSHROFF" id="__input0"/>-->
+				<!--		<Label text="Vendor Code:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="Hudson"></Text>-->
+				<!--		<Label text="Supplier Contact1:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="123 S Clark Street" class="sapUiSmallMarginBottom"></Text>-->
+				<!--	</VBox>-->
+				<!--	<VBox class="sapUiMediumMarginBegin " width="25%">-->
+				<!--		<Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>-->
+				<!--		<Input width="100%" value="SAP SE"/>-->
+				<!--		<Label text="Supplier Category:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="ELE"></Text>-->
+				<!--		<Label text="Supplier Contact2:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="Chicago" class="sapUiSmallMarginBottom"></Text>-->
+				<!--	</VBox>-->
+				<!--	<VBox class="sapUiMediumMarginBegin " width="25%">-->
+				<!--		<Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>-->
+				<!--		<DatePicker width="100%" displayFormat="DD-MM-YYYY" value="27-10-2017"/>-->
+				<!--		<Label text="Commodity:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="Primary"></Text>-->
+				<!--	</VBox>-->
+				<!--	<VBox class="sapUiMediumMarginBegin " width="25%">-->
+				<!--		<Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>-->
+				<!--		<Input width="100%" value="SAP AG"/>-->
+				<!--		<Label text="Country:" class="sapUiSmallMarginTop"/>-->
+				<!--		<Text text="populated based on supplier"></Text>-->
+				<!--	</VBox>-->
+				<!--</HBox>-->
+				<!--<Button text="Add Finding" type="Transparent" press="onDialogPress" id="oButtonAddFinding"/>-->
+				<!--<Button text="Delete" type="Transparent" icon="sap-icon://delete"/>-->
+				<!--<Button text="Modify/View" type="Transparent" icon="sap-icon://zoom-in" press="onViewModifyPress" id="oButtonViewModify"/>-->
+				<!--<Table id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: '/', sorter: { path: 'Name' } }" mode="SingleSelectMaster" selectionChange="onSelectionChange">-->
+				<!--	<columns>-->
+				<!--		<Column width="12em">-->
+				<!--			<Text text="Subject"/>-->
+				<!--		</Column>-->
+				<!--		<Column >-->
+				<!--			<Text text="Category"/>-->
+				<!--		</Column>-->
+				<!--		<Column minScreenWidth="Desktop">-->
+				<!--			<Text text="Question"/>-->
+				<!--		</Column>-->
+				<!--		<Column minScreenWidth="Desktop" >-->
+				<!--			<Text text="Score"/>-->
+				<!--		</Column>-->
+				<!--		<Column hAlign="End">-->
+				<!--			<Text text="Status"/>-->
+				<!--		</Column>-->
+				<!--		<Column hAlign="End">-->
+				<!--			<Text text="Findings"/>-->
+				<!--		</Column>-->
+				<!--			<Column hAlign="End">-->
+				<!--			<Text text="Inspection Location"/>-->
+				<!--		</Column>-->
+				<!--	</columns>-->
+				<!--	<items>-->
+				<!--		<ColumnListItem>-->
+				<!--			<cells>-->
+				<!--				<Text text="{subject_id}"/>-->
+				<!--					<Text text="{category_id}"/>-->
+				<!--					<Text text="{question_id}"/>-->
+				<!--					<Text text="{Score}"/>-->
+				<!--					<Text text="{Status}"/>-->
+				<!--					<Text text="{findings}"/>-->
+				<!--					<Text text="{location}"/>-->
+				<!--			</cells>-->
+				<!--		</ColumnListItem>-->
+				<!--	</items>-->
+				<!--</Table>-->
+				<!--</content>-->
+				<!--<footer>-->
+				<!--	<Toolbar>-->
+				<!--		<ToolbarSpacer/>-->
+				<!--		<Button type="Accept" text="Save" press="onAllInspectionPress"/>-->
+				<!--		<Button type="Reject" text="Cancel" press="onAllInspectionPress"/>-->
+				<!--	</Toolbar>-->
+				<!--</footer>-->
+			</m:Page>
+		</m:pages>
+	</m:App>
 </mvc:View>

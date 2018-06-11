@@ -49,8 +49,7 @@
     "sourceFolder": "webapp",
     "targetFolder": "dist",
     "excludedFolders": [],
-    "excludedFiles": [],
-    "lastBuildDateTime": "Wed, 06 Jun 2018 10:36:16 GMT"
+    "excludedFiles": []
   },
   "mockpreview": {
     "mockUri": "/sap/opu/odata/sap/ZWM_FINDINGS_C_CDS/",
