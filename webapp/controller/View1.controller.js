@@ -15,7 +15,7 @@ sap.ui.define([
 
 		onInit: function() {
 
-			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.Single);
+			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 			//	this.getView().byId("inspectionTable").getTable().attachRowSelectionChange(this.onSmartTableSelectionChange);
 			var oModel = new JSONModel();
 			oModel.setData("");
@@ -29,7 +29,7 @@ sap.ui.define([
 			var DialogModel = new JSONModel();
 			var oData = oEvent.getSource().getBindingContext().getObject();
 			DialogModel.setData(oData);
-
+			this.getView().setModel(DialogModel, "DialogModel");
 			if (!this._oDialogEdit) {
 				this._oDialogEdit = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialogEdit.setModel(this.getView().getModel());
@@ -50,10 +50,12 @@ sap.ui.define([
 
 		},
 		onDialogCancelButton: function(oEvent) {
-			this._oDialogEdit.close();
+			this._oDialogEdit.destroy(); 
+		    this._oDialogEdit = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
-			this._oDialogEdit.close();
+				this._oDialogEdit.destroy(); 
+		    this._oDialogEdit = undefined;
 		},
 		onInspectionPress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getText();

@@ -30,15 +30,15 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{ID}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
-													<core:Item key="{ID}" text="{NAME}"/>
+												<Select forceSelection="true" selectedKey="{/DialogModel/Subject/}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+													<core:Item key="{NAME}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
-													<core:Item key="{id}" text="{name}"/>
+												<Select forceSelection="true"  selectedKey="{DialogModel>/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+													<core:Item key="{name}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
