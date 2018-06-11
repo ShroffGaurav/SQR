@@ -20,14 +20,14 @@ sap.ui.define([
 			var arr = [];
 			var oModel = new JSONModel();
 			var selectModdel = new JSONModel();
+			var headerModel = new JSONModel();
 			if (Source === "Button") {
 				this.getView().byId("oButtonAddFinding").setVisible(true);
-			
 
 				oModel.setData("");
 			} else if (Source === "Link") {
 				this.getView().byId("oButtonAddFinding").setVisible(false);
-	
+
 				var array = {
 					"finding_id": "10053",
 					"subject_id": "test",
@@ -48,13 +48,18 @@ sap.ui.define([
 					"findings": "Lean/ 5S / Safety",
 					"location": "Chicago"
 				};
+				var HeaderData = {
+					"Supplier": "1001553",
+				};
 				arr.push(array);
 				arr.push(array1);
+				headerModel.setData(HeaderData);
 				oModel.setData(arr);
 
 			}
 
 			this.getView().setModel(oModel);
+			this.getView().setModel(headerModel, "headerModel");
 			this.getView().setModel(selectModdel, "selectModdel");
 			this.getView().byId("addInspectionTable").setModel(oModel);
 		},
@@ -65,7 +70,7 @@ sap.ui.define([
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-			this._oDialog.setModel("");
+			this._oDialog.setModel(null);
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
@@ -74,11 +79,17 @@ sap.ui.define([
 		},
 		onDialogCancelButton: function(oEvent) {
 
-			this._oDialog.close();
+		this._oDialog.destroy(); 
+		    this._oDialog = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
 
-			this._oDialog.close();
+		this._oDialog.destroy(); 
+		    this._oDialog = undefined;
+		},
+		dialogAfterclose: function(oEvent) {
+			this._oDialog.destroy(); 
+		    this._oDialog = undefined;
 		},
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("View1", {
@@ -90,26 +101,21 @@ sap.ui.define([
 
 			});
 		},
-		onSelectionChange: function(oEvent) {
-			this.getView().getModel("selectModdel").setData(oEvent.getParameters().listItem.getBindingContext().getObject());
-
-		},
 		onDeletePress: function(oEvent) {
-		var deleteRecord = oEvent.getSource().getBindingContext().getObject();
-		var oData= this.getView().getModel().getData();
-		for(var i=0 ; i < oData.length;i++){
-			if(oData[i] === deleteRecord )
-					{
+			var deleteRecord = oEvent.getSource().getBindingContext().getObject();
+			var oData = this.getView().getModel().getData();
+			for (var i = 0; i < oData.length; i++) {
+				if (oData[i] === deleteRecord) {
 					//	pop this._data.Products[i] 
-						oData.splice(i,1); //removing 1 record from i th index.
-						this.getView().getModel().refresh();
-						break;//quit the loop
-					}
-		}
+					oData.splice(i, 1); //removing 1 record from i th index.
+					this.getView().getModel().refresh();
+					break; //quit the loop
+				}
+			}
 		},
-		onTableEditPress:function(oEvent){
+		onTableEditPress: function(oEvent) {
 			var oModel = new JSONModel();
-				if (!this._oDialog) {
+			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
 
 				this._oDialog.setContentHeight("60%");
@@ -121,7 +127,7 @@ sap.ui.define([
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
-			this._oDialog.open();	
+			this._oDialog.open();
 		}
 
 	});

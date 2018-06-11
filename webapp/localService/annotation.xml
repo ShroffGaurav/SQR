@@ -28,80 +28,78 @@
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="id"/>-->
 						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
+							<!--<Record Type="UI.DataField">-->
+						<!--	<PropertyValue Property="Value" Path="inspection_id"/>-->
+						<!--</Record>-->
+							<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="Subject"/>-->
 						<!--</Record>-->
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="Category"/>-->
 						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
+							<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="question_content"/>-->
 						<!--</Record>-->
 						<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="Score"/>-->
 						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
+							<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="Status"/>-->
 						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="findings"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
+							<!--<Record Type="UI.DataField">-->
 						<!--	<PropertyValue Property="Value" Path="location"/>-->
 						<!--</Record>-->
-						
-						
-						
-						
-						
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="inspection_id"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="StatusId"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="InspectionDate"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="supplier_risk_category"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="short_term_containment"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="supplier_casual_factor"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="created_by"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="inspection_id"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="changed_by"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="created_on"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="changed_on"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="subject_id"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="supplier_id"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="Subject"/>-->
-						<!--</Record>-->
-						<!--<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="category_id"/>-->
-						<!--</Record>-->
-						<!--	<Record Type="UI.DataField">-->
-						<!--	<PropertyValue Property="Value" Path="ScoreId"/>-->
-						<!--</Record>-->
+					
+					
+					
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="findings"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="StatusId"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="InspectionDate"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="supplier_risk_category"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="short_term_containment"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="supplier_casual_factor"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="created_by"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="inspection_id"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="changed_by"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="created_on"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="changed_on"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="subject_id"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="supplier_id"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="Subject"/>
+						</Record>
+						<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="category_id"/>
+						</Record>
+							<Record Type="UI.DataField">
+							<PropertyValue Property="Value" Path="ScoreId"/>
+						</Record>
 						<!--<Record Type="UI.DataFieldWithAction">-->
 						<!--	<PropertyValue Property="Action" String="onPress"/>-->
 						<!--	<PropertyValue Property="Value" Path="id"/>-->

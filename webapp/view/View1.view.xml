@@ -12,7 +12,7 @@
 						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"/>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable"  width="100%"
 							direction="Column" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true"
-							tableType="Table" showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
+							tableType="Table" ignoredFields="findings,StatusId,InspectionDate,supplier_risk_category,short_term_containment,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"  showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
 							<smartTable:customToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
@@ -27,8 +27,7 @@
 								<table:columns>
 									<table:Column width="6rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;columnKey&quot;: &quot;id&quot;, &quot;columnIndex&quot;:&quot;1&quot;, &quot;leadingProperty&quot;: &quot;id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+												<core:CustomData key="p13nData" value='\{"columnKey": "id", "columnIndex":"0", "leadingProperty": "id","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/id/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -37,8 +36,7 @@
 									</table:Column>
 									<table:Column width="6rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;columnKey&quot;: &quot;inspection_id&quot;, &quot;columnIndex&quot;:&quot;2&quot;, &quot;leadingProperty&quot;: &quot;inspection_id&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+												<core:CustomData key="p13nData" value='\{"columnKey": "inspection_id", "columnIndex":"1", "leadingProperty": "inspection_id","type":"numeric"}'/>
 										</table:customData>
 										<Text text="Insp. ID" wrapping="true"/>
 										<table:template>
@@ -47,8 +45,7 @@
 									</table:Column>
 									<table:Column width="9rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;columnKey&quot;: &quot;Subject&quot;, &quot;columnIndex&quot;:&quot;3&quot;, &quot;leadingProperty&quot;: &quot;Subject&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+											<core:CustomData key="p13nData" value='\{"columnKey": "Subject", "columnIndex":"2", "leadingProperty": "Subject","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Subject/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -57,8 +54,7 @@
 									</table:Column>
 									<table:Column width="9rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;columnKey&quot;: &quot;Category&quot;, &quot;columnIndex&quot;:&quot;4&quot;, &quot;leadingProperty&quot;: &quot;Category&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+												<core:CustomData key="p13nData" value='\{"columnKey": "Category", "columnIndex":"3", "leadingProperty": "Category","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Category/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -67,8 +63,7 @@
 									</table:Column>
 									<table:Column >
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;columnKey&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;5&quot;, &quot;leadingProperty&quot;: &quot;question_content&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+											<core:CustomData key="p13nData" value='\{"columnKey": "question_content", "columnIndex":"4", "leadingProperty": "question_content","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/question_content/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -77,8 +72,7 @@
 									</table:Column>
 									<table:Column width="11rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;Score&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;6&quot;, &quot;leadingProperty&quot;: &quot;Score&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+											<core:CustomData key="p13nData" value='\{"columnKey": "Score", "columnIndex":"5", "leadingProperty": "Score","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Score/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -87,8 +81,7 @@
 									</table:Column>
 									<table:Column width="6rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;Status&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;7&quot;, &quot;leadingProperty&quot;: &quot;Status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+												<core:CustomData key="p13nData" value='\{"columnKey": "Status", "columnIndex":"6", "leadingProperty": "Status","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Status/@sap:label}" wrapping="true"/>
 										<table:template>
@@ -97,12 +90,20 @@
 									</table:Column>
 									<table:Column width="6rem">
 										<table:customData>
-											<core:CustomData key="p13nData"
-												value="\{&quot;location&quot;: &quot;question_content&quot;, &quot;columnIndex&quot;:&quot;8&quot;, &quot;leadingProperty&quot;: &quot;location&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+												<core:CustomData key="p13nData" value='\{"columnKey": "location", "columnIndex":"7", "leadingProperty": "location","type":"numeric"}'/>
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/location/@sap:label}" wrapping="true"/>
 										<table:template>
 											<Text text="{location}" wrapping="true"/>
+										</table:template>
+									</table:Column>
+										<table:Column width="6rem">
+										<table:customData>
+												<core:CustomData key="p13nData" value='\{"columnKey": "Edit", "columnIndex":"8", "leadingProperty": "location","type":"numeric"}'/>
+										</table:customData>
+										<Text text="Edit" wrapping="true"/>
+										<table:template>
+											<Button icon="sap-icon://edit"/>
 										</table:template>
 									</table:Column>
 								</table:columns>
@@ -110,13 +111,6 @@
 						</smartTable:SmartTable>
 					</VBox>
 				</content>
-				<!--<footer>-->
-				<!--	<Toolbar>-->
-				<!--		<ToolbarSpacer/>-->
-				<!--		<Button type="Accept" text="New Inspection" press="onNewInspectionPress"/>-->
-				<!--	</Toolbar>-->
-				<!--</footer>-->
-				<!--</View>-->
 			</Page>
 		</pages>
 	</App>
