@@ -1,7 +1,5 @@
-<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout"
-	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:table="sap.ui.table">
-	<Dialog resizable="true" title="Edit Finding">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" xmlns:table="sap.ui.table">
+	<Dialog resizable="true" title="Edit Finding" afterClose="dialogAfterClose">
 		<!--<HBox>-->
 		<!--	<VBox>-->
 		<!--		<Text text="Supplier:"/>-->
@@ -20,8 +18,7 @@
 					<IconTabFilter icon="sap-icon://hint" text="info">
 						<f:Form editable="true">
 							<f:layout>
-								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
-									emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
 							</f:layout>
 							<f:formContainers>
 								<f:FormContainer>
@@ -33,43 +30,43 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/subject_id}" items="{ path: '/subject_id', sorter: { path: 'Name' } }">
-													<core:Item key="{/subject_id}" text="{/subject_id}"/>
+												<Select forceSelection="true" selectedKey="{/DialogModel/Subject/}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+													<core:Item key="{NAME}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/category_id}" items="{ path: '/category_id', sorter: { path: 'Name' } }">
-													<core:Item key="{/category_id}" text="{/category_id}"/>
+												<Select forceSelection="true"  selectedKey="{DialogModel>/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+													<core:Item key="{name}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/question_id}" items="{ path: '/question_id', sorter: { path: 'Name' } }">
-													<core:Item key="{/question_id}" text="{/question_id}"/>
+												<Select forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+														<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/Score}" items="{ path: '/Score', sorter: { path: 'Name' } }">
-													<core:Item key="{/Score}" text="{/Score}"/>
+												<Select forceSelection="true" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
+														<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/category_id}" items="{}">
+												<Select forceSelection="true" selectedKey="{/category_id}" items="{}">
 													<core:Item text="{Name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select>
-													<core:Item text="{/Status}"/>
+												<Select  items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
@@ -79,7 +76,7 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea rows="3" value="{/findings}"></TextArea>
+												<TextArea rows="3" value="{/findings}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
@@ -109,7 +106,7 @@
 							</f:formContainers>
 						</f:Form>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://attachment" text="Attachment">
+					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
 						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button.">
 							<items>
 								<UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018"/>
