@@ -107,7 +107,114 @@
 					</IconTabFilter>
 				</items>
 			</IconTabBar>
+<!--=======-->
+<!--			<f:Form editable="true">-->
+<!--				<f:layout>-->
+<!--					<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"-->
+<!--						emptySpanM="0" emptySpanS="0" columnsXL="3" columnsL="2" columnsM="2" singleContainerFullSize="false"/>-->
+<!--				</f:layout>-->
+<!--				<f:formContainers>-->
+<!--					<f:FormContainer>-->
+<!--						<f:formElements>-->
+<!--							<f:FormElement label="Supplier">-->
+<!--								<f:fields>-->
+<!--									<Input value="{/supplier_id}"/>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Subject">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/subject_id}" items="{ path: '/subject_id', sorter: { path: 'Name' } }">-->
+<!--										<core:Item key="{/subject_id}" text="{/subject_id}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Category">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/category_id}" items="{ path: '/category_id', sorter: { path: 'Name' } }">-->
+<!--										<core:Item key="{/category_id}" text="{/category_id}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Question">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/question_id}" items="{ path: '/question_id', sorter: { path: 'Name' } }">-->
+<!--										<core:Item key="{/question_id}" text="{/question_id}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Score">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/Score}" items="{ path: '/Score', sorter: { path: 'Name' } }">-->
+<!--										<core:Item key="{/Score}" text="{/Score}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Quality Category">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/category_id}" items="{}">-->
+<!--										<core:Item text="{Name}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Status">-->
+<!--								<f:fields>-->
+<!--									<Select>-->
+<!--										<core:Item text="{/Status}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--						</f:formElements>-->
+<!--					</f:FormContainer>-->
+<!--					<f:FormContainer>-->
+<!--						<f:formElements>-->
+<!--							<f:FormElement label="Inspection Findings">-->
+<!--								<f:fields>-->
+<!--									<TextArea rows="3" value="{/findings}"></TextArea>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Inspection Location">-->
+<!--								<f:fields>-->
+<!--									<Input value="{/location}"/>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Supplier Risk Category">-->
+<!--								<f:fields>-->
+<!--									<Select forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">-->
+<!--										<core:Item text="{Name}"/>-->
+<!--									</Select>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Short term Containment">-->
+<!--								<f:fields>-->
+<!--									<Input value="{/short_term_containment}"/>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+<!--							<f:FormElement label="Supplier Causal Factor:">-->
+<!--								<f:fields>-->
+<!--									<Input value="{/supplier_casual_factor}"/>-->
+<!--								</f:fields>-->
+<!--							</f:FormElement>-->
+							<!--<f:FormElement label="Attachments">-->
+							<!--	<f:fields>-->
+							<!--		<u:FileUploader name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server"-->
+							<!--			uploadComplete="handleUploadComplete"/>-->
+							<!--<Button text="Upload File" press="handleUploadPress"/>-->
+							<!--	</f:fields>-->
+							<!--</f:FormElement>-->
+<!--						</f:formElements>-->
+<!--					</f:FormContainer>-->
+<!--				</f:formContainers>-->
+<!--			</f:Form>-->
+<!-->>>>>>> fa1f9e760de77da4655c1b51f11fe734b95649b1-->
 		</VBox>
+		<HBox width="100%" alignItems="Center" alignContent="Center" justifyContent="Center">
+			<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button." id="__collection1">
+				<items>
+					<UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018" id="__item3a"/>
+					<UploadCollectionItem contributor="Contributor1" fileName="fileName2" uploadedDate="Wed Jun 06 2018" id="__item4a"/>
+					<UploadCollectionItem contributor="Contributor1" fileName="fileName3" uploadedDate="Wed Jun 06 2018" id="__item5a"/></items>
+			</UploadCollection>
+		</HBox>
 		<beginButton>
 			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onDialogSubmitButton"/>
 		</beginButton>

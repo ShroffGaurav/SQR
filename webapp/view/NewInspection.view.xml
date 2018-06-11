@@ -96,8 +96,8 @@
 																<m:Text text="{Status}"/>
 																<m:Text text="{findings}"/>
 																<m:Text text="{location}"/>
-																<m:Button icon="sap-icon://edit" />
-																<m:Button icon="sap-icon://delete" />
+																<m:Button icon="sap-icon://edit"/>
+																<m:Button icon="sap-icon://delete"/>
 															</m:cells>
 														</m:ColumnListItem>
 													</m:items>

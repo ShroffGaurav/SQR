@@ -2,7 +2,6 @@
 	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:table="sap.ui.table">
 	<Dialog resizable="true" title="Edit Finding">
-		
 		<!--<HBox>-->
 		<!--	<VBox>-->
 		<!--		<Text text="Supplier:"/>-->
