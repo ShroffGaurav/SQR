@@ -70,20 +70,7 @@ sap.ui.define([
 		var context = oEvent.getParameters().rowContext.getObject();
 		oEvent.getSource().getParent().getParent().getParent().getModel("FindingModel").setData(context);
 		},
-		onDataReceived:function(){
-		// 	var table = this.getView().byId("inspectionTable").getTable();
-		// 	table.getColumns().forEach(function(column) {
-		// 		if(column.getTooltip() === "Score" || column.getTooltip() === "Finding Text"){
-		// 			column.setWidth("15rem");
-		// 		}else{
-		// 			column.setWidth("6.5rem");
-		// 		}
-		
-				
 
-			
-		// });
-		}
 
 	});
 });

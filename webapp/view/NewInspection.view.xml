@@ -25,7 +25,7 @@
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="GSHROFF" id="__input0"/>
+												<m:Input width="100%" value="1001553" id="__input0"/>
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="SAP SE"/>
 											</m:VBox>
@@ -47,8 +47,6 @@
 										<m:VBox>
 											<m:HBox>
 												<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
-												<m:Button text="Delete" type="Transparent" icon="sap-icon://delete"/>
-												<m:Button text="Modify/View" type="Transparent" icon="sap-icon://zoom-in" press="onViewModifyPress" id="oButtonViewModify"/>
 											</m:HBox>
 											<m:HBox>
 												<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: '/', sorter: { path: 'Name' } }"
@@ -96,8 +94,8 @@
 																<m:Text text="{Status}"/>
 																<m:Text text="{findings}"/>
 																<m:Text text="{location}"/>
-																<m:Button icon="sap-icon://edit"/>
-																<m:Button icon="sap-icon://delete"/>
+																<m:Button icon="sap-icon://edit" press="onTableEditPress"/>
+																<m:Button icon="sap-icon://delete" press="onDeletePress"/>
 															</m:cells>
 														</m:ColumnListItem>
 													</m:items>
@@ -182,13 +180,13 @@
 				<!--	</items>-->
 				<!--</Table>-->
 				<!--</content>-->
-				<!--<footer>-->
-				<!--	<Toolbar>-->
-				<!--		<ToolbarSpacer/>-->
-				<!--		<Button type="Accept" text="Save" press="onAllInspectionPress"/>-->
-				<!--		<Button type="Reject" text="Cancel" press="onAllInspectionPress"/>-->
-				<!--	</Toolbar>-->
-				<!--</footer>-->
+				<m:footer>
+					<m:Toolbar>
+						<m:ToolbarSpacer/>
+						<m:Button type="Accept" text="Save" press="onAllInspectionPress"/>
+						<m:Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
+					</m:Toolbar>
+				</m:footer>
 			</m:Page>
 		</m:pages>
 	</m:App>

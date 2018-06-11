@@ -22,12 +22,12 @@ sap.ui.define([
 			var selectModdel = new JSONModel();
 			if (Source === "Button") {
 				this.getView().byId("oButtonAddFinding").setVisible(true);
-				this.getView().byId("oButtonViewModify").setVisible(false);
+			
 
 				oModel.setData("");
 			} else if (Source === "Link") {
 				this.getView().byId("oButtonAddFinding").setVisible(false);
-				this.getView().byId("oButtonViewModify").setVisible(true);
+	
 				var array = {
 					"finding_id": "10053",
 					"subject_id": "test",
@@ -72,19 +72,6 @@ sap.ui.define([
 			this._oDialog.open();
 
 		},
-		onViewModifyPress: function() {
-			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
-
-				this._oDialog.setContentHeight("60%");
-				this._oDialog.setContentWidth("90%");
-			}
-			this._oDialog.setModel(this.getView().getModel("selectModdel"));
-
-			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
-			this._oDialog.open();
-		},
 		onDialogCancelButton: function(oEvent) {
 
 			this._oDialog.close();
@@ -104,34 +91,38 @@ sap.ui.define([
 			});
 		},
 		onSelectionChange: function(oEvent) {
-				this.getView().getModel("selectModdel").setData(oEvent.getParameters().listItem.getBindingContext().getObject());
+			this.getView().getModel("selectModdel").setData(oEvent.getParameters().listItem.getBindingContext().getObject());
 
+		},
+		onDeletePress: function(oEvent) {
+		var deleteRecord = oEvent.getSource().getBindingContext().getObject();
+		var oData= this.getView().getModel().getData();
+		for(var i=0 ; i < oData.length;i++){
+			if(oData[i] === deleteRecord )
+					{
+					//	pop this._data.Products[i] 
+						oData.splice(i,1); //removing 1 record from i th index.
+						this.getView().getModel().refresh();
+						break;//quit the loop
+					}
+		}
+		},
+		onTableEditPress:function(oEvent){
+			var oModel = new JSONModel();
+				if (!this._oDialog) {
+				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
+
+				this._oDialog.setContentHeight("60%");
+				this._oDialog.setContentWidth("90%");
 			}
-			/**
-			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-			 * (NOT before the first rendering! onInit() is used for that one!).
-			 * @memberOf com.sapZSQRMBWA.view.NewInspection
-			 */
-			//	onBeforeRendering: function() {
-			//
-			//	},
+			oModel.setData(oEvent.getSource().getBindingContext().getObject());
+			//this.getView().setModel(oModel);
+			this._oDialog.setModel(oModel);
 
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf com.sapZSQRMBWA.view.NewInspection
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf com.sapZSQRMBWA.view.NewInspection
-		 */
-		//	onExit: function() {
-		//
-		//	}
+			// toggle compact style
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
+			this._oDialog.open();	
+		}
 
 	});
 
