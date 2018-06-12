@@ -9,13 +9,13 @@
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
-						<m:ObjectAttribute title="Supplier Code" text="Hudson"/>
-						<m:ObjectAttribute title="Supplier" text="{headerModel>/Supplier}"/>
-						<m:ObjectAttribute title="Supplier Category" text="ELE"/>
-						<m:ObjectAttribute title="Commodity" text="Primary"/>
-						<m:ObjectAttribute title="Country" text="USA"/>
-						<m:ObjectAttribute title="Supplier Contact1" text="123 S Clark Street"/>
-						<m:ObjectAttribute title="Supplier Contact2" text="Chicago"/>
+						<!--<m:ObjectAttribute title="Supplier Code" text="Hudson"/>-->
+						<!--<m:ObjectAttribute title="Supplier" text="{headerModel>/Supplier}"/>-->
+						<!--<m:ObjectAttribute title="Supplier Category" text="ELE"/>-->
+						<!--<m:ObjectAttribute title="Commodity" text="Primary"/>-->
+						<!--<m:ObjectAttribute title="Country" text="USA"/>-->
+						<!--<m:ObjectAttribute title="Supplier Contact1" text="123 S Clark Street"/>-->
+						<!--<m:ObjectAttribute title="Supplier Contact2" text="Chicago"/>-->
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">
@@ -24,16 +24,33 @@
 									<blocks>
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="1001553" id="__input0"/>
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{headerModel>/Supplier}"/>
+												<m:Label text="Supplier Code:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="Hudson" editable="false"/>
+												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="123 S Clark Street" editable="false"/>
+										
+											</m:VBox>
+											<m:VBox class="sapUiSmallMarginBegin" width="25%">
+													<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="1001553" id="__input0"/>
+													<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="ELE" editable="false"/>
+													<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="Chicago" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:DatePicker width="100%" displayFormat="DD-MM-YYYY" value="27-10-2017"/>
-												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="Primary" editable="false"/>
+											</m:VBox>
+											<m:VBox class="sapUiSmallMarginBegin" width="25%">
+													<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="SAP AG"/>
+												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="USA" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>

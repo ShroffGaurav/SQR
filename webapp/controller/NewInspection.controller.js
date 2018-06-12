@@ -48,25 +48,29 @@ sap.ui.define([
 					"findings": "Lean/ 5S / Safety",
 					"location": "Chicago"
 				};
-				var HeaderData = {
-					"Supplier": "1001553",
-				};
+				
 				arr.push(array);
 				arr.push(array1);
-				headerModel.setData(HeaderData);
+			
 				oModel.setData(arr);
 
 			}
-
+			var HeaderData = {
+					"Supplier": "1001553",
+				};
+			headerModel.setData(HeaderData);
+		//	this.getView().getModel().setProperty("/headerData",HeaderData);
 		//	this.getView().setModel(oModel);
 			this.getView().setModel(headerModel, "headerModel");
 			this.getView().setModel(selectModdel, "selectModdel");
 			this.getView().byId("addInspectionTable").setModel(oModel);
 		},
 		onDialogPress: function(oEvent) {
+				var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
@@ -114,10 +118,11 @@ sap.ui.define([
 			}
 		},
 		onTableEditPress: function(oEvent) {
-			var oModel = new JSONModel();
+			var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
