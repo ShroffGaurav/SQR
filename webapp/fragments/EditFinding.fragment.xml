@@ -16,7 +16,7 @@
 									<f:formElements>
 										<f:FormElement label="Supplier">
 											<f:fields>
-												<Input value="{headerModel>/Supplier}" editable="false"/>
+												<Input value="1001553" editable="false"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Subject">
