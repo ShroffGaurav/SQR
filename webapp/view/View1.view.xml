@@ -9,7 +9,23 @@
 				<content>
 					<VBox fitContainer="true" displayInline="false" direction="Column" renderType="Div" justifyContent="Start" alignItems="Stretch"
 						wrap="NoWrap" alignContent="Stretch">
-						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true" liveMode="true" />
+						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"
+							liveMode="true">
+							<smartFilterBar:controlConfiguration>
+								<smartFilterBar:ControlConfiguration key="SupplierId" index="7" label="Supplier Engineer (Only for Executives)" visibleInAdvancedArea="true"
+									groupId="_BASIC">
+									<smartFilterBar:customControl>
+										<ComboBox></ComboBox>
+									</smartFilterBar:customControl>
+								</smartFilterBar:ControlConfiguration>
+								<smartFilterBar:ControlConfiguration key="Status" index="6" label="Commodity (Only for Executives)" visibleInAdvancedArea="true"
+									groupId="_BASIC">
+									<smartFilterBar:customControl>
+										<ComboBox></ComboBox>
+									</smartFilterBar:customControl>
+								</smartFilterBar:ControlConfiguration>								
+							</smartFilterBar:controlConfiguration>
+						</smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table"
 							ignoredFields="findings,StatusId,InspectionDate,supplier_risk_category,short_term_containment,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"
@@ -25,13 +41,13 @@
 								<FlexItemData growFactor="1" baseSize="0%"/>
 							</smartTable:layoutData>
 							<table:Table rowSelectionChange="onSmartTableSelectionChange" threshold="100" visibleRowCountMode="Auto" rowActionCount="1">
-									<table:rowActionTemplate>
-										<table:RowAction>
-											<table:items>
-												<table:RowActionItem type="Custom" icon="sap-icon://edit" press="onSmartTableEdit"></table:RowActionItem>
-											</table:items>
-										</table:RowAction>
-									</table:rowActionTemplate>
+								<table:rowActionTemplate>
+									<table:RowAction>
+										<table:items>
+											<table:RowActionItem type="Custom" icon="sap-icon://edit" press="onSmartTableEdit"></table:RowActionItem>
+										</table:items>
+									</table:RowAction>
+								</table:rowActionTemplate>
 								<table:columns>
 									<table:Column width="6rem">
 										<table:customData>
@@ -108,7 +124,6 @@
 										</table:template>
 									</table:Column>
 								</table:columns>
-								
 							</table:Table>
 						</smartTable:SmartTable>
 					</VBox>
