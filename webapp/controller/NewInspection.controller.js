@@ -121,9 +121,9 @@ sap.ui.define([
 		onTableEditPress: function(oEvent) {
 			var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
+				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.setTitle("Edit Finding");
+				//this._oDialog.setTitle("Edit Finding");
 				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
