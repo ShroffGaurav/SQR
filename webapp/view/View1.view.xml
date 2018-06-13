@@ -12,7 +12,7 @@
 						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"
 							liveMode="true">
 							<smartFilterBar:controlConfiguration>
-								<smartFilterBar:ControlConfiguration key="SupplierId" index="7" label="Supplier Engineer (Only for Executives)" visibleInAdvancedArea="true"
+								<smartFilterBar:ControlConfiguration key="SupplierId" index="7" label="Supplier Engineer (Only for Managers)" visibleInAdvancedArea="true"
 									groupId="_BASIC">
 									<smartFilterBar:customControl>
 										<ComboBox></ComboBox>
