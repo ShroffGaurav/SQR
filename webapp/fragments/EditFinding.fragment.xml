@@ -21,35 +21,35 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/DialogModel/Subject/}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{/DialogModel/Subject/}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
 													<core:Item key="{NAME}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{DialogModel>/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{DialogModel>/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
 													<core:Item key="{name}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
 													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/category_id}" items="{}" enabled="false">
+												<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}" >
 													<core:Item text="{Name}"/>
 												</Select>
 											</f:fields>
@@ -72,12 +72,12 @@
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
 											<f:fields>
-												<Input value="{/location}"/>
+												<Input editable="false" value="{/location}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">
+												<Select enabled="false" forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">
 													<core:Item text="{Name}"/>
 												</Select>
 											</f:fields>
@@ -89,7 +89,7 @@
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor:">
 											<f:fields>
-												<Input value="{/supplier_casual_factor}"/>
+												<Input editable="false" value="{/supplier_casual_factor}"/>
 											</f:fields>
 										</f:FormElement>
 									</f:formElements>
