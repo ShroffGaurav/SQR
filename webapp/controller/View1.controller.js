@@ -14,12 +14,11 @@ sap.ui.define([
 			this.getView().setModel(oModel, "FindingModel");
 		},
 		getMyComponent: function() {
-			"use strict";
 			var sComponentId = Component.getOwnerIdFor(this.getView());
 			return sap.ui.component(sComponentId);
 		},
 		onBeforeRendering: function() {
-			var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
+			// var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
 			var oVal = {}; oVal.StatusId = "01";
 			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
