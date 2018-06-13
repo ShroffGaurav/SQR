@@ -9,7 +9,7 @@
 				<content>
 					<VBox fitContainer="true" displayInline="false" direction="Column" renderType="Div" justifyContent="Start" alignItems="Stretch"
 						wrap="NoWrap" alignContent="Stretch">
-						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"/>
+						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true" liveMode="true" />
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table"
 							ignoredFields="findings,StatusId,InspectionDate,supplier_risk_category,short_term_containment,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"

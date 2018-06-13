@@ -1,29 +1,27 @@
 sap.ui.define([
 	"jquery.sap.global",
+	"sap/ui/core/Component",
 	"sap/ui/core/mvc/Controller",
-	"sap/m/MessageToast",
-	"sap/ui/model/json/JSONModel",
-	"sap/m/ObjectMarker",
-	"sap/m/UploadCollectionParameter",
-	"sap/m/library",
-	"sap/ui/core/format/FileSizeFormat",
-	"sap/ui/Device"
-], function(jquery, Controller, MessageToast, JSONModel, ObjectMarker, UploadCollectionParameter, MobileLibrary, FileSizeFormat, Device) {
+	"sap/ui/model/json/JSONModel"
+], function(jquery, Component, Controller, JSONModel) {
 	"use strict";
-
 	return Controller.extend("com.sapZSQRMBWA.controller.View1", {
-
 		onInit: function() {
 
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
-			//	this.getView().byId("inspectionTable").getTable().attachRowSelectionChange(this.onSmartTableSelectionChange);
 			var oModel = new JSONModel();
 			oModel.setData("");
 			this.getView().setModel(oModel, "FindingModel");
-			//selectionChange="onSmartTableSelectionChange"
 		},
-		onAfterRendering: function() {
-
+		getMyComponent: function() {
+			"use strict";
+			var sComponentId = Component.getOwnerIdFor(this.getView());
+			return sap.ui.component(sComponentId);
+		},
+		onBeforeRendering: function() {
+			var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
+			var oVal = {}; oVal.StatusId = "01";
+			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
 			var DialogModel = new JSONModel();
@@ -36,29 +34,24 @@ sap.ui.define([
 				this._oDialogEdit.setContentHeight("60%");
 				this._oDialogEdit.setContentWidth("90%");
 			}
-
 			// toggle compact style
-
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogEdit);
 			this._oDialogEdit.open();
-
 		},
 		onNewInspectionPress: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
 				NavFilters: "Button"
 			});
-
 		},
 		onDialogCancelButton: function(oEvent) {
-			this._oDialogEdit.destroy(); 
-		    this._oDialogEdit = undefined;
+			this._oDialogEdit.destroy();
+			this._oDialogEdit = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
-				this._oDialogEdit.destroy(); 
-		    this._oDialogEdit = undefined;
+			this._oDialogEdit.destroy();
+			this._oDialogEdit = undefined;
 		},
 		onInspectionPress: function(oEvent) {
-			var InspectionId = oEvent.getSource().getText();
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
 				NavFilters: "Link"
 			});
@@ -66,7 +59,6 @@ sap.ui.define([
 		onSmartTableSelectionChange: function(oEvent) {
 			var context = oEvent.getParameters().rowContext.getObject();
 			oEvent.getSource().getParent().getParent().getParent().getModel("FindingModel").setData(context);
-		},
-
+		}
 	});
 });
