@@ -20,6 +20,8 @@ sap.ui.define([
 		},
 		onBeforeRendering: function() {
 			var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
+			var oVal = {}; oVal.StatusId = "01";
+			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
 			var DialogModel = new JSONModel();
