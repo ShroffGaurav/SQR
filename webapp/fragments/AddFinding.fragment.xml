@@ -21,21 +21,21 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{ID}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+												<Select forceSelection="true" change="onSubjectChange" selectedKey="{ID}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
 													<core:Item key="{ID}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Category">
+										<f:FormElement label="Category" >
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+												<Select  forceSelection="true" id="CategorySelect" change="onCategoryChange" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
 													<core:Item key="{id}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+												<Select id="questionSelect" forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
 														<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>

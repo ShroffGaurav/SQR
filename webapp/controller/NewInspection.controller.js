@@ -1,7 +1,8 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/model/json/JSONModel"
-], function(Controller, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter"
+], function(Controller, JSONModel,Filter) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
@@ -68,7 +69,7 @@ sap.ui.define([
 		onDialogPress: function(oEvent) {
 				var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
+				this._oDialog = sap.ui.xmlfragment(this.getView().getId(),"com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
 				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
@@ -122,17 +123,34 @@ sap.ui.define([
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
+				this._oDialog.setTitle("Edit Finding");
 				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-			//oModel.setData(oEvent.getSource().getBindingContext().getObject());
-			//this.getView().setModel(oModel);
-			//this._oDialog.setModel(oModel);
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
+		},
+		onSubjectChange:function(oEvent){
+			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
+			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
+			if (SelectedKey !== "" || SelectedKey !== null) {
+			this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);	
+			} else {
+			this.getView().byId("CategorySelect").getBinding("items").filter([]);
+			}
+			
+		},
+		onCategoryChange:function(oEvent){
+			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
+			var oFilter = new Filter("QUALITY_CATEGORY", sap.ui.model.FilterOperator.EQ, SelectedKey);
+			if (SelectedKey !== "" || SelectedKey !== null) {
+			this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);	
+			} else {
+			this.getView().byId("questionSelect").getBinding("items").filter([]);
+			}	
 		}
 
 	});
