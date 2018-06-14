@@ -91,22 +91,101 @@ sap.ui.define([
 		onDialogSubmitButton: function(oEvent) {
 			var oModel = new JSONModel();
 			var arr = [];
+			var count = 0;
+			// var subject_id = this.getView().byId("SubjectSelect").getSelectedItem();
+			// var category_id = this.getView().byId("SubjectSelect").getSelectedItem();
+			// var question_id = this.getView().byId("questionSelect").getSelectedItem();
+			// var Score = this.getView().byId("ScoreSelect").getSelectedItem();
+			// var findings =  this.getView().byId("findingText").getValue();
+			// var location = this.getView().byId("Location").getValue();
+			// if(subject_id !== null && category_id !== null)
 			var array = {
-					"finding_id": "10053",
-					"subject_id": this.getView().byId("SubjectSelect").getSelectedItem().getText(),
-					"category_id": this.getView().byId("CategorySelect").getSelectedItem().getText(),
-					"question_id":  this.getView().byId("questionSelect").getSelectedItem().getText(),
-					"Score": this.getView().byId("ScoreSelect").getSelectedItem().getText(),
-					"Status": this.getView().byId("StatusSelect").getSelectedItem().getText(),
-					"findings": this.getView().byId("findingText").getValue(),
-					"location": this.getView().byId("Location").getValue()
-				};
+				"finding_id": "10053",
+				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
+					.getText()),
+				"category_id": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
+					.getText()),
+				"question_id": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
+					.getText()),
+				"Score": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
+					.getText()),
+				"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
+					.getText()),
+				"findings": this.getView().byId("findingText").getValue(),
+				"location": this.getView().byId("Location").getValue(),
+				"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
+						"RiskCategorySelect").getSelectedItem()
+					.getText()),
+			};
+
+			jQuery.each(array, function(index, value) {
+				if (value !== null && value !== "") {
+						switch (index) {
+						case 'subject_id':
+							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'category_id':
+							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'question_id':
+							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'Score':
+							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'Status':
+							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'findings':
+							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'location':
+							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							break;
+						case 'RiskCategorySelect':
+							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+							break;
+					}
+
+					count++;
+				} else {
+					switch (index) {
+						case 'subject_id':
+							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'category_id':
+							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'question_id':
+							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'Score':
+							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'Status':
+							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'findings':
+							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'location':
+							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case 'RiskCategorySelect':
+							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							break;
+					}
+				}
+			}.bind(this));
+
+			if (count === 8) {
 				arr.push(array);
-			oModel.setData(arr);
-			this.getView().byId("addInspectionTable").setModel(oModel);
-		//	this.getView().byId("Supplier").getValue();                         
-			this._oDialog.destroy();
-			this._oDialog = undefined;
+				oModel.setData(arr);
+				this.getView().byId("addInspectionTable").setModel(oModel);
+				this._oDialog.destroy();
+				this._oDialog = undefined;
+			}
+
 		},
 		dialogAfterclose: function(oEvent) {
 			this._oDialog.destroy();
@@ -175,8 +254,7 @@ sap.ui.define([
 				this.getView().byId("questionSelect").setSelectedKey("");
 				this.getView().byId("QualityCategorySelect").setSelectedKey("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
-				
-				
+
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
@@ -187,14 +265,14 @@ sap.ui.define([
 			var oFilter = new Filter("CATEGORY_ID", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
-					this.getView().byId("questionSelect").setSelectedKey("");
+				this.getView().byId("questionSelect").setSelectedKey("");
 				this.getView().byId("QualityCategorySelect").setSelectedKey("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
 		},
-		onQuestionChange:function(oEvent){
+		onQuestionChange: function(oEvent) {
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().QUALITY_CATEGORY;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().DEFAULT_RISK_CATEGORY;
 			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
