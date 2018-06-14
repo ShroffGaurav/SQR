@@ -200,7 +200,7 @@
 				<m:footer>
 					<m:Toolbar>
 						<m:ToolbarSpacer/>
-						<m:Button type="Accept" text="Save" press="onAllInspectionPress"/>
+						<m:Button type="Accept" text="Save" press="onSaveInspectionPress"/>
 						<m:Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
 					</m:Toolbar>
 				</m:footer>

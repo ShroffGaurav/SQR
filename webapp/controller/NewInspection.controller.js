@@ -1,8 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
-	"sap/ui/model/Filter"
-], function(Controller, JSONModel,Filter) {
+	"sap/ui/model/Filter",
+	'sap/m/MessageBox'
+], function(Controller, JSONModel, Filter, MessageBox) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
@@ -49,33 +50,33 @@ sap.ui.define([
 					"findings": "Lean/ 5S / Safety",
 					"location": "Chicago"
 				};
-				
+
 				arr.push(array);
 				arr.push(array1);
-			
+
 				oModel.setData(arr);
 
 			}
 			var HeaderData = {
-					"Supplier": "1001553",
-				};
+				"Supplier": "1001553",
+			};
 			headerModel.setData(HeaderData);
-		//	this.getView().getModel().setProperty("/headerData",HeaderData);
-		//	this.getView().setModel(oModel);
+			//	this.getView().getModel().setProperty("/headerData",HeaderData);
+			//	this.getView().setModel(oModel);
 			this.getView().setModel(headerModel, "headerModel");
 			this.getView().setModel(selectModdel, "selectModdel");
 			this.getView().byId("addInspectionTable").setModel(oModel);
 		},
 		onDialogPress: function(oEvent) {
-				var supplier = this.getView().getModel("headerModel").getData().Supplier;
+			var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment(this.getView().getId(),"com.sapZSQRMBWA.fragments.AddFinding", this);
+				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+					0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
-
 
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
@@ -84,17 +85,32 @@ sap.ui.define([
 		},
 		onDialogCancelButton: function(oEvent) {
 
-		this._oDialog.destroy(); 
-		    this._oDialog = undefined;
+			this._oDialog.destroy();
+			this._oDialog = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
-
-		this._oDialog.destroy(); 
-		    this._oDialog = undefined;
+			var oModel = new JSONModel();
+			var arr = [];
+			var array = {
+					"finding_id": "10053",
+					"subject_id": this.getView().byId("SubjectSelect").getSelectedItem().getText(),
+					"category_id": this.getView().byId("CategorySelect").getSelectedItem().getText(),
+					"question_id":  this.getView().byId("questionSelect").getSelectedItem().getText(),
+					"Score": this.getView().byId("ScoreSelect").getSelectedItem().getText(),
+					"Status": this.getView().byId("StatusSelect").getSelectedItem().getText(),
+					"findings": this.getView().byId("findingText").getValue(),
+					"location": this.getView().byId("Location").getValue()
+				};
+				arr.push(array);
+			oModel.setData(arr);
+			this.getView().byId("addInspectionTable").setModel(oModel);
+		//	this.getView().byId("Supplier").getValue();                         
+			this._oDialog.destroy();
+			this._oDialog = undefined;
 		},
 		dialogAfterclose: function(oEvent) {
-			this._oDialog.destroy(); 
-		    this._oDialog = undefined;
+			this._oDialog.destroy();
+			this._oDialog = undefined;
 		},
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("View1", {
@@ -105,6 +121,22 @@ sap.ui.define([
 			this.getOwnerComponent().getRouter().navTo("View1", {
 
 			});
+		},
+		onSaveInspectionPress: function() {
+
+			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+			MessageBox.information(
+				"New Inspection Createdn Number :123456", {
+					actions: ["Ok"],
+					styleClass: bCompact ? "sapUiSizeCompact" : "",
+					onClose: function(sAction) {
+						this.getOwnerComponent().getRouter().navTo("View1", {
+
+						});
+					}.bind(this)
+				}
+			);
+
 		},
 		onDeletePress: function(oEvent) {
 			var deleteRecord = oEvent.getSource().getBindingContext().getObject();
@@ -124,7 +156,8 @@ sap.ui.define([
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
 				//this._oDialog.setTitle("Edit Finding");
-				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[0].setValue(supplier);
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+					0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
@@ -133,24 +166,24 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
 		},
-		onSubjectChange:function(oEvent){
+		onSubjectChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-			this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);	
+				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
 			} else {
-			this.getView().byId("CategorySelect").getBinding("items").filter([]);
+				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
-			
+
 		},
-		onCategoryChange:function(oEvent){
+		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("QUALITY_CATEGORY", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-			this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);	
+				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
 			} else {
-			this.getView().byId("questionSelect").getBinding("items").filter([]);
-			}	
+				this.getView().byId("questionSelect").getBinding("items").filter([]);
+			}
 		}
 
 	});
