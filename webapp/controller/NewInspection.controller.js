@@ -171,6 +171,12 @@ sap.ui.define([
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
+				this.getView().byId("CategorySelect").setSelectedKey("");
+				this.getView().byId("questionSelect").setSelectedKey("");
+				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("RiskCategorySelect").setSelectedKey("");
+				
+				
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
@@ -178,12 +184,21 @@ sap.ui.define([
 		},
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
-			var oFilter = new Filter("QUALITY_CATEGORY", sap.ui.model.FilterOperator.EQ, SelectedKey);
+			var oFilter = new Filter("CATEGORY_ID", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
+					this.getView().byId("questionSelect").setSelectedKey("");
+				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
+		},
+		onQuestionChange:function(oEvent){
+			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().QUALITY_CATEGORY;
+			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().DEFAULT_RISK_CATEGORY;
+			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
+			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 		}
 
 	});

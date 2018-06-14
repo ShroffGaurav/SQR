@@ -21,7 +21,7 @@
 										</f:FormElement>
 										<f:FormElement label="Subject" >
 											<f:fields>
-												<Select id="SubjectSelect" forceSelection="true" change="onSubjectChange" selectedKey="" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" selectedKey="" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
 													<core:Item key="{ID}" text="{NAME}"/>
 												</Select>
 											</f:fields>
@@ -35,7 +35,7 @@
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select id="questionSelect" forceSelection="false" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+												<Select id="questionSelect" change="onQuestionChange"  forceSelection="false" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
 														<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
@@ -49,8 +49,8 @@
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select forceSelection="true" selectedKey="{/category_id}" items="{}"  enabled="false">
-													<core:Item text="{Name}"/>
+												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUALITY_CATEGORY' } }"  enabled="false">
+													<core:Item key="{QUALITY_CATEGORY}" text="{QUALITY_CATEGORY}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
@@ -77,8 +77,8 @@
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Select forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">
-													<core:Item text="{Name}"/>
+												<Select id="RiskCategorySelect" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }">
+													<core:Item key="{id}" text="{text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
@@ -87,7 +87,7 @@
 												<Input value="{/short_term_containment}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Causal Factor:">
+										<f:FormElement label="Supplier Causal Factor">
 											<f:fields>
 												<Input value="{/supplier_casual_factor}"/>
 											</f:fields>
