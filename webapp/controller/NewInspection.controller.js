@@ -126,7 +126,7 @@ sap.ui.define([
 
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			MessageBox.information(
-				"New Inspection Createdn Number :123456", {
+				"New Inspection Created, Number :123456", {
 					actions: ["Ok"],
 					styleClass: bCompact ? "sapUiSizeCompact" : "",
 					onClose: function(sAction) {
