@@ -19,7 +19,8 @@ sap.ui.define([
 		},
 		onBeforeRendering: function() {
 			// var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
-			var oVal = {}; oVal.StatusId = "01";
+			var oVal = {};
+			oVal.StatusId = "01";
 			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
@@ -51,9 +52,12 @@ sap.ui.define([
 			this._oDialogEdit = undefined;
 		},
 		onInspectionPress: function(oEvent) {
+		// var sPath = "Inspections(" + oBindingContext.getPath().split("(")[1].split(",ExceptionType")[0] + ",Material='" + material +
+		// 		"')";
+		var sPath = "Inspections('11184')";
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
-				NavFilters: "Link"
-			});
+				NavFilters: sPath
+			},false);
 		},
 		onSmartTableSelectionChange: function(oEvent) {
 			var context = oEvent.getParameters().rowContext.getObject();

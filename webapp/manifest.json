@@ -20,9 +20,7 @@
 				"settings": {
 					"odataVersion": "2.0",
 					"localUri": "localService/ZWM_FINDINGS_C_CDS/metadata.xml",
-					"annotations": [
-						"annotation"
-					]
+					"annotations": ["annotation"]
 				}
 			},
 			"annotation": {
@@ -30,6 +28,14 @@
 				"uri": "localService/annotation.xml",
 				"settings": {
 					"localUri": "localService/annotation.xml"
+				}
+			},
+			"ZSQRMBWA_SRV": {
+				"uri": "/sap/opu/odata/sap/ZSQRMBWA_SRV/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/ZSQRMBWA_SRV/metadata.xml"
 				}
 			}
 		}
@@ -51,10 +57,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
 		"config": {
@@ -103,14 +106,22 @@
 				},
 				"dataSource": "ZWM_FINDINGS_C_CDS",
 				"preload": true
+			},
+			"ZSQRMBWA": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneTime",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "ZSQRMBWA_SRV",
+				"preload": true
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -122,24 +133,17 @@
 				"clearAggregation": false,
 				"viewLevel": 1
 			},
-			"routes": [
-				{
-					"name": "View1",
-					"pattern": "",
-					"titleTarget": "",
-					"greedy": false,
-					"target": [
-						"View1"
-					]
-				},
-				{
-					"pattern": "mainBoard/{NavFilters}",
-					"name": "InspectionView",
-					"target": [
-						"InspectionView"
-					]
-				}
-			],
+			"routes": [{
+				"name": "View1",
+				"pattern": "",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["View1"]
+			}, {
+				"pattern": "mainBoard/{NavFilters}",
+				"name": "InspectionView",
+				"target": ["InspectionView"]
+			}],
 			"targets": {
 				"InspectionView": {
 					"viewName": "NewInspection",

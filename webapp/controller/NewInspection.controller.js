@@ -18,11 +18,29 @@ sap.ui.define([
 
 		},
 		onHandleRouteMatched: function(oEvent) {
+			var oParams = {
+				"expand" : "Findings,Findings/Attachments"
+			};
 			var Source = oEvent.getParameter("arguments").NavFilters;
 			var arr = [];
 			var oModel = new JSONModel();
 			var selectModdel = new JSONModel();
 			var headerModel = new JSONModel();
+			
+			if (oEvent.getParameter("arguments").NavFilters) {
+				this.sContext = oEvent.getParameter("arguments").NavFilters;
+				var oPath;
+				if (this.sContext) {
+					oPath = {
+						path: "ZSQRMBWA>/" + encodeURI(this.sContext),
+						parameters: oParams
+					};
+					this.getView().bindObject(oPath);
+
+				}
+			}
+				
+		
 			if (Source === "Button") {
 				this.getView().byId("oButtonAddFinding").setVisible(true);
 
@@ -234,13 +252,22 @@ sap.ui.define([
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-				//this._oDialog.setTitle("Edit Finding");
-				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-					0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
+				this.getView().addDependent(this._oDialog);
 			}
+					var oPath;
+					var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
+			
+					oPath = {
+						path: "ZSQRMBWA>" + Spath,
+						parameters: {}
+					};
+					this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 
+			
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+					0].setValue(supplier);
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();

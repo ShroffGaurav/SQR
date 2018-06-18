@@ -9,7 +9,7 @@
 						<f:Form editable="true">
 							<f:layout>
 								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="0" emptySpanL="0"
-									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false" />
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
 							</f:layout>
 							<f:formContainers>
 								<f:FormContainer>
@@ -21,21 +21,24 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/DialogModel/Subject/}" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{/DialogModel/Subject/}"
+													items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
 													<core:Item key="{NAME}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{DialogModel>/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{DialogModel>/Category}"
+													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
 													<core:Item key="{name}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{/question_id}"
+													items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
 													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
@@ -49,7 +52,7 @@
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}" >
+												<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}">
 													<core:Item text="{Name}"/>
 												</Select>
 											</f:fields>
@@ -97,12 +100,12 @@
 							</f:formContainers>
 						</f:Form>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://attachment" text="Attachments" count="3">
-						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button.">
+					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
+							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }">
 							<items>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018"/>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName2" uploadedDate="Wed Jun 06 2018"/>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName3" uploadedDate="Wed Jun 06 2018"/></items>
+								<UploadCollectionItem contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"/>
+								</items>
 						</UploadCollection>
 					</IconTabFilter>
 				</items>
