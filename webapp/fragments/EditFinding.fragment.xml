@@ -21,23 +21,23 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/DialogModel/Subject/}"
+												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Subject}"
 													items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
-													<core:Item key="{NAME}" text="{NAME}"/>
+													<core:Item key="{ID}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{DialogModel>/Category}"
+												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Category}"
 													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
-													<core:Item key="{name}" text="{name}"/>
+													<core:Item key="{id}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/question_id}"
+												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Question}"
 													items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
 													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
@@ -45,7 +45,7 @@
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
+												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -59,7 +59,7 @@
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+												<Select selectedKey="{SelectedValueHelp>/Status}" items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -70,12 +70,12 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea rows="3" value="{/findings}"/>
+												<TextArea rows="3" value="{SelectedValueHelp>/Finding}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
 											<f:fields>
-												<Input editable="false" value="{/location}"/>
+												<Input editable="false" value="{SelectedValueHelp>/InspectionLocation}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">

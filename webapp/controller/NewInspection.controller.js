@@ -18,80 +18,40 @@ sap.ui.define([
 
 		},
 		onHandleRouteMatched: function(oEvent) {
+			this.getView().getModel("ZSQRMBWA").setProperty("/busy", true);
 			var oParams = {
 				"expand" : "Findings,Findings/Attachments"
 			};
-			var Source = oEvent.getParameter("arguments").NavFilters;
-			var arr = [];
-			var oModel = new JSONModel();
-			var selectModdel = new JSONModel();
-			var headerModel = new JSONModel();
+			if(this.getView().getModel("ZSQRMBWA").getData()){
+					this.getView().getModel("ZSQRMBWA").setData(null);
+			}
 			
-			if (oEvent.getParameter("arguments").NavFilters) {
-				this.sContext = oEvent.getParameter("arguments").NavFilters;
+			if (oEvent.getParameter("arguments").context) {
+				this.sContext = oEvent.getParameter("arguments").context;
 				var oPath;
 				if (this.sContext) {
 					oPath = {
 						path: "ZSQRMBWA>/" + encodeURI(this.sContext),
 						parameters: oParams
 					};
+				
 					this.getView().bindObject(oPath);
-
+					this.getView().getModel("ZSQRMBWA").updateBindings();
+					this.getView().getModel().updateBindings();
+					this.getView().getModel("ZSQRMBWA").refresh();
 				}
 			}
-				
+			this.getView().getModel("ZSQRMBWA").setProperty("/busy", false);	
 		
-			if (Source === "Button") {
-				this.getView().byId("oButtonAddFinding").setVisible(true);
-
-				oModel.setData("");
-			} else if (Source === "Link") {
-				this.getView().byId("oButtonAddFinding").setVisible(false);
-
-				var array = {
-					"finding_id": "10053",
-					"subject_id": "test",
-					"category_id": "ELE",
-					"question_id": "Under 3rd party certification?",
-					"Score": "0 - Exceeds Requirements",
-					"Status": "In-Progress",
-					"findings": "Lean/ 5S / Safety",
-					"location": "Chicago"
-				};
-				var array1 = {
-					"finding_id": "10054",
-					"subject_id": "test",
-					"category_id": "ELE",
-					"question_id": "Under 3rd party certification?",
-					"Score": "0 - Exceeds Requirements",
-					"Status": "In-Progress",
-					"findings": "Lean/ 5S / Safety",
-					"location": "Chicago"
-				};
-
-				arr.push(array);
-				arr.push(array1);
-
-				oModel.setData(arr);
-
-			}
-			var HeaderData = {
-				"Supplier": "1001553",
-			};
-			headerModel.setData(HeaderData);
-			//	this.getView().getModel().setProperty("/headerData",HeaderData);
-			//	this.getView().setModel(oModel);
-			this.getView().setModel(headerModel, "headerModel");
-			this.getView().setModel(selectModdel, "selectModdel");
-			this.getView().byId("addInspectionTable").setModel(oModel);
+		
 		},
 		onDialogPress: function(oEvent) {
-			var supplier = this.getView().getModel("headerModel").getData().Supplier;
+		//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-					0].setValue(supplier);
+				// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				// 	0].setValue(supplier);
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 			}
@@ -248,10 +208,31 @@ sap.ui.define([
 			}
 		},
 		onTableEditPress: function(oEvent) {
-			var supplier = this.getView().getModel("headerModel").getData().Supplier;
+		//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+		var Findingid = oEvent.getSource().getParent().getCells()[0].getText();
+		var Subject = oEvent.getSource().getParent().getCells()[1].getText();
+		var Category = oEvent.getSource().getParent().getCells()[2].getText();
+		var Question =  oEvent.getSource().getParent().getCells()[3].getText();
+		var Score = oEvent.getSource().getParent().getCells()[4].getText();
+		var Status = oEvent.getSource().getParent().getCells()[5].getText();
+		var Finding = oEvent.getSource().getParent().getCells()[6].getText();
+		var InspectionLocation = oEvent.getSource().getParent().getCells()[7].getText();
+		var Data = {
+			"Findingid":Findingid,
+			"Subject":Subject,
+			"Category":Category,
+			"Question":Question,
+			"Score":Score,
+			"Status":Status,
+			"Finding":Finding,
+			"InspectionLocation":InspectionLocation
+		};
+		var SelectedValueHelp = new JSONModel();
+		SelectedValueHelp.setData(Data);
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
+				this._oDialog.setModel(SelectedValueHelp,"SelectedValueHelp");
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 				this.getView().addDependent(this._oDialog);
@@ -266,8 +247,8 @@ sap.ui.define([
 					this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 
 			
-				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-					0].setValue(supplier);
+				// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				// 	0].setValue(supplier);
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();

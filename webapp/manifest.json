@@ -111,7 +111,7 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneTime",
+					"defaultBindingMode": "Default",
 					"defaultCountMode": "Request"
 				},
 				"dataSource": "ZSQRMBWA_SRV",
@@ -140,7 +140,7 @@
 				"greedy": false,
 				"target": ["View1"]
 			}, {
-				"pattern": "mainBoard/{NavFilters}",
+				"pattern": "mainBoard/:context:",
 				"name": "InspectionView",
 				"target": ["InspectionView"]
 			}],

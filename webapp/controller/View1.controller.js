@@ -57,7 +57,7 @@ sap.ui.define([
 		// 		"')";
 		var sPath = "Inspections('"+InspectionId+"')";
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
-				NavFilters: sPath
+				context: sPath
 			},false);
 		},
 		onSmartTableSelectionChange: function(oEvent) {
