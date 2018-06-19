@@ -52,9 +52,10 @@ sap.ui.define([
 			this._oDialogEdit = undefined;
 		},
 		onInspectionPress: function(oEvent) {
+			var InspectionId = oEvent.getSource().getText();
 		// var sPath = "Inspections(" + oBindingContext.getPath().split("(")[1].split(",ExceptionType")[0] + ",Material='" + material +
 		// 		"')";
-		var sPath = "Inspections('11184')";
+		var sPath = "Inspections('"+InspectionId+"')";
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
 				NavFilters: sPath
 			},false);
