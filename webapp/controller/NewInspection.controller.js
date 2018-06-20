@@ -63,8 +63,8 @@ sap.ui.define([
 		},
 		onDialogCancelButton: function(oEvent) {
 
-			this._oDialog.destroy();
-			this._oDialog = undefined;
+			this._oDialog.close();
+			//this._oDialog = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
 			var oModel = new JSONModel();
@@ -166,8 +166,8 @@ sap.ui.define([
 
 		},
 		dialogAfterclose: function(oEvent) {
-			this._oDialog.destroy();
-			this._oDialog = undefined;
+			this._oDialog.close();
+			//this._oDialog = undefined;
 		},
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("View1", {
@@ -232,7 +232,6 @@ sap.ui.define([
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 				this.getView().addDependent(this._oDialog);
