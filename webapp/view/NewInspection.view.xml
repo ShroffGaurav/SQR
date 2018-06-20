@@ -9,6 +9,7 @@
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
+							<m:ObjectAttribute title="Inspection ID"  text="{ZSQRMBWA>Id}"/>
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">
@@ -18,32 +19,32 @@
 										<m:HBox width="100%" id="HeaderHBox">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>Id}"/>
-												<m:Label text="Supplier Code:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierId}" editable="false"/>
+												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierName}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierCategory/SupplierContact1}" editable="false"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact1}" editable="false"/>
 										
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 													<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>InspectionByName}" id="__input0"/>
+												<m:Input width="100%" value="{ZSQRMBWA>InspectionByName}" id="__input0" editable="false"/>
 													<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierCategory/SupplierCategory}" editable="false"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierCategory}" editable="false"/>
 													<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierCategory/SupplierContact2}" editable="false"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact2}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker width="100%" displayFormat="DD-MM-YYYY" value="{ZSQRMBWA>InspectionDate}"/>
+												<m:DatePicker width="100%" dateValue="{ZSQRMBWA>InspectionDate}" displayFormat="dd/mm/yyyy" editable="false"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierCategory/Commodity}" editable="false"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 													<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierCategory/Country}" editable="false"/>
+												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Country}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>
@@ -99,7 +100,7 @@
 																<m:Text text="{ZSQRMBWA>Id}"/>
 																<m:Text text="{ZSQRMBWA>Subject}"/>
 																<m:Text text="{ZSQRMBWA>Category}"/>
-																<m:Text text="{ZSQRMBWA>QuestionId}"/>
+																<m:Text text="{ZSQRMBWA>Question}"/>
 																<m:Text text="{ZSQRMBWA>Score}"/>
 																<m:Text text="{ZSQRMBWA>Status}"/>
 																<m:Text text="{ZSQRMBWA>Findings}"/>

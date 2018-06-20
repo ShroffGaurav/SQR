@@ -70,7 +70,7 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea rows="3" value="{SelectedValueHelp>/Finding}"/>
+												<TextArea maxLength="256" rows="3" value="{SelectedValueHelp>/Finding}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
@@ -87,12 +87,12 @@
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input value="{/short_term_containment}"/>
+												<Input maxLength="256" value="{/short_term_containment}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor:">
 											<f:fields>
-												<Input editable="false" value="{/supplier_casual_factor}"/>
+												<Input maxLength="256" editable="false" value="{/supplier_casual_factor}"/>
 											</f:fields>
 										</f:FormElement>
 									</f:formElements>

@@ -15,17 +15,18 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this.getOwnerComponent().getRouter().getRoute("InspectionView").attachPatternMatched(this.onHandleRouteMatched, this);
-
+				this.getOwnerComponent().getModel().setSizeLimit(1000);
 		},
 		onHandleRouteMatched: function(oEvent) {
-			this.getView().getModel("ZSQRMBWA").setProperty("/busy", true);
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.open();
 			var oParams = {
-				"expand" : "Findings,Findings/Attachments"
+				"expand": "Findings,Findings/Attachments"
 			};
-			if(this.getView().getModel("ZSQRMBWA").getData()){
-					this.getView().getModel("ZSQRMBWA").setData(null);
+			if (this.getView().getModel("ZSQRMBWA").getData()) {
+				this.getView().getModel("ZSQRMBWA").setData(null);
 			}
-			
+
 			if (oEvent.getParameter("arguments").context) {
 				this.sContext = oEvent.getParameter("arguments").context;
 				var oPath;
@@ -34,19 +35,18 @@ sap.ui.define([
 						path: "ZSQRMBWA>/" + encodeURI(this.sContext),
 						parameters: oParams
 					};
-				
+
 					this.getView().bindObject(oPath);
 					this.getView().getModel("ZSQRMBWA").updateBindings();
 					this.getView().getModel().updateBindings();
 					this.getView().getModel("ZSQRMBWA").refresh();
 				}
 			}
-			this.getView().getModel("ZSQRMBWA").setProperty("/busy", false);	
-		
-		
+		busyIndicator.destroy();
+
 		},
 		onDialogPress: function(oEvent) {
-		//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
@@ -98,7 +98,7 @@ sap.ui.define([
 
 			jQuery.each(array, function(index, value) {
 				if (value !== null && value !== "") {
-						switch (index) {
+					switch (index) {
 						case 'subject_id':
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
 							break;
@@ -208,48 +208,47 @@ sap.ui.define([
 			}
 		},
 		onTableEditPress: function(oEvent) {
-		//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
-		var Findingid = oEvent.getSource().getParent().getCells()[0].getText();
-		// var Subject = oEvent.getSource().getParent().getCells()[1].getText();
-		var Subject = oEvent.getSource().getParent().getBindingContext().getObject().SubjectId;
-		var Category = oEvent.getSource().getParent().getCells()[2].getText();
-		var Question =  oEvent.getSource().getParent().getCells()[3].getText();
-		var Score = oEvent.getSource().getParent().getCells()[4].getText();
-		var Status = oEvent.getSource().getParent().getCells()[5].getText();
-		var Finding = oEvent.getSource().getParent().getCells()[6].getText();
-		var InspectionLocation = oEvent.getSource().getParent().getCells()[7].getText();
-		var Data = {
-			"Findingid":Findingid,
-			"Subject":Subject,
-			"Category":Category,
-			"Question":Question,
-			"Score":Score,
-			"Status":Status,
-			"Finding":Finding,
-			"InspectionLocation":InspectionLocation
-		};
-		var SelectedValueHelp = new JSONModel();
-		SelectedValueHelp.setData(Data);
+			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
+			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().SubjectId;
+			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().CategoryId;
+			var Question = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().QuestionId;
+			var Score = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().ScoreId;
+			var Status = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().StatusId;
+			var Finding = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Findings;
+			var InspectionLocation = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Location;
+			var Data = {
+				"Findingid": Findingid,
+				"Subject": Subject,
+				"Category": Category,
+				"Question": Question,
+				"Score": Score,
+				"Status": Status,
+				"Finding": Finding,
+				"InspectionLocation": InspectionLocation
+			};
+			var SelectedValueHelp = new JSONModel();
+			SelectedValueHelp.setData(Data);
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.setModel(SelectedValueHelp,"SelectedValueHelp");
+
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
 				this.getView().addDependent(this._oDialog);
 			}
-					var oPath;
-					var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
-			
-					oPath = {
-						path: "ZSQRMBWA>" + Spath,
-						parameters: {}
-					};
-					this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
+			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
+			var oPath;
+			var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
 
-			
-				// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				// 	0].setValue(supplier);
+			oPath = {
+				path: "ZSQRMBWA>" + Spath,
+				parameters: {}
+			};
+			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
+
+			// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+			// 	0].setValue(supplier);
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
@@ -286,7 +285,7 @@ sap.ui.define([
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().DEFAULT_RISK_CATEGORY;
 			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
 			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
-		}
+		},
 
 	});
 
