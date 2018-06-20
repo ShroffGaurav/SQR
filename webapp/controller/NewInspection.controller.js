@@ -210,7 +210,8 @@ sap.ui.define([
 		onTableEditPress: function(oEvent) {
 		//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
 		var Findingid = oEvent.getSource().getParent().getCells()[0].getText();
-		var Subject = oEvent.getSource().getParent().getCells()[1].getText();
+		// var Subject = oEvent.getSource().getParent().getCells()[1].getText();
+		var Subject = oEvent.getSource().getParent().getBindingContext().getObject().SubjectId;
 		var Category = oEvent.getSource().getParent().getCells()[2].getText();
 		var Question =  oEvent.getSource().getParent().getCells()[3].getText();
 		var Score = oEvent.getSource().getParent().getCells()[4].getText();
