@@ -97,15 +97,15 @@
 														<m:ColumnListItem>
 															<m:cells>
 																<m:Text text="{ZSQRMBWA>Id}"/>
-																<m:Text text="{ZSQRMBWA>SubjectId}"/>
-																<m:Text text="{ZSQRMBWA>CategoryId}"/>
+																<m:Text text="{ZSQRMBWA>Subject}"/>
+																<m:Text text="{ZSQRMBWA>Category}"/>
 																<m:Text text="{ZSQRMBWA>QuestionId}"/>
 																<m:Text text="{ZSQRMBWA>Score}"/>
 																<m:Text text="{ZSQRMBWA>Status}"/>
 																<m:Text text="{ZSQRMBWA>Findings}"/>
 																<m:Text text="{ZSQRMBWA>Location}"/>
-																<m:Button icon="sap-icon://edit" press="onTableEditPress"/>
-																<m:Button icon="sap-icon://delete" press="onDeletePress"/>
+																<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
+																<m:Button icon="sap-icon://delete" tooltip="Delete" press="onDeletePress"/>
 															</m:cells>
 														</m:ColumnListItem>
 													</m:items>
