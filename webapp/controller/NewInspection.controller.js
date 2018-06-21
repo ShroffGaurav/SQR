@@ -2,8 +2,10 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	'sap/m/MessageBox'
-], function(Controller, JSONModel, Filter, MessageBox) {
+	'com/sapZSQRMBWA/Personalization/PersoService',
+	'sap/m/MessageBox',
+	'sap/m/TablePersoController'
+], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
@@ -15,7 +17,15 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this.getOwnerComponent().getRouter().getRoute("InspectionView").attachPatternMatched(this.onHandleRouteMatched, this);
-				this.getOwnerComponent().getModel().setSizeLimit(1000);
+			this.getOwnerComponent().getModel().setSizeLimit(1000);
+
+			// init and activate controller
+			this._oTPC = new TablePersoController({
+				table: this.byId("addInspectionTable"),
+				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
+				componentName: "PersoApp",
+				persoService: PersoService
+			}).activate();
 		},
 		onHandleRouteMatched: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
@@ -42,7 +52,7 @@ sap.ui.define([
 					this.getView().getModel("ZSQRMBWA").refresh();
 				}
 			}
-		busyIndicator.destroy();
+			busyIndicator.destroy();
 
 		},
 		onDialogPress: function(oEvent) {
@@ -285,6 +295,18 @@ sap.ui.define([
 			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
 			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
+		onPersoButtonPressed: function(oEvent) {
+			this._oTPC.openDialog();
+		},
+		onTablePersoRefresh : function() {
+			PersoService.resetPersData();
+			this._oTPC.refresh();
+		},
+
+		onTableGrouping : function(oEvent) {
+			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
+		}
+		
 
 	});
 
