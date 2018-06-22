@@ -59,18 +59,18 @@ sap.ui.define([
 		},
 		onDialogPress: function(oEvent) {
 			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
-			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
-				this._oDialog.setModel(this.getView().getModel());
+			if (!this._oDialogAdd) {
+				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
+				this._oDialogAdd.setModel(this.getView().getModel());
 				// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
 				// 	0].setValue(supplier);
-				this._oDialog.setContentHeight("60%");
-				this._oDialog.setContentWidth("90%");
+				this._oDialogAdd.setContentHeight("60%");
+				this._oDialogAdd.setContentWidth("90%");
 			}
 
 			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
-			this._oDialog.open();
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
+			this._oDialogAdd.open();
 
 		},
 		onDialogCancelButton: function(oEvent) {
@@ -78,7 +78,14 @@ sap.ui.define([
 			this._oDialog.close();
 			//this._oDialog = undefined;
 		},
-		onDialogSubmitButton: function(oEvent) {
+		onAddDialogCancelButton:function(oEvent){
+			this._oDialogAdd.close();
+			this._oDialog = undefined;
+		},
+		// onAddDialogSubmitButton:function(oEvent){
+			
+		// },
+		onAddDialogSubmitButton: function(oEvent) {
 			var oModel = new JSONModel();
 			var arr = [];
 			var count = 0;
@@ -102,7 +109,7 @@ sap.ui.define([
 				"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
 					.getText()),
 				"findings": this.getView().byId("findingText").getValue(),
-				"location": this.getView().byId("Location").getValue(),
+				"location": this.getView().byId("Locationfrag").getValue(),
 				"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
 						"RiskCategorySelect").getSelectedItem()
 					.getText()),

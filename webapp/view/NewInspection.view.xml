@@ -56,9 +56,6 @@
 									<blocks>
 										<m:VBox>
 											<m:HBox>
-												<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
-											</m:HBox>
-											<m:HBox>
 												<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'ZSQRMBWA>Findings' }" mode="None">
 													<m:headerToolbar>
 														<m:OverflowToolbar>
@@ -67,6 +64,7 @@
 															<!-- Add the Personalization button -->
 															<!--<CheckBox text="Enable Personalization Grouping" select="onTableGrouping"/>-->
 															<!-- Add the Personalization button -->
+															<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
 															<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
 																<m:layoutData>
 																	<m:OverflowToolbarLayoutData priority="NeverOverflow"/>

@@ -16,7 +16,7 @@
 									<f:formElements>
 										<f:FormElement label="Supplier" >
 											<f:fields>
-												<Input id="Supplier" value="{headerModel>/Supplier}" editable="false" required="true"/>
+												<Input value="{headerModel>/Supplier}" editable="false" required="true"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Subject" >
@@ -72,7 +72,7 @@
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
 											<f:fields>
-												<Input id="Location" value="{/location}" required="true"/>
+												<Input id="Locationfrag" value="{/location}" required="true"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
@@ -109,10 +109,10 @@
 			</IconTabBar>
 		</VBox>
 		<beginButton>
-			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onDialogSubmitButton"/>
+			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onAddDialogSubmitButton"/>
 		</beginButton>
 		<endButton>
-			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onDialogCancelButton"/>
+			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onAddDialogCancelButton"/>
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>
