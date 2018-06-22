@@ -21,37 +21,42 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Subject}"
-													items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
-													<core:Item key="{ID}" text="{NAME}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/Subject}"/>
+												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Subject}"-->
+												<!--	items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">-->
+												<!--	<core:Item key="{ID}" text="{NAME}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Category}"
-													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
-													<core:Item key="{id}" text="{name}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/Category}"/>
+												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Category}"-->
+												<!--	items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">-->
+												<!--	<core:Item key="{id}" text="{name}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Question}"
-													items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
-													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/Question}"/>
+												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Question}"-->
+												<!--	items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">-->
+												<!--	<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
-													<core:Item key="{Id}" text="{Text}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/Score}"/>
+												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">-->
+												<!--	<core:Item key="{Id}" text="{Text}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
+												<!--<Input enabled="false" value="{SelectedValueHelp>/Score}" />-->
 												<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}">
 													<core:Item text="{Name}"/>
 												</Select>
@@ -80,19 +85,20 @@
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Select enabled="false" forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">
-													<core:Item text="{Name}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/SupplerRiskCategory}"/>
+												<!--<Select enabled="false" forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">-->
+												<!--	<core:Item text="{Name}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input maxLength="256" value="{/short_term_containment}"/>
+												<Input maxLength="256" value="{SelectedValueHelp>/ShortTermContainment}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor:">
 											<f:fields>
-												<Input maxLength="256" editable="false" value="{/supplier_casual_factor}"/>
+												<Input maxLength="256" editable="false" value="{SelectedValueHelp>/SupplierCasualFactor}"/>
 											</f:fields>
 										</f:FormElement>
 									</f:formElements>
@@ -101,11 +107,14 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
-						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
-							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }">
+						<UploadCollection id="uploadCollection" noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
+							uploadComplete="onUploadComplete" fileDeleted="onFileDeleted" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
+							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"/>
-								</items>
+								<UploadCollectionItem id="uploadCollectionItem"  visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"
+								url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{ZSQRMBWA>FindingId}',Id='{ZSQRMBWA>Id}')/$value"
+								/>
+							</items>
 						</UploadCollection>
 					</IconTabFilter>
 				</items>

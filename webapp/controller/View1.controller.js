@@ -9,9 +9,14 @@ sap.ui.define([
 		onInit: function() {
 
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
-			var oModel = new JSONModel();
-			oModel.setData("");
-			this.getView().setModel(oModel, "FindingModel");
+			// //var InspectionId = oEvent.getSource().getText();
+		
+		
+			// var oModel = new JSONModel();
+			// oModel.setData("");
+			// this.getView().setModel(oModel, "FindingModel");
+			
+			
 		},
 		getMyComponent: function() {
 			var sComponentId = Component.getOwnerIdFor(this.getView());
@@ -24,6 +29,54 @@ sap.ui.define([
 			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
+
+		// 	var Findingid = oEvent.getSource().getParent().getBindingContext().getObject("id");
+		// 	var Subject = oEvent.getSource().getParent().getBindingContext().getObject("Subject");
+		// 	var Category = oEvent.getSource().getParent().getBindingContext().getObject("Category");
+		// 	var Question = oEvent.getSource().getParent().getBindingContext().getObject("question_content");
+		// 	var Score = oEvent.getSource().getParent().getBindingContext().getObject("Score");
+		// 	var Status =  oEvent.getSource().getParent().getBindingContext().getObject("Status");
+		// //	var Finding = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Findings;
+		// //	var InspectionLocation = oEvent.getSource().getParent().getBindingContext().getObject("location");
+		// //	var ShortTermContainment = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("ShortTermContainment");
+		// //	var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplerRiskCategory");
+		// //	var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierCasualFactor");
+		// 	var Data = {
+		// 		"Findingid": Findingid,
+		// 		"Subject": Subject,
+		// 		"Category": Category,
+		// 		"Question": Question,
+		// 		"Score": Score,
+		// 		"Status": Status,
+		// 	//	"Finding": Finding,
+		// 	//	"InspectionLocation": InspectionLocation,
+		// 	//	"ShortTermContainment":ShortTermContainment,
+		// 	//	"SupplerRiskCategory":SupplerRiskCategory,
+		// 	//	"SupplierCasualFactor":SupplierCasualFactor
+		// 	};
+		// 	var SelectedValueHelp = new JSONModel();
+		// 	SelectedValueHelp.setData(Data);
+		// 	if (!this._oDialog) {
+		// 		this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
+		// 		this._oDialog.setModel(this.getView().getModel());
+		// 		this._oDialog.setContentHeight("60%");
+		// 		this._oDialog.setContentWidth("90%");
+		// 		this.getView().addDependent(this._oDialog);
+		// 	}
+		// 	this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
+		// 	var oPath;
+		// 	var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
+
+		// 	oPath = {
+		// 		path: "ZSQRMBWA>" + Spath,
+		// 		parameters: {}
+		// 	};
+		// 	this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
+
+		// 	// toggle compact style
+		// 	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
+		// 	this._oDialog.open();
+			
 			var DialogModel = new JSONModel();
 			var oData = oEvent.getSource().getBindingContext().getObject();
 			DialogModel.setData(oData);
@@ -52,9 +105,7 @@ sap.ui.define([
 			this._oDialogEdit = undefined;
 		},
 		onInspectionPress: function(oEvent) {
-			var InspectionId = oEvent.getSource().getText();
-		// var sPath = "Inspections(" + oBindingContext.getPath().split("(")[1].split(",ExceptionType")[0] + ",Material='" + material +
-		// 		"')";
+		var InspectionId = oEvent.getSource().getText();
 		var sPath = "Inspections('"+InspectionId+"')";
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
 				context: sPath

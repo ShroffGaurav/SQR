@@ -4,8 +4,10 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	'com/sapZSQRMBWA/Personalization/PersoService',
 	'sap/m/MessageBox',
-	'sap/m/TablePersoController'
-], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController) {
+	'sap/m/TablePersoController',
+	"sap/m/UploadCollectionParameter",
+	"sap/m/MessageToast"
+], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
@@ -218,27 +220,6 @@ sap.ui.define([
 			}
 		},
 		onTableEditPress: function(oEvent) {
-			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
-			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
-			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().SubjectId;
-			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().CategoryId;
-			var Question = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().QuestionId;
-			var Score = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().ScoreId;
-			var Status = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().StatusId;
-			var Finding = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Findings;
-			var InspectionLocation = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Location;
-			var Data = {
-				"Findingid": Findingid,
-				"Subject": Subject,
-				"Category": Category,
-				"Question": Question,
-				"Score": Score,
-				"Status": Status,
-				"Finding": Finding,
-				"InspectionLocation": InspectionLocation
-			};
-			var SelectedValueHelp = new JSONModel();
-			SelectedValueHelp.setData(Data);
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
@@ -246,7 +227,6 @@ sap.ui.define([
 				this._oDialog.setContentWidth("90%");
 				this.getView().addDependent(this._oDialog);
 			}
-			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
 			var oPath;
 			var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
 
@@ -255,9 +235,35 @@ sap.ui.define([
 				parameters: {}
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-
-			// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-			// 	0].setValue(supplier);
+			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
+			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Subject;
+			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Category;
+			var Question = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Question;
+			var Score = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Score;
+			var Status = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Status;
+			var Finding = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Findings;
+			var InspectionLocation = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Location;
+			var ShortTermContainment = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("ShortTermContainment");
+			var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplerRiskCategory");
+			var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierCasualFactor");
+			var Data = {
+				"Findingid": Findingid,
+				"Subject": Subject,
+				"Category": Category,
+				"Question": Question,
+				"Score": Score,
+				"Status": Status,
+				"Finding": Finding,
+				"InspectionLocation": InspectionLocation,
+				"ShortTermContainment": ShortTermContainment,
+				"SupplerRiskCategory": SupplerRiskCategory,
+				"SupplierCasualFactor": SupplierCasualFactor,
+				"uploadUrl": window.location.origin + (this.getView().getModel("ZSQRMBWA").sServiceUrl + Spath) + "/Attachments"
+			};
+			var SelectedValueHelp = new JSONModel();
+			SelectedValueHelp.setData(Data);
+			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
@@ -298,15 +304,48 @@ sap.ui.define([
 		onPersoButtonPressed: function(oEvent) {
 			this._oTPC.openDialog();
 		},
-		onTablePersoRefresh : function() {
+		onTablePersoRefresh: function() {
 			PersoService.resetPersData();
 			this._oTPC.refresh();
 		},
 
-		onTableGrouping : function(oEvent) {
+		onTableGrouping: function(oEvent) {
 			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
-		}
-		
+		},
+		onChange: function(oEvent) {
+			var oModel = this.getView().getModel("ZSQRMBWA");
+			oModel.refreshSecurityToken();
+			var oHeaders = oModel.oHeaders;
+			var sToken = oHeaders['x-csrf-token'];
+			var oUploadCollection = oEvent.getSource();
+			var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
+				name: "x-csrf-token",
+				value: sToken
+			});
+
+			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
+		},
+
+		onUploadComplete: function(oEvent) {
+			this.getView().getModel("ZSQRMBWA").refresh();
+			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
+			var oUploadCollection = oEvent.getSource();
+			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
+				if (oUploadCollection.getItems()[i].getFileName() === sUploadedFileName) {
+					oUploadCollection.removeItem(oUploadCollection.getItems()[i]);
+					break;
+				}
+			}
+		},
+
+		onBeforeUploadStarts: function(oEvent) {
+			// Header Slug
+			var oCustomerHeaderSlug = new UploadCollectionParameter({
+				name: "slug",
+				value: oEvent.getParameter("fileName")
+			});
+			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+		},
 
 	});
 
