@@ -92,9 +92,11 @@ sap.ui.define([
 			this._oDialogEdit.open();
 		},
 		onNewInspectionPress: function(oEvent) {
+			var InspectionId = oEvent.getSource().getText();
+			var sPath = "Inspections('')";
 			this.getOwnerComponent().getRouter().navTo("InspectionView", {
-				NavFilters: "Button"
-			});
+				context: sPath
+			},false);
 		},
 		onDialogCancelButton: function(oEvent) {
 			this._oDialogEdit.destroy();

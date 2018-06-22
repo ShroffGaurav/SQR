@@ -19,7 +19,7 @@
 										<m:HBox width="100%" id="HeaderHBox">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierId}" editable="false"/>
+												<m:Input id="HeaderSupplierId" width="100%" value="{ZSQRMBWA>SupplierId}" editable="false"/>
 												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierName}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
@@ -52,10 +52,10 @@
 						</ObjectPageSection>
 						<ObjectPageSection title="Findings">
 							<subSections>
-								<ObjectPageSubSection title=" ">
+								<ObjectPageSubSection>
 									<blocks>
-										<m:VBox>
-											<m:HBox>
+										<!--<m:VBox>-->
+										<!--	<m:HBox>-->
 												<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'ZSQRMBWA>Findings' }" mode="None">
 													<m:headerToolbar>
 														<m:OverflowToolbar>
@@ -121,8 +121,8 @@
 														</m:ColumnListItem>
 													</m:items>
 												</m:Table>
-											</m:HBox>
-										</m:VBox>
+										<!--	</m:HBox>-->
+										<!--</m:VBox>-->
 									</blocks>
 								</ObjectPageSubSection>
 							</subSections>

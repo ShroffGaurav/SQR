@@ -58,16 +58,18 @@ sap.ui.define([
 
 		},
 		onDialogPress: function(oEvent) {
-			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+				var supplier = this.getView().byId("HeaderSupplierId").getValue();
 			if (!this._oDialogAdd) {
 				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialogAdd.setModel(this.getView().getModel());
-				// this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				// 	0].setValue(supplier);
+				 //this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				 //	0].setValue(supplier);
 				this._oDialogAdd.setContentHeight("60%");
 				this._oDialogAdd.setContentWidth("90%");
 			}
-
+			 this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				 	0].setValue(supplier);
+			this._oDialogAdd.setModel(this.getView().getModel("ZSQRMBWA"),"ZSQRMBWA");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();

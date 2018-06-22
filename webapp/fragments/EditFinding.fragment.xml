@@ -107,11 +107,11 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
-						<UploadCollection id="uploadCollection" noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
+						<UploadCollection  noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
 							uploadComplete="onUploadComplete" fileDeleted="onFileDeleted" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem id="uploadCollectionItem"  visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"
+								<UploadCollectionItem  visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"
 								url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{ZSQRMBWA>FindingId}',Id='{ZSQRMBWA>Id}')/$value"
 								/>
 							</items>
