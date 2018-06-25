@@ -23,12 +23,12 @@
 									<smartFilterBar:customControl>
 										<ComboBox></ComboBox>
 									</smartFilterBar:customControl>
-								</smartFilterBar:ControlConfiguration>								
+								</smartFilterBar:ControlConfiguration>
 							</smartFilterBar:controlConfiguration>
 						</smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true" tableType="Table"
-							ignoredFields="findings,StatusId,InspectionDate,supplier_risk_category,short_term_containment,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"
+							ignoredFields="findings,StatusId,InspectionDate,short_term_containment,supplier_risk_category,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"
 							showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
 							<smartTable:customToolbar>
 								<Toolbar>
@@ -121,6 +121,46 @@
 										<Text text="{/#ZWM_FINDINGS_CType/location/@sap:label}" wrapping="true"/>
 										<table:template>
 											<Text text="{location}" wrapping="true"/>
+										</table:template>
+									</table:Column>
+									<table:Column width="6rem">
+										<table:customData>
+											<core:CustomData key="p13nData"
+												value='\{"columnKey": "supplier_risk_category", "columnIndex":"8", "leadingProperty": "supplier_risk_category","type":"numeric"}'/>
+										</table:customData>
+										<Text text="{/#ZWM_FINDINGS_CType/supplier_risk_category/@sap:label}" wrapping="true"/>
+										<table:template>
+											<Text text="{supplier_risk_category}" wrapping="true"/>
+										</table:template>
+									</table:Column>
+									<table:Column width="6rem" visible="False">
+										<table:customData>
+											<core:CustomData key="p13nData"
+												value='\{"columnKey": "short_term_containment", "columnIndex":"9", "leadingProperty": "short_term_containment","type":"numeric"}'/>
+										</table:customData>
+										<Text text="{/#ZWM_FINDINGS_CType/short_term_containment/@sap:label}" wrapping="true"/>
+										<table:template>
+											<Text text="{short_term_containment}" wrapping="true"/>
+										</table:template>
+									</table:Column>
+									<table:Column width="6rem" visible="False">
+										<table:customData>
+											<core:CustomData key="p13nData"
+												value='\{"columnKey": "supplier_casual_factor", "columnIndex":"10", "leadingProperty": "supplier_casual_factor","type":"numeric"}'/>
+										</table:customData>
+										<Text text="{/#ZWM_FINDINGS_CType/supplier_casual_factor/@sap:label}" wrapping="true"/>
+										<table:template>
+											<Text text="{supplier_casual_factor}" wrapping="true"/>
+										</table:template>
+									</table:Column>
+									<table:Column width="6rem" visible="False">
+										<table:customData>
+											<core:CustomData key="p13nData"
+												value='\{"columnKey": "findings", "columnIndex":"11", "leadingProperty": "findings","type":"numeric"}'/>
+										</table:customData>
+										<Text text="{/#ZWM_FINDINGS_CType/findings/@sap:label}" wrapping="true"/>
+										<table:template>
+											<Text text="{findings}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 								</table:columns>

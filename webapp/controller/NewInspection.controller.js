@@ -50,8 +50,8 @@ sap.ui.define([
 
 					this.getView().bindObject(oPath);
 					this.getView().getModel("ZSQRMBWA").updateBindings();
-					this.getView().getModel().updateBindings();
-					this.getView().getModel("ZSQRMBWA").refresh();
+					// this.getView().getModel().updateBindings();
+					// this.getView().getModel("ZSQRMBWA").refresh();
 				}
 			}
 			busyIndicator.destroy();
@@ -244,7 +244,7 @@ sap.ui.define([
 				parameters: {}
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			//	var supplier = this.getView().getModel("headerModel").getData().Supplier;
+			var supplier = this.getView().byId("HeaderSupplierId").getValue();
 			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
 			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Subject;
 			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Category;
@@ -257,6 +257,7 @@ sap.ui.define([
 			var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplerRiskCategory");
 			var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierCasualFactor");
 			var Data = {
+				"supplier":supplier,
 				"Findingid": Findingid,
 				"Subject": Subject,
 				"Category": Category,
@@ -355,6 +356,14 @@ sap.ui.define([
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 		},
+		onIconTabBarChange:function(oEvent){
+			var SelectedKey = oEvent.getParameters().selectedKey;
+			if(SelectedKey === "2"){
+				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(false);
+			}else{
+				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);	
+			}
+		}
 
 	});
 

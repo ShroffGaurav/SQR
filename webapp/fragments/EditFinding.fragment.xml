@@ -3,9 +3,9 @@
 	xmlns:table="sap.ui.table">
 	<Dialog resizable="true" title="Edit Finding" afterClose="dialogAfterClose" draggable="true" contentWidth="70%">
 		<VBox>
-			<IconTabBar class="sapUiResponsiveContentPadding">
+			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange" >
 				<items>
-					<IconTabFilter icon="sap-icon://hint" text="info">
+					<IconTabFilter icon="sap-icon://hint" text="info" key="1">
 						<f:Form editable="true">
 							<f:layout>
 								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="3" labelSpanM="3" labelSpanS="12" adjustLabelSpan="true" emptySpanXL="0" emptySpanL="0"
@@ -16,7 +16,7 @@
 									<f:formElements>
 										<f:FormElement label="Supplier">
 											<f:fields>
-												<Input value="1001553" editable="false"/>
+												<Input value="{SelectedValueHelp>/supplier}" editable="false"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Subject">
@@ -106,7 +106,7 @@
 							</f:formContainers>
 						</f:Form>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
 						<UploadCollection  noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
 							uploadComplete="onUploadComplete" fileDeleted="onFileDeleted" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
