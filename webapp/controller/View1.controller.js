@@ -31,6 +31,8 @@ sap.ui.define([
 				this._oDialogEdit.setContentWidth("90%");
 				this.getView().addDependent(this._oDialogEdit);
 			}
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.open();
 			this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().inspection_id;
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().id;
@@ -59,7 +61,6 @@ sap.ui.define([
 				async: false,
 				success: function(oData) {
 					var Data = {
-						//	"supplier":supplier,
 						"Findingid": oData.Id,
 						"Subject": oData.Subject,
 						"Category": oData.Category,
@@ -71,12 +72,15 @@ sap.ui.define([
 						"ShortTermContainment": oData.ShortTermContainment,
 						"SupplerRiskCategory": oData.SupplerRiskCategory,
 						"SupplierCasualFactor": oData.SupplierCasualFactor,
+						"SupplierId": oData.SupplierName+"("+oData.SupplierId+")",
+						"QualityCategory":oData.QualityCategory,
 						"uploadUrl": window.location.origin + (this._oDialogEdit.getModel("ZSQRMBWA").sServiceUrl + readRequestURL) + "/Attachments"
 					};
 					SelectedValueHelp.setData(Data);
 
 				}.bind(this),
 				error: function(Error) {
+					busyIndicator.close();
 					MessageToast.show("Error in Backend service");
 				}
 			});
@@ -87,7 +91,7 @@ sap.ui.define([
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialogEdit.open();
-
+			busyIndicator.close();
 		},
 		onNewInspectionPress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getText();

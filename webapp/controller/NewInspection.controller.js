@@ -244,7 +244,6 @@ sap.ui.define([
 				parameters: {}
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			var supplier = this.getView().byId("HeaderSupplierId").getValue();
 			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
 			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Subject;
 			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Category;
@@ -256,8 +255,10 @@ sap.ui.define([
 			var ShortTermContainment = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("ShortTermContainment");
 			var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplerRiskCategory");
 			var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierCasualFactor");
+			var QualityCategory = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("QualityCategory");
+			var SupplierId = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierId");
+			var SupplierName = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierName");
 			var Data = {
-				"supplier":supplier,
 				"Findingid": Findingid,
 				"Subject": Subject,
 				"Category": Category,
@@ -265,6 +266,8 @@ sap.ui.define([
 				"Score": Score,
 				"Status": Status,
 				"Finding": Finding,
+				"SupplierId": SupplierName+"("+SupplierId+")",
+				"QualityCategory":QualityCategory,
 				"InspectionLocation": InspectionLocation,
 				"ShortTermContainment": ShortTermContainment,
 				"SupplerRiskCategory": SupplerRiskCategory,

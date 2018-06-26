@@ -16,7 +16,7 @@
 									<f:formElements>
 										<f:FormElement label="Supplier">
 											<f:fields>
-												<Input value="{SelectedValueHelp>/supplier}" editable="false"/>
+												<Input value="{SelectedValueHelp>/SupplierId}" editable="false"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Subject">
@@ -56,10 +56,10 @@
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<!--<Input enabled="false" value="{SelectedValueHelp>/Score}" />-->
-												<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}">
-													<core:Item text="{Name}"/>
-												</Select>
+												<Input enabled="false" value="{SelectedValueHelp>/QualityCategory}" />
+												<!--<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}">-->
+												<!--	<core:Item text="{Name}"/>-->
+												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
