@@ -5,7 +5,7 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast"
-], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter,MessageToast) {
+], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.View1", {
 		onInit: function() {
@@ -31,23 +31,26 @@ sap.ui.define([
 				this._oDialogEdit.setContentWidth("90%");
 				this.getView().addDependent(this._oDialogEdit);
 			}
-			var busyIndicator = new sap.m.BusyDialog();
-			busyIndicator.open();
-			this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
+			var editVisibilityModel = new JSONModel();
+			var SelectedValueHelp = new JSONModel();
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().inspection_id;
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().id;
+			var oPath;
+			var Spath = "Findings(InspectionId='" + InspectionId + "',Id='" + Findingid + "')";
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.setBusyIndicatorDelay(0);
+			busyIndicator.open();
+			this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
+
 			var oParams = {
 				"expand": "Attachments"
 			};
-			 var oPath;
-			var Spath = "Findings(InspectionId='"+ InspectionId +"',Id='"+ Findingid+"')";
 
 			oPath = {
 				path: "ZSQRMBWA>/" + Spath,
 				parameters: oParams
 			};
 
-			var SelectedValueHelp = new JSONModel();
 			var oFilters = [
 				new sap.ui.model.Filter("InspectionId", sap.ui.model.FilterOperator.EQ, InspectionId),
 				new sap.ui.model.Filter("Id", sap.ui.model.FilterOperator.EQ, Findingid)
@@ -62,22 +65,32 @@ sap.ui.define([
 				success: function(oData) {
 					var Data = {
 						"Findingid": oData.Id,
+						"InspectionId":oData.InspectionId,
 						"Subject": oData.Subject,
 						"Category": oData.Category,
 						"Question": oData.Question,
 						"Score": oData.Score,
-						"Status": oData.Status,
+						"Status": oData.StatusId,
 						"Finding": oData.Findings,
 						"InspectionLocation": oData.InspectionLocation,
 						"ShortTermContainment": oData.ShortTermContainment,
 						"SupplerRiskCategory": oData.SupplerRiskCategory,
 						"SupplierCasualFactor": oData.SupplierCasualFactor,
-						"SupplierId": oData.SupplierName+"("+oData.SupplierId+")",
-						"QualityCategory":oData.QualityCategory,
+						"SupplierId": oData.SupplierName + "(" + oData.SupplierId + ")",
+						"QualityCategory": oData.QualityCategory,
 						"uploadUrl": window.location.origin + (this._oDialogEdit.getModel("ZSQRMBWA").sServiceUrl + readRequestURL) + "/Attachments"
 					};
 					SelectedValueHelp.setData(Data);
-
+					if (oData.StatusId === "4") {
+						editVisibilityModel.setData({
+							visible: false
+						});
+					} else {
+						editVisibilityModel.setData({
+							visible: true
+						});
+					}
+					busyIndicator.close();
 				}.bind(this),
 				error: function(Error) {
 					busyIndicator.close();
@@ -87,11 +100,11 @@ sap.ui.define([
 
 			this._oDialogEdit.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 			this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
-
+			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialogEdit.open();
-			busyIndicator.close();
+
 		},
 		onNewInspectionPress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getText();
@@ -105,8 +118,41 @@ sap.ui.define([
 			this._oDialogEdit = undefined;
 		},
 		onDialogSubmitButton: function(oEvent) {
-			this._oDialogEdit.destroy();
-			this._oDialogEdit = undefined;
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.setBusyIndicatorDelay(0);
+			busyIndicator.open();
+			var Inspection = oEvent.getSource().getCustomData()[0].getValue();
+			var FindingId = oEvent.getSource().getCustomData()[1].getValue();
+			var Status = this.getView().byId("StatusSelect").getSelectedKey();
+			var Findings = this.getView().byId("InspectionFindingsText").getValue();
+			var RiskCategory = this.getView().byId("RiskCategoryInput").getValue();
+			var Containment = this.getView().byId("ContainmentInput").getValue();
+
+			var Payload = {};
+			Payload.StatusId = Status;
+			Payload.Findings = Findings;
+			Payload.SupplerRiskCategory = RiskCategory;
+			Payload.ShortTermContainment = Containment;
+
+			//UserStatusSet
+			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
+			this.getOwnerComponent().getModel("ZSQRMBWA").update(requestURLStatusUpdate, Payload, {
+				// method: "PUT",
+				success: function(data, response) {
+					MessageToast.show("Action Complete");
+					busyIndicator.close();
+					this._oDialogEdit.destroy();
+					this._oDialogEdit = undefined;
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Post service");
+					busyIndicator.close();
+					this._oDialogEdit.destroy();
+					this._oDialogEdit = undefined;
+				}.bind(this)
+
+			});
+
 		},
 		onInspectionPress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getText();

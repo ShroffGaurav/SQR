@@ -112,7 +112,8 @@
 				"settings": {
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "Default",
-					"defaultCountMode": "Request"
+					"defaultCountMode": "Request",
+					"defaultUpdateMethod": "PUT"
 				},
 				"dataSource": "ZSQRMBWA_SRV",
 				"preload": true

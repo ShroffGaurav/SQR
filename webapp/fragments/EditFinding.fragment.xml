@@ -3,7 +3,7 @@
 	xmlns:table="sap.ui.table">
 	<Dialog resizable="true" title="Edit Finding" afterClose="dialogAfterClose" draggable="true" contentWidth="70%">
 		<VBox>
-			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange" >
+			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange">
 				<items>
 					<IconTabFilter icon="sap-icon://hint" text="info" key="1">
 						<f:Form editable="true">
@@ -22,49 +22,32 @@
 										<f:FormElement label="Subject">
 											<f:fields>
 												<Input enabled="false" value="{SelectedValueHelp>/Subject}"/>
-												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Subject}"-->
-												<!--	items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">-->
-												<!--	<core:Item key="{ID}" text="{NAME}"/>-->
-												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
 												<Input enabled="false" value="{SelectedValueHelp>/Category}"/>
-												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Category}"-->
-												<!--	items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">-->
-												<!--	<core:Item key="{id}" text="{name}"/>-->
-												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
 												<Input enabled="false" value="{SelectedValueHelp>/Question}"/>
-												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Question}"-->
-												<!--	items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">-->
-												<!--	<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>-->
-												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
 												<Input enabled="false" value="{SelectedValueHelp>/Score}"/>
-												<!--<Select enabled="false" forceSelection="true" selectedKey="{SelectedValueHelp>/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">-->
-												<!--	<core:Item key="{Id}" text="{Text}"/>-->
-												<!--</Select>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Input enabled="false" value="{SelectedValueHelp>/QualityCategory}" />
-												<!--<Select enabled="false" forceSelection="true" selectedKey="{/category_id}" items="{}">-->
-												<!--	<core:Item text="{Name}"/>-->
-												<!--</Select>-->
+												<Input enabled="false" value="{SelectedValueHelp>/QualityCategory}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select selectedKey="{SelectedValueHelp>/Status}" items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+												<Select id="StatusSelect" enabled="{editVisibilityModel>/visible}" selectedKey="{SelectedValueHelp>/Status}"
+													items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -75,7 +58,7 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea maxLength="256" rows="3" value="{SelectedValueHelp>/Finding}"/>
+												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="{editVisibilityModel>/visible}" value="{SelectedValueHelp>/Finding}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
@@ -85,15 +68,12 @@
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Input enabled="false" value="{SelectedValueHelp>/SupplerRiskCategory}"/>
-												<!--<Select enabled="false" forceSelection="false" selectedKey="{/supplier_risk_category}" items="{}">-->
-												<!--	<core:Item text="{Name}"/>-->
-												<!--</Select>-->
+												<Input id="RiskCategoryInput" enabled="{editVisibilityModel>/visible}" value="{SelectedValueHelp>/SupplerRiskCategory}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input maxLength="256" value="{SelectedValueHelp>/ShortTermContainment}"/>
+												<Input id="ContainmentInput" enabled="{editVisibilityModel>/visible}" maxLength="256" value="{SelectedValueHelp>/ShortTermContainment}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor:">
@@ -107,13 +87,14 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
-						<UploadCollection  noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
-							uploadComplete="onUploadComplete" fileDeleted="onFileDeleted" beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
+						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
+							uploadEnabled="{editVisibilityModel>/visible}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
+							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem  visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}" uploadedDate="{ZSQRMBWA>CreatedAt}"
-								url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{ZSQRMBWA>FindingId}',Id='{ZSQRMBWA>Id}')/$value"
-								/>
+								<UploadCollectionItem visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}"
+									uploadedDate="{ZSQRMBWA>CreatedAt}"
+									url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{ZSQRMBWA>FindingId}',Id='{ZSQRMBWA>Id}')/$value"/>
 							</items>
 						</UploadCollection>
 					</IconTabFilter>
@@ -121,7 +102,12 @@
 			</IconTabBar>
 		</VBox>
 		<beginButton>
-			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onDialogSubmitButton"/>
+			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onDialogSubmitButton" enabled="{editVisibilityModel>/visible}">
+				<customData>
+					<core:CustomData value="{SelectedValueHelp>/InspectionId}"/>
+					<core:CustomData value="{SelectedValueHelp>/Findingid}"/>
+				</customData>
+			</Button>
 		</beginButton>
 		<endButton>
 			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onDialogCancelButton"/>

@@ -31,6 +31,7 @@ sap.ui.define([
 		},
 		onHandleRouteMatched: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var oParams = {
 				"expand": "Findings,Findings/Attachments"
@@ -58,18 +59,18 @@ sap.ui.define([
 
 		},
 		onDialogPress: function(oEvent) {
-				var supplier = this.getView().byId("HeaderSupplierId").getValue();
+			var supplier = this.getView().byId("HeaderSupplierId").getValue();
 			if (!this._oDialogAdd) {
 				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
 				this._oDialogAdd.setModel(this.getView().getModel());
-				 //this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				 //	0].setValue(supplier);
+				//this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				//	0].setValue(supplier);
 				this._oDialogAdd.setContentHeight("60%");
 				this._oDialogAdd.setContentWidth("90%");
 			}
-			 this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				 	0].setValue(supplier);
-			this._oDialogAdd.setModel(this.getView().getModel("ZSQRMBWA"),"ZSQRMBWA");
+			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				0].setValue(supplier);
+			this._oDialogAdd.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
@@ -80,24 +81,14 @@ sap.ui.define([
 			this._oDialog.close();
 			//this._oDialog = undefined;
 		},
-		onAddDialogCancelButton:function(oEvent){
+		onAddDialogCancelButton: function(oEvent) {
 			this._oDialogAdd.close();
 			this._oDialog = undefined;
 		},
-		// onAddDialogSubmitButton:function(oEvent){
-			
-		// },
 		onAddDialogSubmitButton: function(oEvent) {
 			var oModel = new JSONModel();
 			var arr = [];
 			var count = 0;
-			// var subject_id = this.getView().byId("SubjectSelect").getSelectedItem();
-			// var category_id = this.getView().byId("SubjectSelect").getSelectedItem();
-			// var question_id = this.getView().byId("questionSelect").getSelectedItem();
-			// var Score = this.getView().byId("ScoreSelect").getSelectedItem();
-			// var findings =  this.getView().byId("findingText").getValue();
-			// var location = this.getView().byId("Location").getValue();
-			// if(subject_id !== null && category_id !== null)
 			var array = {
 				"finding_id": "10053",
 				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
@@ -238,18 +229,19 @@ sap.ui.define([
 			}
 			var oPath;
 			var Spath = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").sPath;
-
+			var editVisibilityModel = new JSONModel();
 			oPath = {
 				path: "ZSQRMBWA>" + Spath,
 				parameters: {}
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 			var Findingid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Id;
+			var inspectionid = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().InspectionId;
 			var Subject = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Subject;
 			var Category = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Category;
 			var Question = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Question;
 			var Score = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Score;
-			var Status = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Status;
+			var Status = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().StatusId;
 			var Finding = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Findings;
 			var InspectionLocation = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject().Location;
 			var ShortTermContainment = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("ShortTermContainment");
@@ -260,14 +252,15 @@ sap.ui.define([
 			var SupplierName = oEvent.getSource().getParent().getBindingContext("ZSQRMBWA").getObject("SupplierName");
 			var Data = {
 				"Findingid": Findingid,
+				"InspectionId":inspectionid,
 				"Subject": Subject,
 				"Category": Category,
 				"Question": Question,
 				"Score": Score,
 				"Status": Status,
 				"Finding": Finding,
-				"SupplierId": SupplierName+"("+SupplierId+")",
-				"QualityCategory":QualityCategory,
+				"SupplierId": SupplierName + "(" + SupplierId + ")",
+				"QualityCategory": QualityCategory,
 				"InspectionLocation": InspectionLocation,
 				"ShortTermContainment": ShortTermContainment,
 				"SupplerRiskCategory": SupplerRiskCategory,
@@ -276,7 +269,17 @@ sap.ui.define([
 			};
 			var SelectedValueHelp = new JSONModel();
 			SelectedValueHelp.setData(Data);
+			if (Status === "4") {
+				editVisibilityModel.setData({
+					visible: false
+				});
+			} else {
+				editVisibilityModel.setData({
+					visible: true
+				});
+			}
 			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
+			this._oDialog.setModel(editVisibilityModel,"editVisibilityModel");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialog.open();
@@ -359,12 +362,12 @@ sap.ui.define([
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 		},
-		onIconTabBarChange:function(oEvent){
+		onIconTabBarChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedKey;
-			if(SelectedKey === "2"){
+			if (SelectedKey === "2") {
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(false);
-			}else{
-				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);	
+			} else {
+				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
 		}
 
