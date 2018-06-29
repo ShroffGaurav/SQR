@@ -19,6 +19,7 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			var CurrentDate = new Date();
+			this.arr = [];
 			var oModel = new sap.ui.model.json.JSONModel({
 				currentMonth: CurrentDate
 			});
@@ -87,9 +88,7 @@ sap.ui.define([
 		},
 
 		onAddDialogSubmitButton: function(oEvent) {
-
 			var oModel = new JSONModel();
-			var arr = [];
 			var count = 0;
 			var array = {
 				//"finding_id": "10053",
@@ -189,9 +188,9 @@ sap.ui.define([
 			}.bind(this));
 
 			if (count === 17) {
-				arr.push(array);
-				//oModel.push(arr);
-				oModel.getProperty("/data").push(arr);
+				this.arr.push(array);
+				oModel.setData(this.arr);
+				//oModel.getProperty("/data").push(arr);
 				this.getView().byId("addInspectionTable").setModel(oModel);
 				this._oDialogAdd.destroy();
 				this._oDialogAdd = undefined;
