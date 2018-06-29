@@ -16,7 +16,7 @@
 									<f:formElements>
 										<f:FormElement label="Supplier" >
 											<f:fields>
-												<Input value="" editable="false" required="true"/>
+												<Input value="" editable="true" required="true"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Subject" >
@@ -84,12 +84,12 @@
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input value="{/short_term_containment}"/>
+												<Input id="ShortTermContainment" value="{/short_term_containment}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Causal Factor">
+										<f:FormElement  label="Supplier Causal Factor">
 											<f:fields>
-												<Input value="{/supplier_casual_factor}"/>
+												<Input id="CasualFactor" value="{/supplier_casual_factor}"/>
 											</f:fields>
 										</f:FormElement>
 									</f:formElements>

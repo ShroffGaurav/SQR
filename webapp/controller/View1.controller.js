@@ -107,9 +107,9 @@ sap.ui.define([
 
 		},
 		onNewInspectionPress: function(oEvent) {
-			var InspectionId = oEvent.getSource().getText();
-			var sPath = "Inspections('')";
-			this.getOwnerComponent().getRouter().navTo("InspectionView", {
+			//var InspectionId = oEvent.getSource().getText();
+			var sPath = "";
+			this.getOwnerComponent().getRouter().navTo("AddInspection", {
 				context: sPath
 			}, false);
 		},
@@ -131,7 +131,7 @@ sap.ui.define([
 			var Payload = {};
 			Payload.StatusId = Status;
 			Payload.Findings = Findings;
-			Payload.SupplerRiskCategory = RiskCategory;
+			Payload.SupplierRiskCategory = RiskCategory;
 			Payload.ShortTermContainment = Containment;
 
 			//UserStatusSet

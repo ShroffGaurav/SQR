@@ -141,9 +141,13 @@
 				"greedy": false,
 				"target": ["View1"]
 			}, {
-				"pattern": "mainBoard/:context:",
+				"pattern": "View1/:context:",
 				"name": "InspectionView",
 				"target": ["InspectionView"]
+			}, {
+				"pattern": "Mainboard/:context:",
+				"name": "AddInspection",
+				"target": ["AddInspection"]
 			}],
 			"targets": {
 				"InspectionView": {
@@ -160,6 +164,14 @@
 					"viewName": "View1",
 					"viewId": "firstView",
 					"viewLevel": 1
+				},
+				"AddInspection": {
+					"viewType": "XML",
+					"transition": "slide",
+					"clearAggregation": true,
+					"viewId": "addinspection",
+					"viewName": "CreateInspection",
+					"viewLevel": 2
 				}
 			}
 		}

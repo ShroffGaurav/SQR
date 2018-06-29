@@ -23,7 +23,7 @@ sap.ui.define([
 
 			// init and activate controller
 			this._oTPC = new TablePersoController({
-				table: this.byId("addInspectionTable"),
+				table: this.byId("EditInspectionTable"),
 				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
 				componentName: "PersoApp",
 				persoService: PersoService
@@ -58,125 +58,145 @@ sap.ui.define([
 			busyIndicator.destroy();
 
 		},
-		onDialogPress: function(oEvent) {
-			var supplier = this.getView().byId("HeaderSupplierId").getValue();
-			if (!this._oDialogAdd) {
-				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
-				this._oDialogAdd.setModel(this.getView().getModel());
-				//this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				//	0].setValue(supplier);
-				this._oDialogAdd.setContentHeight("60%");
-				this._oDialogAdd.setContentWidth("90%");
-			}
-			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				0].setValue(supplier);
-			this._oDialogAdd.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
-			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
-			this._oDialogAdd.open();
-
-		},
+		
 		onDialogCancelButton: function(oEvent) {
 
-			this._oDialog.close();
-			//this._oDialog = undefined;
-		},
-		onAddDialogCancelButton: function(oEvent) {
-			this._oDialogAdd.close();
+			this._oDialog.destroy();
 			this._oDialog = undefined;
 		},
-		onAddDialogSubmitButton: function(oEvent) {
-			var oModel = new JSONModel();
-			var arr = [];
-			var count = 0;
-			var array = {
-				"finding_id": "10053",
-				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
-					.getText()),
-				"category_id": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
-					.getText()),
-				"question_id": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
-					.getText()),
-				"Score": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
-					.getText()),
-				"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
-					.getText()),
-				"findings": this.getView().byId("findingText").getValue(),
-				"location": this.getView().byId("Locationfrag").getValue(),
-				"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
-						"RiskCategorySelect").getSelectedItem()
-					.getText()),
-			};
+		onDialogSubmitButton: function(oEvent) {
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.setBusyIndicatorDelay(0);
+			busyIndicator.open();
+			var Inspection = oEvent.getSource().getCustomData()[0].getValue();
+			var FindingId = oEvent.getSource().getCustomData()[1].getValue();
+			var Status = this.getView().byId("StatusSelect").getSelectedKey();
+			var Findings = this.getView().byId("InspectionFindingsText").getValue();
+			var RiskCategory = this.getView().byId("RiskCategoryInput").getValue();
+			var Containment = this.getView().byId("ContainmentInput").getValue();
 
-			jQuery.each(array, function(index, value) {
-				if (value !== null && value !== "") {
-					switch (index) {
-						case 'subject_id':
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'category_id':
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'question_id':
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'Score':
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'Status':
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'findings':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'location':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
-							break;
-						case 'RiskCategorySelect':
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
-							break;
-					}
+			var Payload = {};
+			Payload.StatusId = Status;
+			Payload.Findings = Findings;
+			Payload.SupplierRiskCategory = RiskCategory;
+			Payload.ShortTermContainment = Containment;
 
-					count++;
-				} else {
-					switch (index) {
-						case 'subject_id':
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'category_id':
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'question_id':
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'Score':
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'Status':
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'findings':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'location':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
-							break;
-						case 'RiskCategorySelect':
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
-							break;
-					}
-				}
-			}.bind(this));
+			//UserStatusSet
+			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
+			this.getOwnerComponent().getModel("ZSQRMBWA").update(requestURLStatusUpdate, Payload, {
+				// method: "PUT",
+				success: function(data, response) {
+					MessageToast.show("Action Complete");
+					busyIndicator.close();
+					this._oDialog.destroy();
+					this._oDialog = undefined;
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Post service");
+					busyIndicator.close();
+					this._oDialog.destroy();
+					this._oDialog = undefined;
+				}.bind(this)
 
-			if (count === 8) {
-				arr.push(array);
-				oModel.setData(arr);
-				this.getView().byId("addInspectionTable").setModel(oModel);
-				this._oDialog.destroy();
-				this._oDialog = undefined;
-			}
+			});
 
 		},
+		// onAddDialogCancelButton: function(oEvent) {
+		// 	this._oDialogAdd.close();
+		// 	this._oDialog = undefined;
+		// },
+		// onAddDialogSubmitButton: function(oEvent) {
+		// 	var oModel = new JSONModel();
+		// 	var arr = [];
+		// 	var count = 0;
+		// 	var array = {
+		// 		"finding_id": "10053",
+		// 		"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
+		// 			.getText()),
+		// 		"category_id": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
+		// 			.getText()),
+		// 		"question_id": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
+		// 			.getText()),
+		// 		"Score": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
+		// 			.getText()),
+		// 		"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
+		// 			.getText()),
+		// 		"findings": this.getView().byId("findingText").getValue(),
+		// 		"location": this.getView().byId("Locationfrag").getValue(),
+		// 		"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
+		// 				"RiskCategorySelect").getSelectedItem()
+		// 			.getText()),
+		// 	};
+
+		// 	jQuery.each(array, function(index, value) {
+		// 		if (value !== null && value !== "") {
+		// 			switch (index) {
+		// 				case 'subject_id':
+		// 					this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'category_id':
+		// 					this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'question_id':
+		// 					this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'Score':
+		// 					this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'Status':
+		// 					this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'findings':
+		// 					this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'location':
+		// 					this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 				case 'RiskCategorySelect':
+		// 					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+		// 					break;
+		// 			}
+
+		// 			count++;
+		// 		} else {
+		// 			switch (index) {
+		// 				case 'subject_id':
+		// 					this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'category_id':
+		// 					this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'question_id':
+		// 					this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'Score':
+		// 					this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'Status':
+		// 					this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'findings':
+		// 					this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'location':
+		// 					this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 				case 'RiskCategorySelect':
+		// 					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+		// 					break;
+		// 			}
+		// 		}
+		// 	}.bind(this));
+
+		// 	if (count === 8) {
+		// 		arr.push(array);
+		// 		oModel.setData(arr);
+		// 		this.getView().byId("addInspectionTable").setModel(oModel);
+		// 		this._oDialog.destroy();
+		// 		this._oDialog = undefined;
+		// 	}
+
+		// },
 		dialogAfterclose: function(oEvent) {
 			this._oDialog.close();
 			//this._oDialog = undefined;
@@ -221,7 +241,7 @@ sap.ui.define([
 		},
 		onTableEditPress: function(oEvent) {
 			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.EditFinding", this);
+				this._oDialog = sap.ui.xmlfragment(this.getView().getId(),"com.sapZSQRMBWA.fragments.EditFinding", this);
 				this._oDialog.setModel(this.getView().getModel());
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
