@@ -87,6 +87,8 @@ sap.ui.define([
 				// method: "PUT",
 				success: function(data, response) {
 					MessageToast.show("Action Complete");
+					this.getView().getModel("ZSQRMBWA").refresh();
+					this.getView().getModel().refresh();
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;

@@ -9,9 +9,12 @@ sap.ui.define([
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.View1", {
 		onInit: function() {
-
+			this.getOwnerComponent().getRouter().getRoute("View1").attachPatternMatched(this.onHandleRouteMatched, this);
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 
+		},
+		onHandleRouteMatched: function(oEvent) {
+			this.getView().byId("inspectionTable").getTable().getModel().refresh();
 		},
 		getMyComponent: function() {
 			var sComponentId = Component.getOwnerIdFor(this.getView());
@@ -109,6 +112,7 @@ sap.ui.define([
 		onNewInspectionPress: function(oEvent) {
 			//var InspectionId = oEvent.getSource().getText();
 			var sPath = "";
+			this.getOwnerComponent().getRouter().getTargetHandler().setCloseDialogs(false);
 			this.getOwnerComponent().getRouter().navTo("AddInspection", {
 				context: sPath
 			}, false);

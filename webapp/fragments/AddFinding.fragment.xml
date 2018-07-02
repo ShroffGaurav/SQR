@@ -1,6 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
-	xmlns:table="sap.ui.table">
+	xmlns:table="sap.ui.table" xmlns:custom="com.sapZSQRMBWA.control">
 	<Dialog resizable="true" title="Add Finding" afterClose="dialogAfterClose" contentWidth="70%" draggable="true">
 		<VBox>
 			<IconTabBar class="sapUiResponsiveContentPadding">
@@ -14,49 +14,53 @@
 							<f:formContainers>
 								<f:FormContainer>
 									<f:formElements>
-										<f:FormElement label="Supplier" >
+										<f:FormElement label="Supplier">
 											<f:fields>
-												<Input value="" editable="true" required="true"/>
+												<Input editable="false" required="true"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Subject" >
+										<f:FormElement label="Subject">
 											<f:fields>
-												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" selectedKey="" items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
+												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" selectedKey=""
+													items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
 													<core:Item key="{ID}" text="{NAME}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Category" >
+										<f:FormElement label="Category">
 											<f:fields>
-												<Select  forceSelection="false" id="CategorySelect" change="onCategoryChange" selectedKey="{/Category}" items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+												<Select forceSelection="false" id="CategorySelect" change="onCategoryChange" selectedKey="{/Category}"
+													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
 													<core:Item key="{id}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select id="questionSelect" change="onQuestionChange"  forceSelection="false" selectedKey="{/question_id}" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
-														<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
+												<Select id="questionSelect" change="onQuestionChange" forceSelection="false" selectedKey="{/question_id}"
+													items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
+													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
 												<Select id="ScoreSelect" forceSelection="false" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
-														<core:Item key="{Id}" text="{Text}"/>
+													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUALITY_CATEGORY' } }"  enabled="false">
+												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUALITY_CATEGORY' } }"
+													enabled="false">
 													<core:Item key="{QUALITY_CATEGORY}" text="{QUALITY_CATEGORY}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select id="StatusSelect" forceSelection="false"  items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+												<Select id="StatusSelect" forceSelection="false" items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -87,7 +91,7 @@
 												<Input id="ShortTermContainment" value="{/short_term_containment}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement  label="Supplier Causal Factor">
+										<f:FormElement label="Supplier Causal Factor">
 											<f:fields>
 												<Input id="CasualFactor" value="{/supplier_casual_factor}"/>
 											</f:fields>
@@ -98,12 +102,19 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
-						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button.">
+						<List mode="Delete" delete="onPressDeleteAttachment"
+							items="{ path: 'Attachments', parameters: { operationMode: 'Client' }, filters: [{ path: 'PRNumber', operator: 'NE', value1: 'delete' }]}"
+							noDataText="{i18n>create.noData.attachments}">
+							<headerToolbar>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<u:FileUploader id="oFileUploader" buttonOnly="true" iconOnly="true" icon="sap-icon://add" multiple="true" sameFilenameAllowed="true"/>
+								</Toolbar>
+							</headerToolbar>
 							<items>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName1" uploadedDate="Wed Jun 06 2018"/>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName2" uploadedDate="Wed Jun 06 2018"/>
-								<UploadCollectionItem contributor="Contributor1" fileName="fileName3" uploadedDate="Wed Jun 06 2018"/></items>
-						</UploadCollection>
+								<ObjectListItem icon="{ path: 'mime_type', formatter: '.formatter.attachmentIcon' }" title="{FileName}"/>
+							</items>
+						</List>
 					</IconTabFilter>
 				</items>
 			</IconTabBar>
