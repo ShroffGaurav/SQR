@@ -7,9 +7,9 @@ sap.ui.define([
 	"sap/m/MessageToast"
 ], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast) {
 	"use strict";
-	return Controller.extend("com.sapZSQRMBWA.controller.View1", {
+	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
 		onInit: function() {
-			this.getOwnerComponent().getRouter().getRoute("View1").attachPatternMatched(this.onHandleRouteMatched, this);
+			this.getOwnerComponent().getRouter().getRoute("ListView").attachPatternMatched(this.onHandleRouteMatched, this);
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 
 		},

@@ -65,7 +65,7 @@
 			"fullWidth": true
 		},
 		"rootView": {
-			"viewName": "com.sapZSQRMBWA.view.View1",
+			"viewName": "com.sapZSQRMBWA.view.ListView",
 			"type": "XML"
 		},
 		"dependencies": {
@@ -135,13 +135,13 @@
 				"viewLevel": 1
 			},
 			"routes": [{
-				"name": "View1",
+				"name": "ListView",
 				"pattern": "",
 				"titleTarget": "",
 				"greedy": false,
-				"target": ["View1"]
+				"target": ["ListView"]
 			}, {
-				"pattern": "View1/:context:",
+				"pattern": "ListView/:context:",
 				"name": "InspectionView",
 				"target": ["InspectionView"]
 			}, {
@@ -157,11 +157,11 @@
 					"transition": "slide",
 					"viewLevel": 2
 				},
-				"View1": {
+				"ListView": {
 					"viewType": "XML",
 					"transition": "slide",
 					"clearAggregation": true,
-					"viewName": "View1",
+					"viewName": "ListView",
 					"viewId": "firstView",
 					"viewLevel": 1
 				},
