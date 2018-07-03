@@ -23,7 +23,7 @@ sap.ui.define([
 		onBeforeRendering: function() {
 			// var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
 			var oVal = {};
-			oVal.StatusId = "01";
+			oVal.StatusId = "1";
 			this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
