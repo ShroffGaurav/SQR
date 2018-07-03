@@ -15,11 +15,11 @@
 		},
 		"dataSources": {
 			"ZWM_FINDINGS_C_CDS": {
-				"uri": "/sap/opu/odata/sap/ZWM_FINDINGS_C_CDS/",
+				"uri": "/sap/opu/odata/sap/ZSQRMBWA_SRV/",
 				"type": "OData",
 				"settings": {
 					"odataVersion": "2.0",
-					"localUri": "localService/ZWM_FINDINGS_C_CDS/metadata.xml",
+					"localUri": "localService/ZSQRMBWA_SRV/metadata.xml",
 					"annotations": ["annotation"]
 				}
 			},
