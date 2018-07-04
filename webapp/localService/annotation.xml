@@ -22,72 +22,11 @@
 	</edmx:Reference>
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
-			<Annotations Target="ZWM_FINDINGS_C_CDS.ZWM_FINDINGS_CType">
-				<Annotation Term="UI.LineItem">
-					<Collection>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="findings"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="StatusId"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="InspectionDate"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="supplier_risk_category"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="short_term_containment"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="supplier_casual_factor"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="created_by"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="inspection_id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="changed_by"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="created_on"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="changed_on"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="subject_id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="supplier_id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="Subject"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="category_id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="ScoreId"/>
-						</Record>
-					</Collection>
-				</Annotation>
-				<Annotation Term="UI.SelectionFields">
-					<Collection>
-						<PropertyPath>supplier_id</PropertyPath>
-						<PropertyPath>InspectionDate</PropertyPath>
-						<PropertyPath>StatusId</PropertyPath>
-						<PropertyPath>ScoreId</PropertyPath>
-					</Collection>
-				</Annotation>
-			</Annotations>
 			<Annotations Target="ZSQRMBWA_SRV.ZWM_FINDINGS_CType">
 				<Annotation Term="UI.SelectionFields">
 					<Collection>
 						<PropertyPath>supplier_id</PropertyPath>
+						<PropertyPath>CommodityCode</PropertyPath>						
 						<PropertyPath>InspectionDate</PropertyPath>
 						<PropertyPath>StatusId</PropertyPath>
 						<PropertyPath>ScoreId</PropertyPath>

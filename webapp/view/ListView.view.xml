@@ -10,7 +10,7 @@
 					<VBox fitContainer="true" displayInline="false" direction="Column" renderType="Div" justifyContent="Start" alignItems="Stretch"
 						wrap="NoWrap" alignContent="Stretch">
 						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"
-							liveMode="true" showFilterConfiguration="false">
+							liveMode="true" showFilterConfiguration="false" useDateRangeType="true">
 							<!--<smartFilterBar:controlConfiguration>-->
 							<!--	<smartFilterBar:ControlConfiguration key="SupplierId" index="7" label="Supplier Engineer (Only for Managers)" visibleInAdvancedArea="true"-->
 							<!--		groupId="_BASIC">-->
