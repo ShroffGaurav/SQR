@@ -90,11 +90,11 @@
 						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
 							uploadEnabled="{editVisibilityModel>/visible}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
-							items="{ path: 'ZSQRMBWA>Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
+							items="{ path: 'Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem visibleDelete="false" visibleEdit="false" contributor="{ZSQRMBWA>CreatedByName}" fileName="{ZSQRMBWA>FileName}"
-									uploadedDate="{ZSQRMBWA>CreatedAt}"
-									url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{ZSQRMBWA>FindingId}',Id='{ZSQRMBWA>Id}')/$value"/>
+								<UploadCollectionItem visibleDelete="false" visibleEdit="false" contributor="{CreatedByName}" fileName="{FileName}"
+									uploadedDate="{CreatedAt}"
+									url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value"/>
 							</items>
 						</UploadCollection>
 					</IconTabFilter>

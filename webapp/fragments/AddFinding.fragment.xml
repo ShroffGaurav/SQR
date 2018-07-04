@@ -3,9 +3,9 @@
 	xmlns:table="sap.ui.table" xmlns:custom="com.sapZSQRMBWA.control">
 	<Dialog resizable="true" title="Add Finding" afterClose="dialogAfterClose" contentWidth="70%" draggable="true">
 		<VBox>
-			<IconTabBar class="sapUiResponsiveContentPadding">
+			<IconTabBar class="sapUiResponsiveContentPadding" id="iconTabBarAdd">
 				<items>
-					<IconTabFilter icon="sap-icon://hint" text="Info">
+					<IconTabFilter icon="sap-icon://hint" text="Info" key="1">
 						<f:Form editable="true">
 							<f:layout>
 								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
@@ -22,14 +22,14 @@
 										<f:FormElement label="Subject">
 											<f:fields>
 												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" selectedKey=""
-													items="{ path: '/ZWM_SUBJECT_TEXT', sorter: { path: 'NAME' } }">
-													<core:Item key="{ID}" text="{NAME}"/>
+													items="{ path: '/ZWM_SUBJECTS_VH', sorter: { path: 'name' } }">
+													<core:Item key="{id}" text="{name}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Category">
 											<f:fields>
-												<Select forceSelection="false" id="CategorySelect" change="onCategoryChange" selectedKey="{/Category}"
+												<Select forceSelection="false" id="CategorySelect" change="onCategoryChange"
 													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
 													<core:Item key="{id}" text="{name}"/>
 												</Select>
@@ -37,24 +37,24 @@
 										</f:FormElement>
 										<f:FormElement label="Question">
 											<f:fields>
-												<Select id="questionSelect" change="onQuestionChange" forceSelection="false" selectedKey="{/question_id}"
-													items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUESTION_CONTENT' } }">
-													<core:Item key="{QUESTION_ID}" text="{QUESTION_CONTENT}"/>
+												<Select id="questionSelect" change="onQuestionChange" forceSelection="false"
+													items="{ path: '/ZWM_QUESTIONS_VH', sorter: { path: 'question_content' } }">
+													<core:Item key="{question_id}" text="{question_content}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select id="ScoreSelect" forceSelection="false" selectedKey="{/Score}" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
+												<Select id="ScoreSelect" forceSelection="false" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'QUALITY_CATEGORY' } }"
+												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'quality_category' } }"
 													enabled="false">
-													<core:Item key="{QUALITY_CATEGORY}" text="{QUALITY_CATEGORY}"/>
+													<core:Item key="{quality_category}" text="{quality_category}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
@@ -71,12 +71,12 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea id="findingText" rows="3" value="{/findings}" required="true"></TextArea>
+												<TextArea id="findingText" rows="3"  required="true"></TextArea>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
 											<f:fields>
-												<Input id="Locationfrag" value="{/location}" required="true"/>
+												<Input id="Locationfrag"  required="true"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
@@ -88,12 +88,12 @@
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input id="ShortTermContainment" value="{/short_term_containment}"/>
+												<Input id="ShortTermContainment" />
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor">
 											<f:fields>
-												<Input id="CasualFactor" value="{/supplier_casual_factor}"/>
+												<Input id="CasualFactor" />
 											</f:fields>
 										</f:FormElement>
 									</f:formElements>
@@ -101,18 +101,18 @@
 							</f:formContainers>
 						</f:Form>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://attachment" text="Attachments">
+					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
 						<List mode="Delete" delete="onPressDeleteAttachment"
-							items="{ path: 'Attachments', parameters: { operationMode: 'Client' }, filters: [{ path: 'PRNumber', operator: 'NE', value1: 'delete' }]}"
-							noDataText="{i18n>create.noData.attachments}">
+							items="{ path: 'AttachmentDisplayModel>/Attachment', parameters: { operationMode: 'Client'}}"
+							noDataText="{No Data}" >
 							<headerToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
-									<u:FileUploader id="oFileUploader" buttonOnly="true" iconOnly="true" icon="sap-icon://add" multiple="true" sameFilenameAllowed="true"/>
+									<u:FileUploader id="oFileUploader" change="onFileUploaderChangePress" buttonOnly="true" iconOnly="true" icon="sap-icon://add" multiple="false" sameFilenameAllowed="true"/>
 								</Toolbar>
 							</headerToolbar>
 							<items>
-								<ObjectListItem icon="{ path: 'mime_type', formatter: '.formatter.attachmentIcon' }" title="{FileName}"/>
+								<ObjectListItem icon="{ path: 'AttachmentDisplayModel>type', formatter: '.formatter.attachmentIcon' }" title="{AttachmentDisplayModel>name}"/>
 							</items>
 						</List>
 					</IconTabFilter>

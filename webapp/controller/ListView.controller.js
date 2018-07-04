@@ -43,14 +43,14 @@ sap.ui.define([
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
-			this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
+			//this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
 
 			var oParams = {
 				"expand": "Attachments"
 			};
 
 			oPath = {
-				path: "ZSQRMBWA>/" + Spath,
+				path: Spath,
 				parameters: oParams
 			};
 
@@ -60,7 +60,7 @@ sap.ui.define([
 			];
 
 			var readRequestURL = "/Findings(InspectionId='" + InspectionId + "',Id='" + Findingid + "')";
-			this.getOwnerComponent().getModel("ZSQRMBWA").read(readRequestURL, {
+			this.getOwnerComponent().getModel().read(readRequestURL, {
 				urlParameters: {
 					$expand: "Attachments"
 				},
@@ -81,7 +81,7 @@ sap.ui.define([
 						"SupplierCasualFactor": oData.SupplierCasualFactor,
 						"SupplierId": oData.SupplierName + "(" + oData.SupplierId + ")",
 						"QualityCategory": oData.QualityCategory,
-						"uploadUrl": window.location.origin + (this._oDialogEdit.getModel("ZSQRMBWA").sServiceUrl + readRequestURL) + "/Attachments"
+						"uploadUrl": window.location.origin + (this._oDialogEdit.getModel().sServiceUrl + readRequestURL) + "/Attachments"
 					};
 					SelectedValueHelp.setData(Data);
 					if (oData.StatusId === "4") {
@@ -140,7 +140,7 @@ sap.ui.define([
 
 			//UserStatusSet
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
-			this.getOwnerComponent().getModel("ZSQRMBWA").update(requestURLStatusUpdate, Payload, {
+			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				// method: "PUT",
 				success: function(data, response) {
 					MessageToast.show("Action Complete");
@@ -173,7 +173,7 @@ sap.ui.define([
 		/////// Upload Collection Code ///////
 
 		onChange: function(oEvent) {
-			var oModel = this.getView().getModel("ZSQRMBWA");
+			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();
 			var oHeaders = oModel.oHeaders;
 			var sToken = oHeaders['x-csrf-token'];
@@ -187,7 +187,7 @@ sap.ui.define([
 		},
 
 		onUploadComplete: function(oEvent) {
-			this.getView().getModel("ZSQRMBWA").refresh();
+			this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {

@@ -9,7 +9,7 @@
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
-						<m:ObjectAttribute title="Inspection ID" text="{ZSQRMBWA>Id}"/>
+						<m:ObjectAttribute title="Inspection ID" text="{Id}"/>
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">
@@ -19,31 +19,31 @@
 										<m:HBox width="100%" id="HeaderHBox">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="HeaderSupplierId" width="100%" value="{ZSQRMBWA>SupplierId}" editable="false"/>
+												<m:Input id="HeaderSupplierId" width="100%" value="{SupplierId}" editable="false"/>
 												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierName}" editable="false"/>
+												<m:Input width="100%" value="{SupplierName}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact1}" editable="false"/>
+												<m:Input width="100%" value="{SupplierDetail/SupplierContact1}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>InspectionByName}" id="__input0" editable="false"/>
+												<m:Input width="100%" value="{InspectionByName}" id="__input0" editable="false"/>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierCategory}" editable="false"/>
+												<m:Input width="100%" value="{SupplierDetail/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact2}" editable="false"/>
+												<m:Input width="100%" value="{SupplierDetail/SupplierContact2}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker width="100%" dateValue="{ZSQRMBWA>InspectionDate}" displayFormat="short" editable="false"/>
+												<m:DatePicker width="100%" dateValue="{InspectionDate}" displayFormat="short" editable="false"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
+												<m:Input width="100%" value="{SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>OtherContacts}"/>
+												<m:Input width="100%" value="{OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Country}" editable="false"/>
+												<m:Input width="100%" value="{SupplierDetail/Country}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>
@@ -56,7 +56,7 @@
 									<blocks>
 										<!--<m:VBox>-->
 										<!--	<m:HBox>-->
-												<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'ZSQRMBWA>Findings' }" mode="None">
+												<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'Findings' }" mode="None">
 													<m:headerToolbar>
 														<m:OverflowToolbar>
 															<!--<Title text="Products" level="H2"/>-->
@@ -64,7 +64,7 @@
 															<!-- Add the Personalization button -->
 															<!--<CheckBox text="Enable Personalization Grouping" select="onTableGrouping"/>-->
 															<!-- Add the Personalization button -->
-															<!--<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>-->
+															<m:Button text="Add Finding" type="Transparent" press="onAddDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
 															<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
 																<m:layoutData>
 																	<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
@@ -107,14 +107,14 @@
 													<m:items>
 														<m:ColumnListItem>
 															<m:cells>
-																<m:Text text="{ZSQRMBWA>Id}"/>
-																<m:Text text="{ZSQRMBWA>Subject}"/>
-																<m:Text text="{ZSQRMBWA>Category}"/>
-																<m:Text text="{ZSQRMBWA>Question}"/>
-																<m:Text text="{ZSQRMBWA>Score}"/>
-																<m:Text text="{ZSQRMBWA>Status}"/>
-																<m:Text text="{ZSQRMBWA>Findings}"/>
-																<m:Text text="{ZSQRMBWA>Location}"/>
+																<m:Text text="{Id}"/>
+																<m:Text text="{Subject}"/>
+																<m:Text text="{Category}"/>
+																<m:Text text="{Question}"/>
+																<m:Text text="{Score}"/>
+																<m:Text text="{Status}"/>
+																<m:Text text="{Findings}"/>
+																<m:Text text="{Location}"/>
 																<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
 																<m:Button icon="sap-icon://delete" tooltip="Delete" press="onDeletePress"/>
 															</m:cells>

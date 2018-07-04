@@ -1,0 +1,18 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		noDataText="No Supplier Found"
+		title="Select Supplier"
+		search="handleSupplierSearch"
+		confirm="handleSupplierClose"
+		cancel="handleSupplierClose"
+		items="{
+			path: '/ZWM_SUPPLIER_VH'
+		}" >
+		<StandardListItem
+			title="{name1}"
+			description="{lifnr}"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -20,7 +20,7 @@
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="SupplierID" width="100%" value="" editable="false"/>
+												<m:Input id="SupplierID" width="100%" value="{HeaderModel>/supplier}" editable="false"/>
 												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierName}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
@@ -29,7 +29,7 @@
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%"  class="sapUiSmallMarginTop"/>
 												<!--<m:Input width="100%" value="{ZSQRMBWA>InspectionByName}"  editable="false"/>-->
-												<m:Input width="100%" id="InspectionBy" value=""  editable="true"/>
+												<m:Input width="100%" id="InspectionBy" value="{HeaderModel>/inspectionBy}"  editable="true"/>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
@@ -37,7 +37,7 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker id="InspectionDate" width="100%" dateValue="{DateModel>/currentMonth}" displayFormat="short" editable="false"/>
+												<m:DatePicker id="InspectionDate" width="100%" dateValue="{HeaderModel>/currentMonth}" displayFormat="short" editable="false"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>

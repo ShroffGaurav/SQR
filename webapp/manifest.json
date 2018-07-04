@@ -14,7 +14,7 @@
 			"version": "0.0.0"
 		},
 		"dataSources": {
-			"ZWM_FINDINGS_C_CDS": {
+			"ZSQRMBWA": {
 				"uri": "/sap/opu/odata/sap/ZSQRMBWA_SRV/",
 				"type": "OData",
 				"settings": {
@@ -28,14 +28,6 @@
 				"uri": "localService/annotation.xml",
 				"settings": {
 					"localUri": "localService/annotation.xml"
-				}
-			},
-			"ZSQRMBWA_SRV": {
-				"uri": "/sap/opu/odata/sap/ZSQRMBWA_SRV/",
-				"type": "OData",
-				"settings": {
-					"odataVersion": "2.0",
-					"localUri": "localService/ZSQRMBWA_SRV/metadata.xml"
 				}
 			}
 		}
@@ -101,21 +93,11 @@
 				"type": "sap.ui.model.odata.v2.ODataModel",
 				"settings": {
 					"defaultOperationMode": "Server",
-					"defaultBindingMode": "OneWay",
-					"defaultCountMode": "Request"
-				},
-				"dataSource": "ZWM_FINDINGS_C_CDS",
-				"preload": true
-			},
-			"ZSQRMBWA": {
-				"type": "sap.ui.model.odata.v2.ODataModel",
-				"settings": {
-					"defaultOperationMode": "Server",
-					"defaultBindingMode": "Default",
-					"defaultCountMode": "Request",
+					"defaultBindingMode": "TwoWay",
+					"defaultCountMode": "Inline",
 					"defaultUpdateMethod": "PUT"
 				},
-				"dataSource": "ZSQRMBWA_SRV",
+				"dataSource": "ZSQRMBWA",
 				"preload": true
 			}
 		},

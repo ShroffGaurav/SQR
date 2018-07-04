@@ -6,12 +6,13 @@ sap.ui.define([
 	'sap/m/MessageBox',
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
-	"sap/m/MessageToast"
-], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast) {
+	"sap/m/MessageToast",
+	"com/sapZSQRMBWA/util/formatter"
+], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,formatter) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.CreateInspection", {
-
+			formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -20,12 +21,19 @@ sap.ui.define([
 		onInit: function() {
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
 			var CurrentDate = new Date();
-			var oModel = new sap.ui.model.json.JSONModel({
-				currentMonth: CurrentDate
+				var oModel = new JSONModel({
+				Attachment:[]
 			});
+			this.getView().setModel(oModel,"AttachmentDisplayModel");
 			var AttachmentModel = new sap.ui.model.json.JSONModel({
 				Attachments:[]
 			});
+			var HeaderModel = new sap.ui.model.json.JSONModel({
+				currentMonth: CurrentDate,
+				supplier:"",
+				inspectionBy:"MOSELRO"
+			});
+			this.getView().setModel(HeaderModel,"HeaderModel");
 			this.getView().setModel(AttachmentModel,"AttachmentModel");
 			var oView = this.getView();
 			oView.addEventDelegate({
@@ -33,50 +41,48 @@ sap.ui.define([
 					this.onSupplierDialog();
 				}.bind(this)
 			}, oView);
-			this.getView().setModel(oModel, "DateModel");
+			
 		},
 		onHandleRouteMatched: function(oEvent) {
 			this.arr = [];
-			if (this.getView().getModel("ZSQRMBWA").getData()) {
-				this.getView().getModel("ZSQRMBWA").setData(null);
+			if (this.getView().getModel().getData()) {
+				this.getView().getModel().setData(null);
 			}
 			if (this.getView().getModel().getData()) {
 				this.getView().getModel().setData(null);
+			}
+			if(this.getView().byId("addInspectionTable").getModel()){
+				this.getView().byId("addInspectionTable").setModel(null);
 			}
 		},
 
 		onSupplierDialog: function() {
 			if (!this.supplierDialog) {
-				this.supplierDialog = new sap.m.Dialog({
-					title: 'Supplier Input',
-					content: [new sap.m.Label({
-							text: "Supplier:"
-						}),
-						new sap.m.Input({
-							value: "",
-							showValueHelp: true
-						})
-					],
-					beginButton: new sap.m.Button({
-						text: 'Save',
-						press: function() {
-							var oInput = this.supplierDialog.getContent()[1];
-							if (oInput.getValue() !== "") {
-								oInput.setValueState(sap.ui.core.ValueState.None);
-								this.getView().byId("SupplierID").setValue(oInput.getValue());
-								this.supplierDialog.close();
-							} else {
-								oInput.setValueState(sap.ui.core.ValueState.Error);
-							}
-						}.bind(this)
-					})
-				});
-
-				//to get access to the global model
-				this.getView().addDependent(this.supplierDialog);
+				this.supplierDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.Supplier", this);
+				this.supplierDialog.setModel(this.getView().getModel());
 			}
+			// clear the old search filter
+			this.supplierDialog.getBinding("items").filter([]);
 
+			// toggle compact style
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
 			this.supplierDialog.open();
+		},
+			handleSupplierSearch: function(oEvent) {
+			var sValue = oEvent.getParameter("value");
+			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+			var oBinding = oEvent.getSource().getBinding("items");
+			oBinding.filter([oFilter]);
+		},
+
+		handleSupplierClose: function(oEvent) {
+			var aContexts = oEvent.getParameter("selectedContexts");
+			if (aContexts && aContexts.length) {
+			this.getView().getModel("HeaderModel").setProperty("/supplier", aContexts.map(function(oContext) { return oContext.getObject().lifnr; }));
+			} else {
+				MessageToast.show("No new item was selected.");
+			}
+			oEvent.getSource().getBinding("items").filter([]);
 		},
 		onSaveInspectionPress: function(oEvent) {
 			//	var oModel = new JSONModel();
@@ -109,19 +115,18 @@ sap.ui.define([
 			// oModel.setData(Inspection);
 
 			var requestURLStatusUpdate = "/Inspections";
-			this.getOwnerComponent().getModel("ZSQRMBWA").create(requestURLStatusUpdate, Inspection, {
+			this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Inspection, {
 				success: function(data, responsee) {
 					MessageToast.show("New Inspection Id No:" + data.Id);
 					var Spath;
 					var UploadURL;
-					//this.getOwnerComponent().getRouter().navTo("View1", {});
 					jQuery.each(data.Findings.results, function(index, value) {
 						Spath = "/Findings(InspectionId='" + data.Id + "',Id='" + data.Findings.results[index].Id + "')";
-						UploadURL = window.location.origin + (this.getView().getModel("ZSQRMBWA").sServiceUrl + Spath) + "/Attachments";
+						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = this.getView().byId("addInspectionTable").getModel().getData()[index].Attachments;
 						this._uploadAttachments(UploadURL,oData);
 					}.bind(this));
-					this.getOwnerComponent().getRouter().navTo("View1", {});
+					this.getOwnerComponent().getRouter().navTo("ListView", {});
 				}.bind(this),
 				error: function() {
 					MessageToast.show("Error in UserStatusSet service");
@@ -140,9 +145,11 @@ sap.ui.define([
 				this._oDialogAdd.setContentHeight("60%");
 				this._oDialogAdd.setContentWidth("90%");
 			}
+			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
+			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0,Length);
 			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
 				0].setValue(supplier);
-			this._oDialogAdd.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
+			this._oDialogAdd.setModel(this.getView().getModel("AttachmentDisplayModel"), "AttachmentDisplayModel");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
@@ -152,7 +159,9 @@ sap.ui.define([
 		onAddDialogSubmitButton: function(oEvent) {
 			var oModel = new JSONModel();
 			var count = 0;
+			if(this.getView().byId("oFileUploader").oFileUpload){
 			var aFiles = this.getView().byId("oFileUploader").oFileUpload.files;
+			}
 			var iKey;
 			var oFile;
 
@@ -193,6 +202,7 @@ sap.ui.define([
 				"CasualFactor": this.getView().byId("CasualFactor").getValue(),
 				"Attachments": []
 			};
+			if(aFiles){
 			var aAttachments = array.Attachments;
 			for (iKey = 0; iKey < aFiles.length; iKey++) {
 				oFile = aFiles[iKey];
@@ -206,6 +216,8 @@ sap.ui.define([
 					file: oFile
 				});
 			}
+			}
+		
 
 
 			jQuery.each(array, function(index, value) {
@@ -236,7 +248,7 @@ sap.ui.define([
 							count++;
 							break;
 						case 'location':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'RiskCategorySelect':
@@ -245,6 +257,8 @@ sap.ui.define([
 							break;
 					}
 				} else {
+					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
+					//busyIndicator.close();
 					switch (index) {
 						case 'subject':
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
@@ -265,12 +279,13 @@ sap.ui.define([
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'location':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'RiskCategorySelect':
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
+					
 				}
 			}.bind(this));
 
@@ -279,13 +294,17 @@ sap.ui.define([
 				oModel.setData(this.arr);
 				//oModel.getProperty("/data").push(arr);
 				this.getView().byId("addInspectionTable").setModel(oModel);
-				this._oDialogAdd.close();
-				//	this._oDialogAdd = undefined;
+				//this._oDialogAdd.close();
+				this._oDialogAdd.destroy();    
+				this._oDialogAdd = undefined;
+			}else{
+				
 			}
 		},
 		onAddDialogCancelButton: function(oEvent) {
-			this._oDialogAdd.close();
-			//this._oDialogAdd = undefined;
+		//	this._oDialogAdd.close();
+			this._oDialogAdd.destroy();    
+				this._oDialogAdd = undefined;
 		},
 		onSubjectChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
@@ -304,7 +323,7 @@ sap.ui.define([
 		},
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
-			var oFilter = new Filter("CATEGORY_ID", sap.ui.model.FilterOperator.EQ, SelectedKey);
+			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
 				this.getView().byId("questionSelect").setSelectedKey("");
@@ -329,7 +348,7 @@ sap.ui.define([
 			// 	PRNumber: sPRNumber
 			// });
 			 var sUploadURL = Url;
-			var sToken = this.getView().getModel("ZSQRMBWA").getSecurityToken();
+			var sToken = this.getView().getModel().getSecurityToken();
 
 			aAttachments.forEach(function(oAttachment) {
 				var sFileName;
@@ -361,6 +380,12 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
+			onFileUploaderChangePress:function(oEvent){
+			
+		this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
+		this.getView().getModel("AttachmentDisplayModel").refresh();
+		
+		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 		 * (NOT before the first rendering! onInit() is used for that one!).
@@ -387,7 +412,7 @@ sap.ui.define([
 		//
 		//	}
 		onNavBack: function(oEvent) {
-			this.getOwnerComponent().getRouter().navTo("View1", {});
+			this.getOwnerComponent().getRouter().navTo("ListView", {});
 		},
 
 	});
