@@ -8,11 +8,12 @@ sap.ui.define([
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter"
-], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,formatter) {
+], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
+	formatter) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
-			formatter: formatter,
+		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
@@ -22,9 +23,9 @@ sap.ui.define([
 			this.getOwnerComponent().getRouter().getRoute("InspectionView").attachPatternMatched(this.onHandleRouteMatched, this);
 			this.getOwnerComponent().getModel().setSizeLimit(1000);
 			var oModel = new JSONModel({
-				Attachment:[]
+				Attachment: []
 			});
-			this.getView().setModel(oModel,"AttachmentDisplayModel");
+			this.getView().setModel(oModel, "AttachmentDisplayModel");
 			// init and activate controller
 			this._oTPC = new TablePersoController({
 				table: this.byId("EditInspectionTable"),
@@ -122,10 +123,10 @@ sap.ui.define([
 				this._oDialogAdd.setContentWidth("90%");
 			}
 			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
-			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0,Length);
+			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0, Length);
 			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
 				0].setValue(supplier);
-			this._oDialogAdd.setModel(this.getView().getModel("AttachmentDisplayModel"),"AttachmentDisplayModel");
+			this._oDialogAdd.setModel(this.getView().getModel("AttachmentDisplayModel"), "AttachmentDisplayModel");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
@@ -260,7 +261,7 @@ sap.ui.define([
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
-					
+
 				}
 			}.bind(this));
 
@@ -307,13 +308,13 @@ sap.ui.define([
 				this.getView().getModel().refresh();
 			}
 		},
-		onAddDialogCancelButton:function(){
-				this._oDialogAdd.destroy();
-				this._oDialogAdd = undefined;
+		onAddDialogCancelButton: function() {
+			this._oDialogAdd.destroy();
+			this._oDialogAdd = undefined;
 		},
 		dialogAfterclose: function(oEvent) {
-			this._oDialog.close();
-			//this._oDialog = undefined;
+			this._oDialogAdd.destroy();
+			this._oDialogAdd = undefined;
 		},
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView", {
@@ -325,20 +326,33 @@ sap.ui.define([
 
 			});
 		},
-		onSaveInspectionPress: function() {
+		onSaveInspectionPress: function(oEvent) {
+			var busyIndicator = new sap.m.BusyDialog();
+			busyIndicator.setBusyIndicatorDelay(0);
+			busyIndicator.open();
+			var otherContacts = this.getView().byId("headerOtherContacts").getValue();
+			var InspectionId = this.getView().getBindingContext().getObject().Id;
+			var Payload = {};
+			Payload.OtherContacts = otherContacts;
+			var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')";
 
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
-			MessageBox.information(
-				"New Inspection Created, Number :123456", {
-					actions: ["Ok"],
-					styleClass: bCompact ? "sapUiSizeCompact" : "",
-					onClose: function(sAction) {
-						this.getOwnerComponent().getRouter().navTo("ListView", {
+			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
+				success: function(data, response) {
+					MessageToast.show("Action Complete");
+					this.getView().getModel().refresh();
+					this.getView().getModel().refresh();
+					this.getOwnerComponent().getRouter().navTo("ListView", {
 
-						});
-					}.bind(this)
-				}
-			);
+					});
+					busyIndicator.close();
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Post service");
+					busyIndicator.close();
+				}.bind(this)
+
+			});
 
 		},
 
@@ -354,24 +368,23 @@ sap.ui.define([
 					actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 					styleClass: bCompact ? "sapUiSizeCompact" : "",
 					onClose: function(sAction) {
-						if(sAction === "OK"){
-								var requestURLStatusUpdate = "/Findings(InspectionId='" + InspectionId + "',Id='" + FindingId + "')";
-						this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
-							success: function(data, response) {
-								MessageToast.show("Finding Deleted");
-								this.getView().getModel().refresh();
-							}.bind(this),
-							error: function() {
-								MessageToast.show("Error in Delete service");
-							}.bind(this)
+						if (sAction === "OK") {
+							var requestURLStatusUpdate = "/Findings(InspectionId='" + InspectionId + "',Id='" + FindingId + "')";
+							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
+								success: function(data, response) {
+									MessageToast.show("Finding Deleted");
+									this.getView().getModel().refresh();
+								}.bind(this),
+								error: function() {
+									MessageToast.show("Error in Delete service");
+								}.bind(this)
 
-						});
-						}else{
-							MessageToast.show("Action Cancelled.");	
-							
+							});
+						} else {
+							MessageToast.show("Action Cancelled.");
+
 						}
-					
-					
+
 					}.bind(this)
 				}
 			);
@@ -526,11 +539,11 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
-		onFileUploaderChangePress:function(oEvent){
-			
-		this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
-		this.getView().getModel("AttachmentDisplayModel").refresh();
-		
+		onFileUploaderChangePress: function(oEvent) {
+
+			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
+			this.getView().getModel("AttachmentDisplayModel").refresh();
+
 		},
 		onChange: function(oEvent) {
 			var oModel = this.getView().getModel();
@@ -573,6 +586,28 @@ sap.ui.define([
 			} else {
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
+		},
+		onFileDeleted: function(oEvent) {
+			//Attachments(FindingId='11149',Id='FOL18%20%20%20%20%20%20%20%20%20%204%20EXT43000000001639')
+			// this.deleteItemById(oEvent.getParameter("documentId"));
+			// MessageToast.show("FileDeleted event triggered.");
+			var FileId = oEvent.getParameters().item.getCustomData()[0].getValue();
+			// var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
+			// var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
+			var FindingId = oEvent.getSource().getParent().getBindingContext().getObject().Id;
+
+			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + FileId + "')";
+			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
+				success: function(data, response) {
+					MessageToast.show("Attachment Deleted");
+					this.getView().getModel().refresh();
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Delete service");
+				}.bind(this)
+
+			});
+
 		}
 
 	});

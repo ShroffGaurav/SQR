@@ -339,6 +339,87 @@ sap.ui.define([
 			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
 			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
+		onTableDeletePress:function(oEvent){
+		var oTable = this.getView().byId("addInspectionTable");
+		var path = oEvent.getSource().getParent().getBindingContext().sPath;
+		 var idx = parseInt(path.substring(path.lastIndexOf('/') +1));
+		 oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
+		 oTable.removeItem(oEvent.getParameter('listItem'));
+		 oTable.getModel().refresh();
+		},
+		onTableEditPress:function(oEvent){
+			var supplier = this.getView().byId("SupplierID").getValue();
+			if (!this._oDialog) {
+				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
+				this._oDialog.setModel(this.getView().getModel());
+				this._oDialog.setContentHeight("60%");
+				this._oDialog.setContentWidth("90%");
+				this.getView().addDependent(this._oDialog);
+			}
+				this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
+				0].setValue(supplier);
+			var editVisibilityModel = new JSONModel();
+		//	var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().Id;
+		//	var inspectionid = oEvent.getSource().getParent().getBindingContext().getObject().InspectionId;
+			var Subject = oEvent.getSource().getParent().getBindingContext().getObject().subject;
+			var Category = oEvent.getSource().getParent().getBindingContext().getObject().category;
+			var Question = oEvent.getSource().getParent().getBindingContext().getObject().question;
+			var Score = oEvent.getSource().getParent().getBindingContext().getObject().Score;
+			var Status = oEvent.getSource().getParent().getBindingContext().getObject().Status_id;
+			var Finding = oEvent.getSource().getParent().getBindingContext().getObject().findings;
+			var InspectionLocation = oEvent.getSource().getParent().getBindingContext().getObject().location;
+			var ShortTermContainment = oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment");
+			var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext().getObject("RiskCategorySelect");
+			var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext().getObject("CasualFactor");
+			var QualityCategory = oEvent.getSource().getParent().getBindingContext().getObject("QualityCategorySelect");
+		//	var SupplierId = oEvent.getSource().getParent().getBindingContext().getObject("SupplierId");
+		//	var SupplierName = oEvent.getSource().getParent().getBindingContext().getObject("SupplierName");
+			var Data = {
+		//		"Findingid": Findingid,
+		//		"InspectionId": inspectionid,
+				"Subject": Subject,
+				"Category": Category,
+				"Question": Question,
+				"Score": Score,
+				"Status": Status,
+				"Finding": Finding,
+			//	"SupplierId": SupplierName + "(" + SupplierId + ")",
+				"QualityCategory": QualityCategory,
+				"InspectionLocation": InspectionLocation,
+				"ShortTermContainment": ShortTermContainment,
+				"SupplerRiskCategory": SupplerRiskCategory,
+				"SupplierCasualFactor": SupplierCasualFactor,
+		//		"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments"
+			};
+			var SelectedValueHelp = new JSONModel();
+			SelectedValueHelp.setData(Data);
+			if (Status === "4") {
+				editVisibilityModel.setData({
+					visible: false
+				});
+			} else {
+				editVisibilityModel.setData({
+					visible: true
+				});
+			}
+			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
+			
+			
+			this._oDialog.open();
+		},
+		onDialogCancelButton: function(oEvent) {
+
+			this._oDialog.destroy();
+			this._oDialog = undefined;
+		},
+		onDialogSubmitButton:function(oEvent){
+			//var Inspection = oEvent.getSource().getCustomData()[0].getValue();
+		//	var FindingId = oEvent.getSource().getCustomData()[1].getValue();
+			var Status = this.getView().byId("StatusSelect").getSelectedKey();
+			var Findings = this.getView().byId("InspectionFindingsText").getValue();
+			var RiskCategory = this.getView().byId("RiskCategoryInput").getValue();
+			var Containment = this.getView().byId("ContainmentInput").getValue();
+		},
 
 		/// UploadCollection Code 
 		
