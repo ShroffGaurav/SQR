@@ -27,7 +27,7 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%" id="__label0" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{InspectionByName}" id="__input0" editable="false"/>
+												<m:Input width="100%" value="{InspectionBy}" id="__input0" editable="false"/>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{SupplierDetail/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
@@ -41,7 +41,7 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{OtherContacts}"/>
+												<m:Input id="headerOtherContacts" width="100%" value="{OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{SupplierDetail/Country}" editable="false"/>
 											</m:VBox>
@@ -130,11 +130,11 @@
 					</sections>
 				</ObjectPageLayout>
 				<m:footer>
-					<!--<m:Toolbar>-->
-					<!--	<m:ToolbarSpacer/>-->
-					<!--	<m:Button type="Accept" text="Save" press="onSaveInspectionPress"/>-->
-					<!--	<m:Button type="Reject" text="Cancel" press="onAllInspectionPress"/>-->
-					<!--</m:Toolbar>-->
+					<m:Toolbar>
+						<m:ToolbarSpacer/>
+						<m:Button type="Accept" text="Save" press="onSaveInspectionPress"/>
+						<m:Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
+					</m:Toolbar>
 				</m:footer>
 			</m:Page>
 		</m:pages>

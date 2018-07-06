@@ -118,7 +118,7 @@
 																<m:Text text="{findings}"/>
 																<m:Text text="{location}"/>
 																<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
-																<m:Button icon="sap-icon://delete" tooltip="Delete" press="onDeletePress"/>
+																<m:Button icon="sap-icon://delete" tooltip="Delete" press="onTableDeletePress"/>
 															</m:cells>
 														</m:ColumnListItem>
 													</m:items>

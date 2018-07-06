@@ -92,9 +92,13 @@
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem visibleDelete="false" visibleEdit="false" contributor="{CreatedByName}" fileName="{FileName}"
-									uploadedDate="{CreatedAt}"
-									url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value"/>
+								<UploadCollectionItem visibleDelete="true" visibleEdit="false" contributor="{CreatedByName}" fileName="{FileName}"
+									uploadedDate="{CreatedAt}" url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value">
+									<customData>
+										<core:CustomData value="{Id}"/>
+										<core:CustomData value="{SelectedValueHelp>/Findingid}"/>
+									</customData>
+								</UploadCollectionItem>
 							</items>
 						</UploadCollection>
 					</IconTabFilter>
@@ -110,7 +114,12 @@
 			</Button>
 		</beginButton>
 		<endButton>
-			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onDialogCancelButton"/>
+			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onDialogCancelButton">
+					<customData>
+					<core:CustomData value="{SelectedValueHelp>/InspectionId}"/>
+					<core:CustomData value="{SelectedValueHelp>/Findingid}"/>
+				</customData>
+			</Button>
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>
