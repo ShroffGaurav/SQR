@@ -596,6 +596,7 @@ sap.ui.define([
 			// var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
+
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
 					MessageToast.show("Attachment Deleted");
