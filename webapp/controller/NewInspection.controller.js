@@ -588,12 +588,7 @@ sap.ui.define([
 			}
 		},
 		onFileDeleted: function(oEvent) {
-			//Attachments(FindingId='11149',Id='FOL18%20%20%20%20%20%20%20%20%20%204%20EXT43000000001639')
-			// this.deleteItemById(oEvent.getParameter("documentId"));
-			// MessageToast.show("FileDeleted event triggered.");
 			var FileId = oEvent.getParameters().item.getCustomData()[0].getValue();
-			// var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
-			// var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 

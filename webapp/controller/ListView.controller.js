@@ -100,12 +100,14 @@ sap.ui.define([
 					MessageToast.show("Error in Backend service");
 				}
 			});
-
 			this._oDialogEdit.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
+			this._oDialogEdit.updateBindings();
+			this._oDialogEdit.getModel().refresh();
+			this._oDialogEdit.getModel().updateBindings();
+				this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
 			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
+		//	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialogEdit.open();
 
 		},
@@ -196,6 +198,7 @@ sap.ui.define([
 					break;
 				}
 			}
+			this.getView().getModel().refresh();
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
