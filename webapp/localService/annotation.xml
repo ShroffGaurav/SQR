@@ -28,7 +28,6 @@
 						<PropertyPath>supplier_id</PropertyPath>
 						<PropertyPath>CommodityCode</PropertyPath>
 						<PropertyPath>zsqemgr</PropertyPath>
-						
 						<PropertyPath>InspectionDate</PropertyPath>
 						<PropertyPath>StatusId</PropertyPath>
 						<PropertyPath>ScoreId</PropertyPath>

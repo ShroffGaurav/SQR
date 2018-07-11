@@ -109,12 +109,12 @@
 											<Text text="{location}" wrapping="true"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="6rem">
+									<table:Column width="8rem">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value='\{"columnKey": "supplier_risk_category", "columnIndex":"8", "leadingProperty": "supplier_risk_category","type":"numeric"}'/>
 										</table:customData>
-										<Text text="{/#ZWM_FINDINGS_CType/supplier_risk_category/@sap:label}" wrapping="true"/>
+										<Text text="Supp. Risk Cat." wrapping="true"/>
 										<table:template>
 											<Text text="{supplier_risk_category}" wrapping="true"/>
 										</table:template>
