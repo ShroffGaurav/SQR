@@ -11,10 +11,16 @@ sap.ui.define([
 		onInit: function() {
 			this.getOwnerComponent().getRouter().getRoute("ListView").attachPatternMatched(this.onHandleRouteMatched, this);
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
-
 		},
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().byId("inspectionTable").getTable().getModel().refresh();
+		},
+		onBeforeRebindTableExtension: function(oEvent) {
+			var oBindingParams = oEvent.getParameter("bindingParams");
+			//initially sort the table EndTime descending, so the last synchronizations are shown first
+			if (!oBindingParams.sorter.length) {
+				oBindingParams.sorter.push(new sap.ui.model.Sorter("created_on", false));
+			}
 		},
 		getMyComponent: function() {
 			var sComponentId = Component.getOwnerIdFor(this.getView());
@@ -68,7 +74,7 @@ sap.ui.define([
 				success: function(oData) {
 					var Data = {
 						"Findingid": oData.Id,
-						"InspectionId":oData.InspectionId,
+						"InspectionId": oData.InspectionId,
 						"Subject": oData.Subject,
 						"Category": oData.Category,
 						"Question": oData.Question,
@@ -104,10 +110,10 @@ sap.ui.define([
 			this._oDialogEdit.updateBindings();
 			this._oDialogEdit.getModel().refresh();
 			this._oDialogEdit.getModel().updateBindings();
-				this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
+			this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
 			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
-		//	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
+			//	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialogEdit.open();
 
 		},
