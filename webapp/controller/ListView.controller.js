@@ -28,9 +28,9 @@ sap.ui.define([
 		},
 		onBeforeRendering: function() {
 			// var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
-			var oVal = {};
-			oVal.StatusId = "1";
-			this.getView().byId("smartFilterBar").setFilterData(oVal);
+			// var oVal = {};
+			// oVal.StatusId = "1";
+			// this.getView().byId("smartFilterBar").setFilterData(oVal);
 		},
 		onSmartTableEdit: function(oEvent) {
 			if (!this._oDialogEdit) {
