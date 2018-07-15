@@ -13,7 +13,7 @@
 							liveMode="true" showFilterConfiguration="false" useDateRangeType="true"></smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							smartFilterId="smartFilterBar" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true"
-							tableType="Table"
+							tableType="Table" beforeRebindTable="onBeforeRebindTableExtension"
 							ignoredFields="findings,StatusId,InspectionDate,short_term_containment,supplier_risk_category,supplier_casual_factor,created_by,inspection_id,changed_by,created_on,changed_on,subject_id,supplier_id,Subject,category_id,ScoreId"
 							showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
 							<smartTable:customToolbar>
@@ -109,12 +109,12 @@
 											<Text text="{location}" wrapping="true"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="6rem">
+									<table:Column width="8rem">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value='\{"columnKey": "supplier_risk_category", "columnIndex":"8", "leadingProperty": "supplier_risk_category","type":"numeric"}'/>
 										</table:customData>
-										<Text text="{/#ZWM_FINDINGS_CType/supplier_risk_category/@sap:label}" wrapping="true"/>
+										<Text text="Supp. Risk Cat." wrapping="true"/>
 										<table:template>
 											<Text text="{supplier_risk_category}" wrapping="true"/>
 										</table:template>
