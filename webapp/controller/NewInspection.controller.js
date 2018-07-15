@@ -286,7 +286,7 @@ sap.ui.define([
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Payload, {
 					// method: "PUT",
 					success: function(data, response) {
-						MessageToast.show("Action Complete");
+						MessageToast.show("Successfully created the Finding :" + data.Id);
 						Spath = "/Findings(InspectionId='" + data.InspectionId + "',Id='" + data.Id + "')";
 						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = array.Attachments;
@@ -407,6 +407,7 @@ sap.ui.define([
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().Id;
+			this._oDialog.setTitle("Edit Finding("+ Findingid +")");
 			var inspectionid = oEvent.getSource().getParent().getBindingContext().getObject().InspectionId;
 			var Subject = oEvent.getSource().getParent().getBindingContext().getObject().Subject;
 			var Category = oEvent.getSource().getParent().getBindingContext().getObject().Category;

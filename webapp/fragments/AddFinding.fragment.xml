@@ -71,7 +71,7 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea id="findingText" rows="3"  required="true"></TextArea>
+												<TextArea id="findingText" maxLength="256" rows="3"  required="true"></TextArea>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">

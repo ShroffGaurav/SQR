@@ -29,6 +29,7 @@ sap.ui.define([
 		onSmartTableEdit: function(oEvent) {
 			if (!this._oDialogEdit) {
 				this._oDialogEdit = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
+				
 				this._oDialogEdit.setModel(this.getView().getModel());
 				this._oDialogEdit.setContentHeight("60%");
 				this._oDialogEdit.setContentWidth("90%");
@@ -38,6 +39,7 @@ sap.ui.define([
 			var SelectedValueHelp = new JSONModel();
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().inspection_id;
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().id;
+			this._oDialogEdit.setTitle("Edit Finding("+ Findingid +")");
 			var oPath;
 			var Spath = "Findings(InspectionId='" + InspectionId + "',Id='" + Findingid + "')";
 			var busyIndicator = new sap.m.BusyDialog();
@@ -79,7 +81,7 @@ sap.ui.define([
 						"ShortTermContainment": oData.ShortTermContainment,
 						"SupplerRiskCategory": oData.SupplerRiskCategory,
 						"SupplierCasualFactor": oData.SupplierCasualFactor,
-						"SupplierId": oData.SupplierName + "(" + oData.SupplierId + ")",
+						"SupplierId": oData.SupplierName + " (" + oData.SupplierId + ")",
 						"QualityCategory": oData.QualityCategory,
 						"uploadUrl": window.location.origin + (this._oDialogEdit.getModel().sServiceUrl + readRequestURL) + "/Attachments"
 					};

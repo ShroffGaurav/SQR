@@ -3,7 +3,7 @@
 	xmlns:core="sap.ui.core">
 	<SelectDialog
 		noDataText="No Supplier Found"
-		title="Select Supplier"
+		title="Choose a Supplier"
 		search="handleSupplierSearch"
 		confirm="handleSupplierClose"
 		cancel="handleSupplierClose"
