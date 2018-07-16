@@ -1,6 +1,6 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:m="sap.m" xmlns:html="http://www.w3.org/1999/xhtml"
 	xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns="sap.uxap" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:table="sap.ui.table"
-	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.NewInspection">
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.EditInspection">
 	<m:App id="newinspection">
 		<m:pages>
 			<m:Page title="SQRMBWA" showNavButton="true" navButtonPress="onNavBack">

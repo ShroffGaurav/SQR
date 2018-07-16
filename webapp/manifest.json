@@ -150,7 +150,7 @@
 			],
 			"targets": {
 				"InspectionView": {
-					"viewName": "NewInspection",
+					"viewName": "EditInspection",
 					"viewId": "newinspection",
 					"controlAggregation": "pages",
 					"transition": "slide",

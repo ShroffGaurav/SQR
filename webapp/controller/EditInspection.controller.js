@@ -12,7 +12,7 @@ sap.ui.define([
 	formatter) {
 	"use strict";
 
-	return Controller.extend("com.sapZSQRMBWA.controller.NewInspection", {
+	return Controller.extend("com.sapZSQRMBWA.controller.EditInspection", {
 		formatter: formatter,
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
