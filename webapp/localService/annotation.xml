@@ -35,31 +35,37 @@
 				</Annotation>
 			</Annotations>
 			<!--Below is for using a SmartField-->
-			<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZSQRMBWA_SRV.Inspection/SupplierId">
-				<Annotation Term="Common.ValueList">
-					<Record>
-						<PropertyValue Property="Label" String="Supplier Value Help"/>
-						<PropertyValue Property="CollectionPath" String="ZWM_SUPPLIER_VH"/>
-						<PropertyValue Property="SearchSupported" Bool="true"/>
-						<PropertyValue Property="Parameters">
-							<Collection>
-								<Record Type="Common.ValueListParameterInOut">
-									<PropertyValue Property="LocalDataProperty" PropertyPath="SupplierId"/>
-									<PropertyValue Property="ValueListProperty" String="lifnr"/>
-								</Record>
-								<Record Type="Common.ValueListParameterDisplayOnly">
-									<PropertyValue Property="ValueListProperty" String="stras"/>
-								</Record>
-								<Record Type="Common.ValueListParameterDisplayOnly">
-									<PropertyValue Property="ValueListProperty" String="land1"/>
-								</Record>
-								<Record Type="Common.ValueListParameterDisplayOnly">
-									<PropertyValue Property="ValueListProperty" String="name1"/>
-								</Record>
-							</Collection>
-						</PropertyValue>
-					</Record>
-				</Annotation>
+			<!--<Annotations xmlns="http://docs.oasis-open.org/odata/ns/edm" Target="ZSQRMBWA_SRV.Inspection/SupplierId">-->
+			<!--	<Annotation Term="Common.ValueList">-->
+			<!--		<Record>-->
+			<!--			<PropertyValue Property="Label" String="Supplier Value Help"/>-->
+			<!--			<PropertyValue Property="CollectionPath" String="ZWM_SUPPLIER_VH"/>-->
+			<!--			<PropertyValue Property="SearchSupported" Bool="true"/>-->
+			<!--			<PropertyValue Property="Parameters">-->
+			<!--				<Collection>-->
+			<!--					<Record Type="Common.ValueListParameterInOut">-->
+			<!--						<PropertyValue Property="LocalDataProperty" PropertyPath="SupplierId"/>-->
+			<!--						<PropertyValue Property="ValueListProperty" String="lifnr"/>-->
+			<!--					</Record>-->
+			<!--					<Record Type="Common.ValueListParameterDisplayOnly">-->
+			<!--						<PropertyValue Property="ValueListProperty" String="stras"/>-->
+			<!--					</Record>-->
+			<!--					<Record Type="Common.ValueListParameterDisplayOnly">-->
+			<!--						<PropertyValue Property="ValueListProperty" String="land1"/>-->
+			<!--					</Record>-->
+			<!--					<Record Type="Common.ValueListParameterDisplayOnly">-->
+			<!--						<PropertyValue Property="ValueListProperty" String="name1"/>-->
+			<!--					</Record>-->
+			<!--				</Collection>-->
+			<!--			</PropertyValue>-->
+			<!--		</Record>-->
+			<!--	</Annotation>-->
+			<!--</Annotations>-->
+			<Annotations Target="ZSQRMBWA_SRV.ZWM_MANAGER_VHType/manager">
+				<Annotation Term="Common.Label" String="Name"/>
+			</Annotations>
+			<Annotations Target="ZSQRMBWA_SRV.ZWM_MANAGER_VHType/zsqemgr">
+				<Annotation Term="Common.Label" String="ID"/>
 			</Annotations>
 		</Schema>
 	</edmx:DataServices>
