@@ -30,8 +30,6 @@ sap.ui.define([
 				Attachments: []
 			});
 			var HeaderModel = new sap.ui.model.json.JSONModel({
-				currentMonth: CurrentDate,
-				supplier: "",
 				inspectionBy: "MOSELRO"
 			});
 			this.getView().setModel(HeaderModel, "HeaderModel");
@@ -86,9 +84,12 @@ sap.ui.define([
 		handleSupplierClose: function(oEvent) {
 			var aContexts = oEvent.getParameter("selectedContexts");
 			if (aContexts && aContexts.length) {
-				this.getView().getModel("HeaderModel").setProperty("/supplier", aContexts.map(function(oContext) {
-					return oContext.getObject().lifnr;
-				}));
+				
+				aContexts.map(function(oContext) {
+					this.getView().getModel("HeaderModel").setData(oContext.getObject());
+					//return oContext.getObject().lifnr;
+				}.bind(this));
+			//	this.getView().getModel("HeaderModel").setProperty("/supplier", ));
 			} else {
 				MessageToast.show("No new item was selected.");
 			}

@@ -92,7 +92,7 @@
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
 							<items>
-								<UploadCollectionItem visibleDelete="true" visibleEdit="false" contributor="{CreatedByName}" fileName="{FileName}"
+								<UploadCollectionItem visibleDelete="true" visibleEdit="false" contributor="{CreatedByName}" fileName="{FileName}" documentId="{Id}"
 									uploadedDate="{CreatedAt}" url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value">
 									<customData>
 										<core:CustomData value="{Id}"/>

@@ -97,8 +97,8 @@ sap.ui.define([
 				// method: "PUT",
 				success: function(data, response) {
 					MessageToast.show("Action Complete");
-					this.getView().getModel().refresh();
-					this.getView().getModel().refresh();
+					//this.getView().getModel().refresh();
+					//this.getView().getModel().refresh();
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;
@@ -291,8 +291,8 @@ sap.ui.define([
 						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = array.Attachments;
 						this._uploadAttachments(UploadURL, oData);
-						this.getView().getModel().refresh();
-						this.getView().getModel().updateBindings();
+						//this.getView().getModel().refresh();
+						//this.getView().getModel().updateBindings();
 						busyIndicator.close();
 						this._oDialogAdd.destroy();
 						this._oDialogAdd = undefined;
@@ -340,8 +340,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
 					MessageToast.show("Action Complete");
-					this.getView().getModel().refresh();
-					this.getView().getModel().refresh();
+					//this.getView().getModel().refresh();
+				//	this.getView().getModel().refresh();
 					this.getOwnerComponent().getRouter().navTo("ListView", {
 
 					});
@@ -373,7 +373,7 @@ sap.ui.define([
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
 									MessageToast.show("Finding Deleted");
-									this.getView().getModel().refresh();
+								//	this.getView().getModel().refresh();
 								}.bind(this),
 								error: function() {
 									MessageToast.show("Error in Delete service");
@@ -543,7 +543,7 @@ sap.ui.define([
 		onFileUploaderChangePress: function(oEvent) {
 
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
-			this.getView().getModel("AttachmentDisplayModel").refresh();
+		//	this.getView().getModel("AttachmentDisplayModel").refresh();
 
 		},
 		onChange: function(oEvent) {
@@ -561,7 +561,7 @@ sap.ui.define([
 		},
 
 		onUploadComplete: function(oEvent) {
-			this.getView().getModel().refresh();
+		//	this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
@@ -570,6 +570,7 @@ sap.ui.define([
 					break;
 				}
 			}
+			 oUploadCollection.getBinding("items").refresh();
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
@@ -589,14 +590,14 @@ sap.ui.define([
 			}
 		},
 		onFileDeleted: function(oEvent) {
-			var FileId = oEvent.getParameters().item.getCustomData()[0].getValue();
+			var FileId = oEvent.getParameters("documentId").documentId;
 			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
 					MessageToast.show("Attachment Deleted");
-					this.getView().getModel().refresh();
+				//	this.getView().getModel().refresh();
 				}.bind(this),
 				error: function() {
 					MessageToast.show("Error in Delete service");

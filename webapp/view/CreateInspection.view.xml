@@ -20,11 +20,11 @@
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="SupplierID" width="100%" value="{HeaderModel>/supplier}" editable="false"/>
+												<m:Input id="SupplierID" width="100%" value="{HeaderModel>/lifnr}" editable="false"/>
 												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierName}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/name1}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact1}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/stras}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%"  class="sapUiSmallMarginTop"/>
@@ -45,7 +45,7 @@
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input id="OtherContacts" width="100%" value="{ZSQRMBWA>OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Country}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/land1}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>

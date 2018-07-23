@@ -35,7 +35,7 @@ sap.ui.define([
 		onSmartTableEdit: function(oEvent) {
 			if (!this._oDialogEdit) {
 				this._oDialogEdit = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
-				
+
 				this._oDialogEdit.setModel(this.getView().getModel());
 				this._oDialogEdit.setContentHeight("60%");
 				this._oDialogEdit.setContentWidth("90%");
@@ -45,9 +45,9 @@ sap.ui.define([
 			var SelectedValueHelp = new JSONModel();
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().inspection_id;
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().id;
-			this._oDialogEdit.setTitle("Edit Finding("+ Findingid +")");
+			this._oDialogEdit.setTitle("Edit Finding(" + Findingid + ")");
 			var oPath;
-			var Spath = "Findings(InspectionId='" + InspectionId + "',Id='" + Findingid + "')";
+			var Spath = "/Findings(InspectionId='" + InspectionId + "',Id='" + Findingid + "')";
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
@@ -59,7 +59,7 @@ sap.ui.define([
 
 			oPath = {
 				path: Spath,
-				parameters: oParams
+				parameters: {}
 			};
 
 			var oFilters = [
@@ -109,9 +109,9 @@ sap.ui.define([
 				}
 			});
 			this._oDialogEdit.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			this._oDialogEdit.updateBindings();
-			this._oDialogEdit.getModel().refresh();
-			this._oDialogEdit.getModel().updateBindings();
+			//this._oDialogEdit.updateBindings();
+			//this._oDialogEdit.getModel().refresh();
+			//	this._oDialogEdit.getModel().updateBindings();
 			this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
 			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
@@ -197,7 +197,7 @@ sap.ui.define([
 		},
 
 		onUploadComplete: function(oEvent) {
-			this.getView().getModel().refresh();
+			//this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
@@ -206,7 +206,10 @@ sap.ui.define([
 					break;
 				}
 			}
-			this.getView().getModel().refresh();
+			 oUploadCollection.getBinding("items").refresh();
+			//oEvent.getSource().getModel().updateBindings();
+			//oEvent.getSource()
+			//this.getView().getModel().refresh();
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
@@ -216,6 +219,23 @@ sap.ui.define([
 				value: oEvent.getParameter("fileName")
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
+		},
+		onFileDeleted: function(oEvent) {
+			var FileId = oEvent.getParameters("documentId").documentId;
+			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
+			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
+
+			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
+				success: function(data, response) {
+					MessageToast.show("Attachment Deleted");
+					//	this.getView().getModel().refresh();
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Delete service");
+				}.bind(this)
+
+			});
+
 		},
 		onIconTabBarChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedKey;
