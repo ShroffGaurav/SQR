@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.EditInspection">
 	<m:App id="newinspection">
 		<m:pages>
-			<m:Page title="SQRMBWA" showNavButton="true" navButtonPress="onNavBack">
+			<m:Page title="Edit Inspection" showNavButton="true" navButtonPress="onNavBack">
 				<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false">
 					<headerTitle>
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>

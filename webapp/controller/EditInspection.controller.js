@@ -590,22 +590,22 @@ sap.ui.define([
 			}
 		},
 		onFileDeleted: function(oEvent) {
-			var FileId = oEvent.getParameters("documentId").documentId;
-			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
-			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
+				var FileId = oEvent.getParameters("documentId").documentId;
+				var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
+				var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 
-			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
-				success: function(data, response) {
-					MessageToast.show("Attachment Deleted");
-				//	this.getView().getModel().refresh();
-				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Delete service");
-				}.bind(this)
+				this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
+					success: function(data, response) {
+						MessageToast.show("Attachment Deleted");
+						//	this.getView().getModel().refresh();
+					}.bind(this),
+					error: function() {
+						MessageToast.show("Error in Delete service");
+					}.bind(this)
 
-			});
+				});
 
-		}
+			}
 
 	});
 

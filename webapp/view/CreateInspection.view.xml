@@ -3,7 +3,7 @@
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.CreateInspection">
 	<m:App id="addinspection">
 		<m:pages>
-			<m:Page title="Title" showNavButton="true" navButtonPress="onNavBack">
+			<m:Page title="New Inspection" showNavButton="true" navButtonPress="onNavBack">
 				<!--<content>-->
 					<ObjectPageLayout enableLazyLoading="false">
 					<headerTitle>
@@ -37,7 +37,7 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker id="InspectionDate" width="100%" dateValue="{HeaderModel>/currentMonth}" displayFormat="short"/>
+												<m:DatePicker id="InspectionDate" width="100%" displayFormat="short"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
