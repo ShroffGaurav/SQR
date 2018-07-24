@@ -339,12 +339,9 @@ sap.ui.define([
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
-					MessageToast.show("Action Complete");
+					MessageToast.show("Inspection Saved");
 					//this.getView().getModel().refresh();
 				//	this.getView().getModel().refresh();
-					this.getOwnerComponent().getRouter().navTo("ListView", {
-
-					});
 					busyIndicator.close();
 				}.bind(this),
 				error: function() {
@@ -407,7 +404,7 @@ sap.ui.define([
 			};
 			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
 			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().Id;
-			this._oDialog.setTitle("Edit Finding("+ Findingid +")");
+			this._oDialog.setTitle("Edit Finding ("+ Findingid +")");
 			var inspectionid = oEvent.getSource().getParent().getBindingContext().getObject().InspectionId;
 			var Subject = oEvent.getSource().getParent().getBindingContext().getObject().Subject;
 			var Category = oEvent.getSource().getParent().getBindingContext().getObject().Category;
@@ -431,7 +428,7 @@ sap.ui.define([
 				"Score": Score,
 				"Status": Status,
 				"Finding": Finding,
-				"SupplierId": SupplierName + "(" + SupplierId + ")",
+				"SupplierId": SupplierName + " (" + SupplierId + ")",
 				"QualityCategory": QualityCategory,
 				"InspectionLocation": InspectionLocation,
 				"ShortTermContainment": ShortTermContainment,
