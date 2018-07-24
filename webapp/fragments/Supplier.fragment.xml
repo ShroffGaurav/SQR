@@ -6,7 +6,7 @@
 		title="Choose a Supplier"
 		search="handleSupplierSearch"
 		confirm="handleSupplierClose"
-		cancel="handleSupplierClose"
+		cancel="handleSupplierCloseNavigate"
 		items="{
 			path: '/ZWM_SUPPLIER_VH'
 		}" >

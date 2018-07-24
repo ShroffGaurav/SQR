@@ -40,10 +40,10 @@ sap.ui.define([
 				}.bind(this)
 			}, oView);
 
-			this._oTPC = new TablePersoController({
-				table: this.byId("EditInspectionTable"),
+			this._oTPCCreate = new TablePersoController({
+				table: this.byId("addInspectionTable"),
 				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
-				componentName: "PersoApp",
+				componentName: "PersoApp1",
 				persoService: PersoService
 			}).activate();
 
@@ -91,8 +91,13 @@ sap.ui.define([
 				//	this.getView().getModel("HeaderModel").setProperty("/supplier", ));
 			} else {
 				MessageToast.show("No new item was selected.");
+				this.getOwnerComponent().getRouter().navTo("ListView", {});
 			}
 			oEvent.getSource().getBinding("items").filter([]);
+		},
+		handleSupplierCloseNavigate:function(oEvent){
+				MessageToast.show("No new item was selected.");
+				this.getOwnerComponent().getRouter().navTo("ListView");
 		},
 		onSaveInspectionPress: function(oEvent) {
 			//	var oModel = new JSONModel();
@@ -566,15 +571,15 @@ sap.ui.define([
 		},
 		// Table Personalization 
 		onPersoButtonPressed: function(oEvent) {
-			this._oTPC.openDialog();
+			this._oTPCCreate.openDialog();
 		},
 		onTablePersoRefresh: function() {
 			PersoService.resetPersData();
-			this._oTPC.refresh();
+			this._oTPCCreate.refresh();
 		},
 
 		onTableGrouping: function(oEvent) {
-			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
+			this._oTPCCreate.setHasGrouping(oEvent.getSource().getSelected());
 		},
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
