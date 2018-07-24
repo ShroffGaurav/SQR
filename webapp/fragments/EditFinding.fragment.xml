@@ -114,7 +114,7 @@
 			</Button>
 		</beginButton>
 		<endButton>
-			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onDialogCancelButton">
+			<Button type="Default" text="Close" icon="sap-icon://sys-cancel" press="onDialogCancelButton">
 					<customData>
 					<core:CustomData value="{SelectedValueHelp>/InspectionId}"/>
 					<core:CustomData value="{SelectedValueHelp>/Findingid}"/>
