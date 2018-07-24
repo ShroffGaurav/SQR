@@ -2,13 +2,13 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	'com/sapZSQRMBWA/Personalization/PersoService',
+	'com/sapZSQRMBWA/Personalization/PersoServiceEdit',
 	'sap/m/MessageBox',
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter"
-], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
+], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
 	formatter) {
 	"use strict";
 
@@ -31,7 +31,7 @@ sap.ui.define([
 				table: this.byId("EditInspectionTable"),
 				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
 				componentName: "PersoApp",
-				persoService: PersoService
+				persoService: PersoServiceEdit
 			}).activate();
 		},
 		onHandleRouteMatched: function(oEvent) {
@@ -493,7 +493,7 @@ sap.ui.define([
 			this._oTPC.openDialog();
 		},
 		onTablePersoRefresh: function() {
-			PersoService.resetPersData();
+			PersoServiceEdit.resetPersData();
 			this._oTPC.refresh();
 		},
 

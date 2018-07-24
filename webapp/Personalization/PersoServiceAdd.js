@@ -9,55 +9,55 @@ sap.ui.define(['jquery.sap.global'],
 			oData: {
 				_persoSchemaVersion: "1.0",
 				aColumns: [{
-					id: "PersoApp-addInspectionTable-FindingId",
+					id: "PersoAppAdd-addInspectionTable-FindingId",
 					order: 0,
 					text: "Finding id",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Subject",
+					id: "PersoAppAdd-addInspectionTable-Subject",
 					order: 1,
 					text: "Subject",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Category",
+					id: "PersoAppAdd-addInspectionTable-Category",
 					order: 3,
 					text: "Category",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Question",
+					id: "PersoAppAdd-addInspectionTable-Question",
 					order: 4,
 					text: "Question",
 					visible: false
 				}, {
-					id: "PersoApp-addInspectionTable-Score",
+					id: "PersoAppAdd-addInspectionTable-Score",
 					order: 5,
 					text: "Score",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Status",
+					id: "PersoAppAdd-addInspectionTable-Status",
 					order: 6,
 					text: "Status",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Findings",
+					id: "PersoAppAdd-addInspectionTable-Findings",
 					order: 7,
 					text: "Findings",
 					visible: false
 				},
 				{
-					id: "PersoApp-addInspectionTable-Location",
+					id: "PersoAppAdd-addInspectionTable-Location",
 					order: 8,
 					text: "Inspection Location",
 					visible: true
 				},
 				{
-					id: "PersoApp-addInspectionTable-Edit",
+					id: "PersoAppAdd-addInspectionTable-Edit",
 					order: 9,
 					text: "Edit",
 					visible: true
 				},
 					{
-					id: "PersoApp-addInspectionTable-Delete",
+					id: "PersoAppAdd-addInspectionTable-Delete",
 					order: 10,
 					text: "Delete",
 					visible: true
@@ -86,55 +86,55 @@ sap.ui.define(['jquery.sap.global'],
 				var oInitialData = {
 					_persoSchemaVersion: "1.0",
 					aColumns: [{
-					id: "PersoApp-addInspectionTable-FindingId",
+					id: "PersoAppAdd-addInspectionTable-FindingId",
 					order: 0,
 					text: "Finding id",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Subject",
+					id: "PersoAppAdd-addInspectionTable-Subject",
 					order: 1,
 					text: "Subject",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Category",
+					id: "PersoAppAdd-addInspectionTable-Category",
 					order: 3,
 					text: "Category",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Question",
+					id: "PersoAppAdd-addInspectionTable-Question",
 					order: 4,
 					text: "Question",
 					visible: false
 				}, {
-					id: "PersoApp-addInspectionTable-Score",
+					id: "PersoAppAdd-addInspectionTable-Score",
 					order: 5,
 					text: "Score",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Status",
+					id: "PersoAppAdd-addInspectionTable-Status",
 					order: 6,
 					text: "Status",
 					visible: true
 				}, {
-					id: "PersoApp-addInspectionTable-Findings",
+					id: "PersoAppAdd-addInspectionTable-Findings",
 					order: 7,
 					text: "Findings",
 					visible: false
 				},
 				{
-					id: "PersoApp-addInspectionTable-Location",
+					id: "PersoAppAdd-addInspectionTable-Location",
 					order: 8,
 					text: "Inspection Location",
 					visible: true
 				},
 				{
-					id: "PersoApp-addInspectionTable-Edit",
+					id: "PersoAppAdd-addInspectionTable-Edit",
 					order: 9,
 					text: "Edit",
 					visible: true
 				},
 					{
-					id: "PersoApp-addInspectionTable-Delete",
+					id: "PersoAppAdd-addInspectionTable-Delete",
 					order: 10,
 					text: "Delete",
 					visible: true

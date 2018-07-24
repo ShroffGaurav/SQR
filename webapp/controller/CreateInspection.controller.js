@@ -2,13 +2,13 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	'com/sapZSQRMBWA/Personalization/PersoService',
+	'com/sapZSQRMBWA/Personalization/PersoServiceAdd',
 	'sap/m/MessageBox',
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter"
-], function(Controller, JSONModel, Filter, PersoService, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
+], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
 	formatter) {
 	"use strict";
 
@@ -43,8 +43,8 @@ sap.ui.define([
 			this._oTPCCreate = new TablePersoController({
 				table: this.byId("addInspectionTable"),
 				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
-				componentName: "PersoApp1",
-				persoService: PersoService
+				componentName: "PersoAppAdd",
+				persoService: PersoServiceAdd
 			}).activate();
 
 		},
@@ -574,7 +574,7 @@ sap.ui.define([
 			this._oTPCCreate.openDialog();
 		},
 		onTablePersoRefresh: function() {
-			PersoService.resetPersData();
+			PersoServiceAdd.resetPersData();
 			this._oTPCCreate.refresh();
 		},
 

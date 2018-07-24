@@ -75,34 +75,34 @@
 														</m:OverflowToolbar>
 													</m:headerToolbar>
 													<m:columns>
-														<m:Column  width="12em">
+														<m:Column id="FindingId" width="12em">
 															<m:Text text="Finding id"/>
 														</m:Column>
-														<m:Column  width="12em">
+														<m:Column id="Subject" width="12em">
 															<m:Text text="Subject"/>
 														</m:Column>
-														<m:Column >
+														<m:Column id="Category">
 															<m:Text  text="Category"/>
 														</m:Column>
-														<m:Column  minScreenWidth="Desktop">
+														<m:Column id="Question" minScreenWidth="Desktop">
 															<m:Text text="Question"/>
 														</m:Column>
-														<m:Column  minScreenWidth="Desktop">
+														<m:Column id="Score" minScreenWidth="Desktop">
 															<m:Text text="Score"/>
 														</m:Column>
-														<m:Column  hAlign="End">
+														<m:Column id="Status" hAlign="End">
 															<m:Text text="Status"/>
 														</m:Column>
-														<m:Column  hAlign="End">
+														<m:Column id="Findings" hAlign="End">
 															<m:Text text="Findings"/>
 														</m:Column>
-														<m:Column  hAlign="End">
+														<m:Column id="Location" hAlign="End">
 															<m:Text text="Inspection Location"/>
 														</m:Column>
-														<m:Column  hAlign="End">
+														<m:Column id="Edit" hAlign="End">
 															<m:Text text="Edit"/>
 														</m:Column>
-														<m:Column  hAlign="End">
+														<m:Column id="Delete" hAlign="End">
 															<m:Text text="Delete"/>
 														</m:Column>
 													</m:columns>

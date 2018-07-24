@@ -20,9 +20,7 @@
 				"settings": {
 					"odataVersion": "2.0",
 					"localUri": "localService/ZSQRMBWA_SRV/metadata.xml",
-					"annotations": [
-						"annotation"
-					]
+					"annotations": ["annotation"]
 				}
 			},
 			"annotation": {
@@ -51,10 +49,7 @@
 			"tablet": true,
 			"phone": true
 		},
-		"supportedThemes": [
-			"sap_hcb",
-			"sap_belize"
-		]
+		"supportedThemes": ["sap_hcb", "sap_belize"]
 	},
 	"sap.ui5": {
 		"config": {
@@ -107,11 +102,9 @@
 			}
 		},
 		"resources": {
-			"css": [
-				{
-					"uri": "css/style.css"
-				}
-			]
+			"css": [{
+				"uri": "css/style.css"
+			}]
 		},
 		"routing": {
 			"config": {
@@ -123,31 +116,21 @@
 				"clearAggregation": false,
 				"viewLevel": 1
 			},
-			"routes": [
-				{
-					"name": "ListView",
-					"pattern": "",
-					"titleTarget": "",
-					"greedy": false,
-					"target": [
-						"ListView"
-					]
-				},
-				{
-					"pattern": "ListView/:context:",
-					"name": "InspectionView",
-					"target": [
-						"InspectionView"
-					]
-				},
-				{
-					"pattern": "Mainboard/:context:",
-					"name": "AddInspection",
-					"target": [
-						"AddInspection"
-					]
-				}
-			],
+			"routes": [{
+				"name": "ListView",
+				"pattern": "",
+				"titleTarget": "",
+				"greedy": false,
+				"target": ["ListView"]
+			}, {
+				"pattern": "ListView/:context:",
+				"name": "InspectionView",
+				"target": ["InspectionView"]
+			}, {
+				"pattern": "Mainboard/:context:",
+				"name": "AddInspection",
+				"target": ["AddInspection"]
+			}],
 			"targets": {
 				"InspectionView": {
 					"viewName": "EditInspection",
@@ -170,7 +153,7 @@
 					"clearAggregation": true,
 					"viewId": "addinspection",
 					"viewName": "CreateInspection",
-					"viewLevel": 2
+					"viewLevel": 1
 				}
 			}
 		}
