@@ -37,7 +37,7 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker id="InspectionDate" width="100%" dateValue="{HeaderModel>/currentMonth}" displayFormat="short" editable="false"/>
+												<m:DatePicker id="InspectionDate" width="100%" dateValue="{HeaderModel>/currentMonth}" displayFormat="short"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
