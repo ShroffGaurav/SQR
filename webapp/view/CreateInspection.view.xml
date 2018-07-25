@@ -31,15 +31,15 @@
 												<!--<m:Input width="100%" value="{ZSQRMBWA>InspectionByName}"  editable="false"/>-->
 												<m:Input width="100%" id="InspectionBy" value="{HeaderModel>/inspectionBy}"  editable="true"/>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierCategory}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/SupplierContact2}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/telephoneNumber}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:DatePicker id="InspectionDate" width="100%" displayFormat="short"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{ZSQRMBWA>SupplierDetail/Commodity}" editable="false"/>
+												<m:Input width="100%" value="{HeaderModel>/CommodityName}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
