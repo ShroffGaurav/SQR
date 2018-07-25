@@ -68,7 +68,10 @@
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Input id="RiskCategoryInput" enabled="{editVisibilityModel>/visible}" value="{SelectedValueHelp>/SupplerRiskCategory}"/>
+													<Select id="RiskCategorySelect" enabled="false" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }">
+													<core:Item key="{id}" text="{text}"/>
+													</Select>
+												<!--<Input id="RiskCategoryInput"  value="{SelectedValueHelp>/SupplerRiskCategory}"/>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">

@@ -7,6 +7,7 @@
 		search="handleSupplierSearch"
 		confirm="handleSupplierClose"
 		cancel="handleSupplierCloseNavigate"
+		liveChange="HandleLiveSupplierSearch"
 		items="{
 			path: '/ZWM_SUPPLIER_VH'
 		}" >

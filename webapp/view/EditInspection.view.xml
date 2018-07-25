@@ -97,10 +97,10 @@
 														<m:Column id="Location" hAlign="End">
 															<m:Text text="Inspection Location"/>
 														</m:Column>
-														<m:Column id="Edit" hAlign="End">
+														<m:Column id="Edit" hAlign="End" width="5rem">
 															<m:Text text="Edit"/>
 														</m:Column>
-														<m:Column id="Delete" hAlign="End">
+														<m:Column id="Delete" hAlign="End" width="5rem">
 															<m:Text text="Delete"/>
 														</m:Column>
 													</m:columns>
