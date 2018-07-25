@@ -67,6 +67,15 @@
 			<Annotations Target="ZSQRMBWA_SRV.ZWM_MANAGER_VHType/zsqemgr">
 				<Annotation Term="Common.Label" String="ID"/>
 			</Annotations>
+			<Annotations Target="ZSQRMBWA_SRV.ZWM_SUPPLIER_VHType/CommodityName">
+				<Annotation Term="Common.Label" String="Commodity"/>
+			</Annotations>
+			<Annotations Target="ZSQRMBWA_SRV.ZWM_SUPPLIER_VHType/SupplierCategory">
+				<Annotation Term="Common.Label" String="Supplier Category"/>
+			</Annotations>
+			<Annotations Target="ZSQRMBWA_SRV.ZWM_SUPPLIER_VHType/telephoneNumber">
+				<Annotation Term="Common.Label" String="Telephone"/>
+			</Annotations>
 		</Schema>
 	</edmx:DataServices>
 </edmx:Edmx>
