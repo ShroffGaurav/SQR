@@ -77,7 +77,15 @@ sap.ui.define([
 			var sValue = oEvent.getParameter("value");
 			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
 			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter([oFilter]);
+			oBinding.filter([oFilter]);	
+		},
+		HandleLiveSupplierSearch: function(oEvent){
+			var sValue = oEvent.getParameter("value");
+			if(sValue.length > 3){
+			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+			var oBinding = oEvent.getSource().getBinding("items");
+			oBinding.filter([oFilter]);	
+			}
 		},
 
 		handleSupplierClose: function(oEvent) {
@@ -90,7 +98,7 @@ sap.ui.define([
 				}.bind(this));
 				//	this.getView().getModel("HeaderModel").setProperty("/supplier", ));
 			} else {
-				MessageToast.show("No new item was selected.");
+				//MessageToast.show("No new item was selected.");
 				this.getOwnerComponent().getRouter().navTo("ListView", {});
 			}
 			oEvent.getSource().getBinding("items").filter([]);
