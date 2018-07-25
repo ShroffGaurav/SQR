@@ -23,6 +23,31 @@
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
 			<Annotations Target="ZSQRMBWA_SRV.ZWM_FINDINGS_CType">
+				<Annotation Term="UI.PresentationVariant">
+					<Record Type="UI.PresentationVariantType">
+						<PropertyValue Property="SortOrder">
+							<Collection>
+								<Record Type="Common.SortOrderType">
+									<PropertyValue Property="Property" PropertyPath="id"/>
+									<PropertyValue Property="Descending" Bool="true"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="GroupBy"/>
+						<PropertyValue Property="TotalBy"/>
+						<PropertyValue Property="Total"/>
+						<PropertyValue Property="Visualizations">
+							<Collection>
+								<AnnotationPath>@UI.LineItem</AnnotationPath>
+							</Collection>
+						</PropertyValue>
+						<PropertyValue Property="RequestAtLeast">
+							<Collection>
+								<PropertyPath>id</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
 				<Annotation Term="UI.SelectionFields">
 					<Collection>
 						<PropertyPath>supplier_id</PropertyPath>

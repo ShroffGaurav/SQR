@@ -16,11 +16,11 @@ sap.ui.define([
 			this.getView().byId("inspectionTable").getTable().getModel().refresh();
 		},
 		onBeforeRebindTableExtension: function(oEvent) {
-			var oBindingParams = oEvent.getParameter("bindingParams");
-			//initially sort the table EndTime descending, so the last synchronizations are shown first
-			if (!oBindingParams.sorter.length) {
-				oBindingParams.sorter.push(new sap.ui.model.Sorter("created_on", false));
-			}
+			// var oBindingParams = oEvent.getParameter("bindingParams");
+			// initially sort the table EndTime descending, so the last synchronizations are shown first
+			// if (!oBindingParams.sorter.length) {
+			// 	oBindingParams.sorter.push(new sap.ui.model.Sorter("created_on", false));
+			// }
 		},
 		getMyComponent: function() {
 			var sComponentId = Component.getOwnerIdFor(this.getView());
