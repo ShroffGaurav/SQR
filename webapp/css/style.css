@@ -2,3 +2,16 @@
 /*bottomMargin{*/
 /* margin-bottom: -3rem !Important;*/
 /*}*/
+
+.statusColour{
+	color: red;
+}
+span[data-colorclass="Late"] {
+color:#F00000 !important;
+}
+span[data-colorclass="In-Progress"] {
+color:blue !important;
+}
+span[data-colorclass="Closed"] {
+color:green !important;
+}

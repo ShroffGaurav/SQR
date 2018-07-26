@@ -102,7 +102,7 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
-						<List mode="Delete" delete="onPressDeleteAttachment"
+						<List mode="Delete" delete="onDeletePressAdd"
 							items="{ path: 'AttachmentDisplayModel>/Attachment', parameters: { operationMode: 'Client'}}"
 							noDataText="{No Data}" >
 							<headerToolbar>

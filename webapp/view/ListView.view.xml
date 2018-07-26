@@ -97,7 +97,11 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Status/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{Status}" wrapping="true"/>
+											<Text text="{Status}" wrapping="true">
+												<customData>
+													<core:CustomData key="colorClass" value="{ path:'Status'}" writeToDom="true"/>
+												</customData>
+											</Text>
 										</table:template>
 									</table:Column>
 									<table:Column width="6rem">

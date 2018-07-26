@@ -10,6 +10,9 @@
 					</headerTitle>
 					<headerContent>
 						<m:ObjectAttribute title="Inspection ID" text="{Id}"/>
+						<m:ToolbarSpacer width="70%"/>
+						<m:ObjectAttribute title="Inspection Status" text="{Status}"/>
+						
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">

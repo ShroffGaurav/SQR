@@ -540,7 +540,7 @@ sap.ui.define([
 		onFileUploaderChangePress: function(oEvent) {
 
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
-		//	this.getView().getModel("AttachmentDisplayModel").refresh();
+			this.getView().getModel("AttachmentDisplayModel").refresh();
 
 		},
 		onChange: function(oEvent) {
@@ -585,6 +585,20 @@ sap.ui.define([
 			} else {
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
+		},
+			onDeletePressAdd:function(oEvent){
+			var oList = oEvent.getSource(),
+			oItem = oEvent.getParameter("listItem"),
+			sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+			sPath = sPath.split("/");
+			sPath = sPath[2];
+			// after deletion put the focus back to the list
+			oList.attachEventOnce("updateFinished", oList.focus, oList);
+			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
+			
+			// send a delete request to the odata service
+			oData.Attachment.splice(sPath,1);
+			oList.getModel("AttachmentDisplayModel").refresh();	
 		},
 		onFileDeleted: function(oEvent) {
 				var FileId = oEvent.getParameters("documentId").documentId;

@@ -71,7 +71,7 @@
 									<f:formElements>
 									<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="true}" value="{SelectedValueHelp>/Finding}"/>
+												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="true" value="{SelectedValueHelp>/Finding}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
@@ -102,20 +102,33 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
-						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
-							uploadEnabled="true" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
-							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
-							items="{ path: 'SelectedValueHelp>/Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">
+							<List mode="Delete" delete="handleDelete" id="NewInspectionEditAttachment"
+							items="{ path: 'AttachmentDisplayModel>/Attachment', parameters: { operationMode: 'Client'}}"
+							noDataText="{No Data}" >
+							<headerToolbar>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<u:FileUploader id="oFileUploaderNewInspectionEdit" change="onFileUploaderChangePress" buttonOnly="true" iconOnly="true" icon="sap-icon://add" multiple="false" sameFilenameAllowed="true"/>
+								</Toolbar>
+							</headerToolbar>
 							<items>
-								<UploadCollectionItem id="oFileUploaderNewInspectionEdit" visibleDelete="true" visibleEdit="false" contributor="{SelectedValueHelp>CreatedByName}" fileName="{SelectedValueHelp>FileName}" documentId="{SelectedValueHelp>FileName}"
-									uploadedDate="{SelectedValueHelp>CreatedAt}" url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value">
-									<customData>
-										<core:CustomData value="{Id}"/>
-										<core:CustomData value="{SelectedValueHelp>/Findingid}"/>
-									</customData>
-								</UploadCollectionItem>
+								<ObjectListItem icon="{ path: 'AttachmentDisplayModel>type', formatter: '.formatter.attachmentIcon' }" title="{AttachmentDisplayModel>name}"/>
 							</items>
-						</UploadCollection>
+						</List>
+						<!--<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."-->
+						<!--	uploadEnabled="true" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"-->
+						<!--	beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"-->
+						<!--	items="{ path: 'SelectedValueHelp>/Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">-->
+						<!--	<items>-->
+						<!--		<UploadCollectionItem id="oFileUploaderNewInspectionEdit" visibleDelete="true" visibleEdit="false" contributor="{SelectedValueHelp>CreatedByName}" fileName="{SelectedValueHelp>FileName}" documentId="{SelectedValueHelp>FileName}"-->
+						<!--			uploadedDate="{SelectedValueHelp>CreatedAt}" url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value">-->
+						<!--			<customData>-->
+						<!--				<core:CustomData value="{Id}"/>-->
+						<!--				<core:CustomData value="{SelectedValueHelp>/Findingid}"/>-->
+						<!--			</customData>-->
+						<!--		</UploadCollectionItem>-->
+						<!--	</items>-->
+						<!--</UploadCollection>-->
 					</IconTabFilter>
 				</items>
 			</IconTabBar>

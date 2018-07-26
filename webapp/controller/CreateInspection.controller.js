@@ -23,6 +23,10 @@ sap.ui.define([
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
 			var CurrentDate = new Date();
 			this.getView().byId("InspectionDate").setDateValue(CurrentDate);
+			if(sap.ushell.Container){
+				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());	
+			}
+		
 			var oModel = new JSONModel({
 				Attachment: []
 			});
@@ -77,14 +81,14 @@ sap.ui.define([
 			var sValue = oEvent.getParameter("value");
 			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
 			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter([oFilter]);	
+			oBinding.filter([oFilter]);
 		},
-		HandleLiveSupplierSearch: function(oEvent){
+		HandleLiveSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
-			if(sValue.length > 3){
-			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
-			var oBinding = oEvent.getSource().getBinding("items");
-			oBinding.filter([oFilter]);	
+			if (sValue.length > 3) {
+				var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+				var oBinding = oEvent.getSource().getBinding("items");
+				oBinding.filter([oFilter]);
 			}
 		},
 
@@ -103,9 +107,9 @@ sap.ui.define([
 			}
 			oEvent.getSource().getBinding("items").filter([]);
 		},
-		handleSupplierCloseNavigate:function(oEvent){
-				MessageToast.show("No new item was selected.");
-				this.getOwnerComponent().getRouter().navTo("ListView");
+		handleSupplierCloseNavigate: function(oEvent) {
+			MessageToast.show("No new item was selected.");
+			this.getOwnerComponent().getRouter().navTo("ListView");
 		},
 		onSaveInspectionPress: function(oEvent) {
 			//	var oModel = new JSONModel();
@@ -113,71 +117,70 @@ sap.ui.define([
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
-				
-					this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
-					this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
-					var Inspection = {
-				"InspectionBy": this.getView().byId("InspectionBy").getValue(),
-				"SupplierId": this.getView().byId("SupplierID").getValue(),
-				"InspectionDate": InspectionDate,
-				"OtherContacts": this.getView().byId("OtherContacts").getValue(),
-				"Findings": []
-			};
-			jQuery.each(TableData, function(index, value) {
-				var Findings = {
-					"SubjectId": value.Status_id,
-					"CategoryId": value.category_id,
-					"QuestionId": value.question_id,
-					"ScoreId": value.Score_id,
-					"StatusId": value.Status_id,
-					"Findings": value.findings,
-					"Location": value.location,
-					"SupplierRiskCategory": value.RiskCategorySelect_id,
-					"ShortTermContainment": value.ShortTermContainment,
-					"SupplierCasualFactor": value.CasualFactor,
+
+				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
+				var Inspection = {
+					"InspectionBy": this.getView().byId("InspectionBy").getValue(),
 					"SupplierId": this.getView().byId("SupplierID").getValue(),
-					"QualityCategory": value.QualityCategorySelect
+					"InspectionDate": InspectionDate,
+					"OtherContacts": this.getView().byId("OtherContacts").getValue(),
+					"Findings": []
 				};
-				Inspection.Findings[index] = Findings;
-			}.bind(this));
-			// oModel.setData(Inspection);
+				jQuery.each(TableData, function(index, value) {
+					var Findings = {
+						"SubjectId": value.Status_id,
+						"CategoryId": value.category_id,
+						"QuestionId": value.question_id,
+						"ScoreId": value.Score_id,
+						"StatusId": value.Status_id,
+						"Findings": value.findings,
+						"Location": value.location,
+						"SupplierRiskCategory": value.RiskCategorySelect_id,
+						"ShortTermContainment": value.ShortTermContainment,
+						"SupplierCasualFactor": value.CasualFactor,
+						"SupplierId": this.getView().byId("SupplierID").getValue(),
+						"QualityCategory": value.QualityCategorySelect
+					};
+					Inspection.Findings[index] = Findings;
+				}.bind(this));
+				// oModel.setData(Inspection);
 
-			var requestURLStatusUpdate = "/Inspections";
-			this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Inspection, {
-				success: function(data, responsee) {
-					var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
-					MessageBox.success(
-						"New Inspection Id No:" + data.Id, {
-							styleClass: bCompact ? "sapUiSizeCompact" : "",
-							onClose: function(sAction) {
-								this.getOwnerComponent().getRouter().navTo("ListView", {});
-							}.bind(this)
-						}
-					);
-					//	MessageToast.show("New Inspection Id No:" + data.Id);
-					var Spath;
-					var UploadURL;
-					jQuery.each(data.Findings.results, function(index, value) {
-						Spath = "/Findings(InspectionId='" + data.Id + "',Id='" + data.Findings.results[index].Id + "')";
-						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
-						var oData = this.getView().byId("addInspectionTable").getModel().getData()[index].Attachments;
-						this._uploadAttachments(UploadURL, oData);
-					}.bind(this));
-				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in UserStatusSet service");
-				}
+				var requestURLStatusUpdate = "/Inspections";
+				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Inspection, {
+					success: function(data, responsee) {
+						var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
+						MessageBox.success(
+							"New Inspection Id No:" + data.Id, {
+								styleClass: bCompact ? "sapUiSizeCompact" : "",
+								onClose: function(sAction) {
+									this.getOwnerComponent().getRouter().navTo("ListView", {});
+								}.bind(this)
+							}
+						);
+						//	MessageToast.show("New Inspection Id No:" + data.Id);
+						var Spath;
+						var UploadURL;
+						jQuery.each(data.Findings.results, function(index, value) {
+							Spath = "/Findings(InspectionId='" + data.Id + "',Id='" + data.Findings.results[index].Id + "')";
+							UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
+							var oData = this.getView().byId("addInspectionTable").getModel().getData()[index].Attachments;
+							this._uploadAttachments(UploadURL, oData);
+						}.bind(this));
+					}.bind(this),
+					error: function() {
+						MessageToast.show("Error in UserStatusSet service");
+					}
 
-			});
+				});
 			} else {
-			
-					this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
-					this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
+
+				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
 				MessageToast.show("Please Fill All Mandatory Fields");
-				
-				
+
 			}
-		
+
 		},
 		onDialogPress: function(oEvent) {
 			var supplier = this.getView().byId("SupplierID").getValue();
@@ -459,53 +462,124 @@ sap.ui.define([
 		onDialogSubmitButton: function(oEvent) {
 			var oData = this.getView().byId("addInspectionTable").getModel().getData();
 			var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
-			if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
-				var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("SelectedValueHelp").getData().Attachment;
+			
+				if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
+				var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("AttachmentDisplayModel").getData().Attachment;
 			}
+			
+			// if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
+			// 	var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("SelectedValueHelp").getData().Attachment;
+			// }
+			var count = 0;
 			var iKey;
 			var oFile;
+			var DataArray = oData;
 			rowIndex = rowIndex.split("/");
 			rowIndex = rowIndex[1];
-			var DataArray = oData;
-			DataArray[rowIndex].CasualFactor = this.getView().byId("CasualFactor").getValue();
-			DataArray[rowIndex].QualityCategorySelect = "";
-			DataArray[rowIndex].RiskCategorySelect = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
-			DataArray[rowIndex].RiskCategorySelect_id = this.getView().byId("RiskCategorySelect").getSelectedItem().getKey();
-			DataArray[rowIndex].Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();
-			DataArray[rowIndex].Score_id = this.getView().byId("ScoreSelect").getSelectedItem().getKey();
-			DataArray[rowIndex].ShortTermContainment = this.getView().byId("ContainmentInput").getValue();
-			DataArray[rowIndex].Status = this.getView().byId("StatusSelect").getSelectedItem().getText();
-			DataArray[rowIndex].Status_id = this.getView().byId("StatusSelect").getSelectedItem().getKey();
-			DataArray[rowIndex].category = this.getView().byId("CategorySelect").getSelectedItem().getText();
-			DataArray[rowIndex].category_id = this.getView().byId("CategorySelect").getSelectedItem().getKey();
-			DataArray[rowIndex].findings = this.getView().byId("InspectionFindingsText").getValue();
-			DataArray[rowIndex].location = this.getView().byId("InspectionLocation").getValue();
-			DataArray[rowIndex].question = this.getView().byId("questionSelect").getSelectedItem().getText();
-			DataArray[rowIndex].question_id = this.getView().byId("questionSelect").getSelectedItem().getKey();
-			DataArray[rowIndex].subject = this.getView().byId("SubjectSelect").getSelectedItem().getText();
-			DataArray[rowIndex].subject_id = this.getView().byId("SubjectSelect").getSelectedItem().getKey();
 
-			if (aFiles) {
-				var aAttachments = DataArray[rowIndex].Attachments;
-				for (iKey = 0; iKey < aFiles.length; iKey++) {
-					oFile = aFiles[iKey];
-					aAttachments.push({
-						PRNumber: "",
-						FileName: oFile.name,
-						mime_type: oFile.type,
-						CreatedAt: new Date(),
-						//	CreatedByName: sName,
-						FileSize: oFile.size,
-						file: oFile
-					});
-				}
+			if (this.getView().byId("SubjectSelect").getSelectedItem().getKey() !== null && this.getView().byId("SubjectSelect").getSelectedItem()
+				.getKey() !== "") {
+				this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
 			}
 
-			this.getView().byId("addInspectionTable").getModel().setData(DataArray);
-			this.getView().byId("addInspectionTable").getModel().refresh();
+			if (this.getView().byId("CategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("CategorySelect").getSelectedItem()
+				.getKey() !== "") {
+				this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+			}
 
-			this._oDialog.destroy();
-			this._oDialog = undefined;
+			if (this.getView().byId("questionSelect").getSelectedItem().getKey() !== null && this.getView().byId("questionSelect").getSelectedItem()
+				.getKey() !== "") {
+				this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+			}
+
+			if (this.getView().byId("ScoreSelect").getSelectedItem().getKey() !== null && this.getView().byId("ScoreSelect").getSelectedItem().getKey() !==
+				"") {
+				this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+			}
+
+			if (this.getView().byId("StatusSelect").getSelectedItem().getKey() !== null && this.getView().byId("StatusSelect").getSelectedItem()
+				.getKey() !== "") {
+				this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+
+			}
+
+			if (this.getView().byId("InspectionFindingsText").getValue() !== "") {
+				this.getView().byId("InspectionFindingsText").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("InspectionFindingsText").setValueState(sap.ui.core.ValueState.Error);
+			}
+
+			if(this.getView().byId("InspectionLocation").getValue() !== ""){
+			this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.None);
+			count++;	
+			}else{
+				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.Error);	
+			}
+			
+			if(this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== ""){
+					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+							count++;
+			}else{
+					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+			}
+	
+			if (count === 8) {
+				DataArray[rowIndex].QualityCategorySelect = "";
+				DataArray[rowIndex].RiskCategorySelect = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
+				DataArray[rowIndex].RiskCategorySelect_id = this.getView().byId("RiskCategorySelect").getSelectedItem().getKey();
+				DataArray[rowIndex].Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();
+				DataArray[rowIndex].Score_id = this.getView().byId("ScoreSelect").getSelectedItem().getKey();
+				DataArray[rowIndex].ShortTermContainment = this.getView().byId("ContainmentInput").getValue();
+				DataArray[rowIndex].Status = this.getView().byId("StatusSelect").getSelectedItem().getText();
+				DataArray[rowIndex].Status_id = this.getView().byId("StatusSelect").getSelectedItem().getKey();
+				DataArray[rowIndex].category = this.getView().byId("CategorySelect").getSelectedItem().getText();
+				DataArray[rowIndex].category_id = this.getView().byId("CategorySelect").getSelectedItem().getKey();
+				DataArray[rowIndex].findings = this.getView().byId("InspectionFindingsText").getValue();
+				DataArray[rowIndex].location = this.getView().byId("InspectionLocation").getValue();
+				DataArray[rowIndex].question = this.getView().byId("questionSelect").getSelectedItem().getText();
+				DataArray[rowIndex].question_id = this.getView().byId("questionSelect").getSelectedItem().getKey();
+				DataArray[rowIndex].subject = this.getView().byId("SubjectSelect").getSelectedItem().getText();
+				DataArray[rowIndex].subject_id = this.getView().byId("SubjectSelect").getSelectedItem().getKey();
+
+				if (aFiles) {
+					var aAttachments = DataArray[rowIndex].Attachments;
+					for (iKey = 0; iKey < aFiles.length; iKey++) {
+						oFile = aFiles[iKey];
+						aAttachments.push({
+							PRNumber: "",
+							FileName: oFile.name,
+							mime_type: oFile.type,
+							CreatedAt: new Date(),
+							//	CreatedByName: sName,
+							FileSize: oFile.size,
+							file: oFile
+						});
+					}
+				}
+
+				this.getView().byId("addInspectionTable").getModel().setData(DataArray);
+				this.getView().byId("addInspectionTable").getModel().refresh();
+
+				this._oDialog.destroy();
+				this._oDialog = undefined;
+			}
+
 		},
 
 		/// UploadCollection Code 
@@ -554,29 +628,62 @@ sap.ui.define([
 			this.getView().getModel("AttachmentDisplayModel").refresh();
 
 		},
-		onFileDeleted: function(oEvent) {
-			var sItemToDeleteId = oEvent.getParameter("documentId");
+		onDeletePressAdd:function(oEvent){
+			var oList = oEvent.getSource(),
+			oItem = oEvent.getParameter("listItem"),
+			sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+			sPath = sPath.split("/");
+			sPath = sPath[2];
+			// after deletion put the focus back to the list
+			oList.attachEventOnce("updateFinished", oList.focus, oList);
+			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
+			
+			// send a delete request to the odata service
+			oData.Attachment.splice(sPath,1);
+			oList.getModel("AttachmentDisplayModel").refresh();	
+		},
+		handleDelete: function(oEvent) {
+			var oList = oEvent.getSource(),
+				oItem = oEvent.getParameter("listItem"),
+				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
 			var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
 			rowIndex = rowIndex.split("/");
 			rowIndex = rowIndex[1];
+			sPath = sPath.split("/");
+			sPath = sPath[2];
+			// after deletion put the focus back to the list
+			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
-			var oData = oEvent.getSource().getModel("SelectedValueHelp").getData();
-			var aItems = jQuery.extend(true, {}, oData);
-			jQuery.each(aItems.Attachments, function(index) {
-				if (aItems.Attachments[index] && aItems.Attachments[index].FileName === sItemToDeleteId) {
-					aItems.Attachments.splice(index, 1);
-				}
-			});
-			var atableItems = jQuery.extend(true, {}, oTableData);
-			jQuery.each(atableItems[rowIndex].Attachments, function(index) {
-				if (atableItems[rowIndex].Attachments[index] && atableItems[rowIndex].Attachments[index].FileName === sItemToDeleteId) {
-					atableItems[rowIndex].Attachments.splice(index, 1);
-				}
-			});
-
-			this.getView().byId("addInspectionTable").getModel().setData(atableItems);
-			oEvent.getSource().getModel("SelectedValueHelp").setData(aItems);
+			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
+			
+			// send a delete request to the odata service
+			oData.Attachment.splice(sPath,1);
+			oTableData[rowIndex].Attachments.splice(sPath,1);
+			oList.getModel("AttachmentDisplayModel").refresh();
 		},
+		// onFileDeleted: function(oEvent) {
+		// 	var sItemToDeleteId = oEvent.getParameter("documentId");
+		// 	var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
+		// 	rowIndex = rowIndex.split("/");
+		// 	rowIndex = rowIndex[1];
+		// 	var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
+		// 	var oData = oEvent.getSource().getModel("SelectedValueHelp").getData();
+		// 	var aItems = jQuery.extend(true, {}, oData);
+		// 	jQuery.each(aItems.Attachments, function(index) {
+		// 		if (aItems.Attachments[index] && aItems.Attachments[index].FileName === sItemToDeleteId) {
+		// 			aItems.Attachments.splice(index, 1);
+		// 		}
+		// 	});
+		// 	var atableItems = jQuery.extend(true, {}, oTableData);
+		// 	jQuery.each(atableItems[rowIndex].Attachments, function(index) {
+		// 		if (atableItems[rowIndex].Attachments[index] && atableItems[rowIndex].Attachments[index].FileName === sItemToDeleteId) {
+		// 			atableItems[rowIndex].Attachments.splice(index, 1);
+		// 		}
+		// 	});
+
+		// 	this.getView().byId("addInspectionTable").getModel().setData(atableItems);
+		// 	oEvent.getSource().getModel("SelectedValueHelp").setData(aItems);
+		// },
 		// Table Personalization 
 		onPersoButtonPressed: function(oEvent) {
 			this._oTPCCreate.openDialog();
