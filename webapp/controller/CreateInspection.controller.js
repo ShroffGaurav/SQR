@@ -7,9 +7,11 @@ sap.ui.define([
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
-	"com/sapZSQRMBWA/util/formatter"
+	"com/sapZSQRMBWA/util/formatter",
+	"sap/ui/core/ListItem",
+	"sap/ui/core/search/OpenSearchProvider"
 ], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
-	formatter) {
+	formatter, ListItem, OpenSearchProvider) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.CreateInspection", {
@@ -20,13 +22,14 @@ sap.ui.define([
 		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
 		 */
 		onInit: function() {
+
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
 			var CurrentDate = new Date();
 			this.getView().byId("InspectionDate").setDateValue(CurrentDate);
-			if(sap.ushell.Container){
-				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());	
+			if (sap.ushell.Container) {
+				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());
 			}
-		
+
 			var oModel = new JSONModel({
 				Attachment: []
 			});
@@ -52,6 +55,21 @@ sap.ui.define([
 			}).activate();
 
 		},
+
+		handleSuggest: function(oEvent) {
+			var sTerm = oEvent.getParameter("suggestValue");
+			var oFilter;
+			if (sTerm) {
+				oFilter = new Filter({
+					filters: [new Filter("Name", sap.ui.model.FilterOperator.Contains, sTerm),
+						new Filter("userId", sap.ui.model.FilterOperator.Contains, sTerm)
+					],
+					and: false
+				});
+			}
+			oEvent.getSource().getBinding("suggestionItems").filter(oFilter);
+		},
+
 		onHandleRouteMatched: function(oEvent) {
 			this.arr = [];
 			if (this.getView().getModel().getData()) {
@@ -462,11 +480,11 @@ sap.ui.define([
 		onDialogSubmitButton: function(oEvent) {
 			var oData = this.getView().byId("addInspectionTable").getModel().getData();
 			var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
-			
-				if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
+
+			if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
 				var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("AttachmentDisplayModel").getData().Attachment;
 			}
-			
+
 			// if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
 			// 	var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("SelectedValueHelp").getData().Attachment;
 			// }
@@ -525,20 +543,21 @@ sap.ui.define([
 				this.getView().byId("InspectionFindingsText").setValueState(sap.ui.core.ValueState.Error);
 			}
 
-			if(this.getView().byId("InspectionLocation").getValue() !== ""){
-			this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.None);
-			count++;	
-			}else{
-				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.Error);	
+			if (this.getView().byId("InspectionLocation").getValue() !== "") {
+				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.Error);
 			}
-			
-			if(this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== ""){
-					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
-							count++;
-			}else{
-					this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+
+			if (this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("RiskCategorySelect").getSelectedItem()
+				.getKey() !== "") {
+				this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+				count++;
+			} else {
+				this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 			}
-	
+
 			if (count === 8) {
 				DataArray[rowIndex].QualityCategorySelect = "";
 				DataArray[rowIndex].RiskCategorySelect = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
@@ -628,19 +647,19 @@ sap.ui.define([
 			this.getView().getModel("AttachmentDisplayModel").refresh();
 
 		},
-		onDeletePressAdd:function(oEvent){
+		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
-			oItem = oEvent.getParameter("listItem"),
-			sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+				oItem = oEvent.getParameter("listItem"),
+				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
 			sPath = sPath.split("/");
 			sPath = sPath[2];
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
-			
+
 			// send a delete request to the odata service
-			oData.Attachment.splice(sPath,1);
-			oList.getModel("AttachmentDisplayModel").refresh();	
+			oData.Attachment.splice(sPath, 1);
+			oList.getModel("AttachmentDisplayModel").refresh();
 		},
 		handleDelete: function(oEvent) {
 			var oList = oEvent.getSource(),
@@ -655,10 +674,10 @@ sap.ui.define([
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
 			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
-			
+
 			// send a delete request to the odata service
-			oData.Attachment.splice(sPath,1);
-			oTableData[rowIndex].Attachments.splice(sPath,1);
+			oData.Attachment.splice(sPath, 1);
+			oTableData[rowIndex].Attachments.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
 		// onFileDeleted: function(oEvent) {
@@ -701,9 +720,11 @@ sap.ui.define([
 		 * (NOT before the first rendering! onInit() is used for that one!).
 		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
 		 */
-		//	onBeforeRendering: function() {
-		//
-		//	},
+		onBeforeRendering: function() {
+			if (sap.ushell.Container) {
+				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());
+			}
+		},
 
 		/**
 		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
