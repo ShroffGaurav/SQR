@@ -98,7 +98,7 @@
 										<table:template>
 											<Text text="{Status}" wrapping="true">
 												<customData>
-													<core:CustomData key="colorClass" value="{ path:'Status'}" writeToDom="true"/>
+													<core:CustomData key="colorClass" value="{ path:'Status', formatter: '.formatter.stringCheck'}" writeToDom="true"/>
 												</customData>
 											</Text>
 										</table:template>

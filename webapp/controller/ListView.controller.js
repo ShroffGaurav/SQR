@@ -4,10 +4,12 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/m/UploadCollectionParameter",
-	"sap/m/MessageToast"
-], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast) {
+	"sap/m/MessageToast",
+	"com/sapZSQRMBWA/util/formatter"
+], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast,formatter) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
+		formatter: formatter,
 		onInit: function() {
 			this.getOwnerComponent().getRouter().getRoute("ListView").attachPatternMatched(this.onHandleRouteMatched, this);
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
