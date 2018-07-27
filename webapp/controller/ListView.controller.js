@@ -155,7 +155,7 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				// method: "PUT",
 				success: function(data, response) {
-					MessageToast.show("Action Complete");
+					MessageToast.show("Successfully updated the Finding");
 					busyIndicator.close();
 					this._oDialogEdit.destroy();
 					this._oDialogEdit = undefined;
@@ -183,7 +183,6 @@ sap.ui.define([
 		},
 
 		/////// Upload Collection Code ///////
-
 		onChange: function(oEvent) {
 			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();

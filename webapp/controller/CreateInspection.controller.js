@@ -103,11 +103,14 @@ sap.ui.define([
 		},
 		HandleLiveSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
-				var oNameFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
-				var oIdFilter = new Filter("lifnr", sap.ui.model.FilterOperator.Contains, sValue);
-				var oTotalFilter = new Filter({ filters:[oNameFilter, oIdFilter], and: false}); //Or Filter between ID and name
-				var oBinding = oEvent.getSource().getBinding("items");
-				oBinding.filter(oTotalFilter);
+			var oNameFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+			var oIdFilter = new Filter("lifnr", sap.ui.model.FilterOperator.Contains, sValue);
+			var oTotalFilter = new Filter({
+				filters: [oNameFilter, oIdFilter],
+				and: false
+			}); //Or Filter between ID and name
+			var oBinding = oEvent.getSource().getBinding("items");
+			oBinding.filter(oTotalFilter);
 		},
 
 		handleSupplierClose: function(oEvent) {
@@ -158,7 +161,7 @@ sap.ui.define([
 						"ShortTermContainment": value.ShortTermContainment,
 						"SupplierCasualFactor": value.CasualFactor,
 						"SupplierId": this.getView().byId("SupplierID").getValue(),
-						"QualityCategory": value.QualityCategorySelect
+						"QualityCategory": value.QualityCategoryInput
 					};
 					Inspection.Findings[index] = Findings;
 				}.bind(this));
@@ -257,9 +260,8 @@ sap.ui.define([
 				"RiskCategorySelect_id": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
 						"RiskCategorySelect").getSelectedItem()
 					.getKey()),
-				"QualityCategorySelect": (this.getView().byId("QualityCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
-						"QualityCategorySelect").getSelectedItem()
-					.getText()),
+				"QualityCategoryInput": (this.getView().byId("QualityCategoryInput").getValue() === null ? "" : this.getView().byId(
+					"QualityCategoryInput").getValue()),
 				"ShortTermContainment": this.getView().byId("ShortTermContainment").getValue(),
 				"CasualFactor": this.getView().byId("CasualFactor").getValue(),
 				"Attachments": []
@@ -368,7 +370,7 @@ sap.ui.define([
 				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
 				this.getView().byId("CategorySelect").setSelectedKey("");
 				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("QualityCategoryInput").setValue("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
@@ -381,16 +383,16 @@ sap.ui.define([
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
 				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("QualityCategoryInput").setValue("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
 		},
 		onQuestionChange: function(oEvent) {
-			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().QUALITY_CATEGORY;
-			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().DEFAULT_RISK_CATEGORY;
-			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
+			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
+			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
+			this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
 			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
 		onTableDeletePress: function(oEvent) {
@@ -413,23 +415,8 @@ sap.ui.define([
 			this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
 				0].setValue(supplier);
 			var editVisibilityModel = new JSONModel();
-
-			// var rowIndex = oEvent.getSource().getParent().getBindingContext().sPath;
-			// //	var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().Id;
-			// //	var inspectionid = oEvent.getSource().getParent().getBindingContext().getObject().InspectionId;
-			// var Subject = oEvent.getSource().getParent().getBindingContext().getObject().subject;
-			// var Category = oEvent.getSource().getParent().getBindingContext().getObject().category;
-			// var Question = oEvent.getSource().getParent().getBindingContext().getObject().question;
-			// var Score = oEvent.getSource().getParent().getBindingContext().getObject().Score;
 			var Status = oEvent.getSource().getParent().getBindingContext().getObject().Status_id;
-			// var Finding = oEvent.getSource().getParent().getBindingContext().getObject().findings;
-			// var InspectionLocation = oEvent.getSource().getParent().getBindingContext().getObject().location;
-			// var ShortTermContainment = oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment");
-			// var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext().getObject("RiskCategorySelect");
-			// var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext().getObject("CasualFactor");
-			// var QualityCategory = oEvent.getSource().getParent().getBindingContext().getObject("QualityCategorySelect");
-			// var SupplierId = oEvent.getSource().getParent().getBindingContext().getObject("SupplierId");
-			// var SupplierName = oEvent.getSource().getParent().getBindingContext().getObject("SupplierName");
+
 			var Data = {
 				"rowIndex": oEvent.getSource().getParent().getBindingContext().sPath,
 				//		"Findingid": Findingid,
@@ -441,7 +428,7 @@ sap.ui.define([
 				"Status": oEvent.getSource().getParent().getBindingContext().getObject().Status_id,
 				"Finding": oEvent.getSource().getParent().getBindingContext().getObject().findings,
 				//	"SupplierId": SupplierName + "(" + SupplierId + ")",
-				"QualityCategory": oEvent.getSource().getParent().getBindingContext().getObject("QualityCategorySelect"),
+				"QualityCategory": oEvent.getSource().getParent().getBindingContext().getObject("QualityCategoryInput"),
 				"InspectionLocation": oEvent.getSource().getParent().getBindingContext().getObject().location,
 				"ShortTermContainment": oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment"),
 				"SupplerRiskCategory": oEvent.getSource().getParent().getBindingContext().getObject("RiskCategorySelect_id"),
@@ -551,7 +538,7 @@ sap.ui.define([
 			}
 
 			if (count === 8) {
-				DataArray[rowIndex].QualityCategorySelect = "";
+				DataArray[rowIndex].QualityCategoryInput = "";
 				DataArray[rowIndex].RiskCategorySelect = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
 				DataArray[rowIndex].RiskCategorySelect_id = this.getView().byId("RiskCategorySelect").getSelectedItem().getKey();
 				DataArray[rowIndex].Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();

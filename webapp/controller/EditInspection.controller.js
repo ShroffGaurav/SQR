@@ -72,7 +72,7 @@ sap.ui.define([
 			var FindingId = oEvent.getSource().getCustomData()[1].getValue();
 			var Status = this.getView().byId("StatusSelect").getSelectedKey();
 			var Findings = this.getView().byId("InspectionFindingsText").getValue();
-			var RiskCategory = this.getView().byId("RiskCategorySelect").getSelectedKey();			
+			var RiskCategory = this.getView().byId("RiskCategorySelect").getSelectedKey();
 			var Containment = this.getView().byId("ContainmentInput").getValue();
 
 			var Payload = {};
@@ -154,9 +154,8 @@ sap.ui.define([
 				"RiskCategorySelect_id": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
 						"RiskCategorySelect").getSelectedItem()
 					.getKey()),
-				"QualityCategorySelect": (this.getView().byId("QualityCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
-						"QualityCategorySelect").getSelectedItem()
-					.getText()),
+				"QualityCategoryInput": (this.getView().byId("QualityCategoryInput").getValue() === null ? "" : this.getView().byId(
+					"QualityCategoryInput").getValue()),
 				"ShortTermContainment": this.getView().byId("ShortTermContainment").getValue(),
 				"CasualFactor": this.getView().byId("CasualFactor").getValue(),
 				"Attachments": []
@@ -261,7 +260,7 @@ sap.ui.define([
 				Payload.SupplierRiskCategory = array.RiskCategorySelect_id;
 				Payload.ShortTermContainment = array.ShortTermContainment;
 				Payload.SupplierCasualFactor = array.CasualFactor;
-				Payload.QualityCategory = array.QualityCategorySelect;
+				Payload.QualityCategory = array.QualityCategoryInput;
 
 				var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')/Findings";
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Payload, {
@@ -295,12 +294,10 @@ sap.ui.define([
 			this._oDialogAdd = undefined;
 		},
 		onNavBack: function(oEvent) {
-			this.getOwnerComponent().getRouter().navTo("ListView", {
-			});
+			this.getOwnerComponent().getRouter().navTo("ListView", {});
 		},
 		onAllInspectionPress: function() {
-			this.getOwnerComponent().getRouter().navTo("ListView", {
-			});
+			this.getOwnerComponent().getRouter().navTo("ListView", {});
 		},
 		onSaveInspectionPress: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
@@ -315,7 +312,7 @@ sap.ui.define([
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
-					MessageToast.show("Inspection Saved");
+					MessageToast.show("Successfully saved the Inspection");
 					busyIndicator.close();
 				}.bind(this),
 				error: function() {
@@ -425,7 +422,7 @@ sap.ui.define([
 				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
 				this.getView().byId("CategorySelect").setSelectedKey("");
 				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("QualityCategoryInput").setValue("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
@@ -437,16 +434,16 @@ sap.ui.define([
 			if (SelectedKey !== "" || SelectedKey !== null) {
 				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
 				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategorySelect").setSelectedKey("");
+				this.getView().byId("QualityCategoryInput").setValue("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
 		},
 		onQuestionChange: function(oEvent) {
-			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().QUALITY_CATEGORY;
-			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().DEFAULT_RISK_CATEGORY;
-			this.getView().byId("QualityCategorySelect").setSelectedKey(QualityCategory);
+			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
+			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
+			this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
 			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
 		onPersoButtonPressed: function(oEvent) {
@@ -524,7 +521,7 @@ sap.ui.define([
 					break;
 				}
 			}
-			 oUploadCollection.getBinding("items").refresh();
+			oUploadCollection.getBinding("items").refresh();
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
@@ -543,33 +540,33 @@ sap.ui.define([
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
 		},
-			onDeletePressAdd:function(oEvent){
+		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
-			oItem = oEvent.getParameter("listItem"),
-			sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+				oItem = oEvent.getParameter("listItem"),
+				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
 			sPath = sPath.split("/");
 			sPath = sPath[2];
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
-			
+
 			// send a delete request to the odata service
-			oData.Attachment.splice(sPath,1);
-			oList.getModel("AttachmentDisplayModel").refresh();	
+			oData.Attachment.splice(sPath, 1);
+			oList.getModel("AttachmentDisplayModel").refresh();
 		},
 		onFileDeleted: function(oEvent) {
-				var FileId = oEvent.getParameters("documentId").documentId;
-				var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
-				var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
+			var FileId = oEvent.getParameters("documentId").documentId;
+			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
+			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 
-				this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
-					success: function(data, response) {
-						MessageToast.show("Successfully deleted the attachment");
-					}.bind(this),
-					error: function() {
-						MessageToast.show("Error in Delete service");
-					}.bind(this)
-				});
-			}
+			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
+				success: function(data, response) {
+					MessageToast.show("Successfully deleted the attachment");
+				}.bind(this),
+				error: function() {
+					MessageToast.show("Error in Delete service");
+				}.bind(this)
+			});
+		}
 	});
 });

@@ -39,7 +39,7 @@
 											<f:fields>
 												<Select id="questionSelect" change="onQuestionChange" forceSelection="false"
 													items="{ path: '/ZWM_QUESTIONS_VH', sorter: { path: 'question_content' } }">
-													<core:Item key="{question_id}" text="{question_content}"/>
+													<core:Item key="{question_id}" text="{question_content}"/>												
 												</Select>
 											</f:fields>
 										</f:FormElement>
@@ -52,10 +52,7 @@
 										</f:FormElement>
 										<f:FormElement label="Quality Category">
 											<f:fields>
-												<Select id="QualityCategorySelect" forceSelection="false" items="{ path: '/ZWM_CAT_QUESTION', sorter: { path: 'quality_category' } }"
-													enabled="false">
-													<core:Item key="{quality_category}" text="{quality_category}"/>
-												</Select>
+												<Input id="QualityCategoryInput" enabled="false"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Status">
