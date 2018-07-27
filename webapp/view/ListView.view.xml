@@ -13,12 +13,16 @@
 							liveMode="true" showFilterConfiguration="false" useDateRangeType="true"></smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							smartFilterId="smartFilterBar" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true"
-							tableType="Table" beforeRebindTable="onBeforeRebindTableExtension"
-							showFullScreenButton="true" enableAutoBinding="true" entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
+							tableType="Table" beforeRebindTable="onBeforeRebindTableExtension" showFullScreenButton="true" enableAutoBinding="true"
+							entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
+							<!--'customData' is used to disbale 'Filter' in the View Settings-->
+							<smartTable:customData>
+								<core:CustomData key="p13nDialogSettings"
+									value='\{ "columns": \{ "visible": true}, "sort": \{ "visible": true}, "group": \{ "visible": false}, "filter": \{ "visible": false} }'/>
+							</smartTable:customData>
 							<smartTable:customToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
-									<!--<Button text="Edit" press="onEditPress" type="Transparent" icon="sap-icon://edit"></Button>-->
 									<Button type="Emphasized" text="New Inspection" press="onNewInspectionPress"/>
 								</Toolbar>
 							</smartTable:customToolbar>
@@ -34,7 +38,7 @@
 									</table:RowAction>
 								</table:rowActionTemplate>
 								<table:columns>
-									<table:Column width="6rem">
+									<table:Column width="6rem" sortProperty="id">
 										<table:customData>
 											<core:CustomData key="p13nData" value='\{"columnKey": "id", "columnIndex":"1", "leadingProperty": "id","type":"numeric"}'/>
 										</table:customData>
@@ -43,7 +47,8 @@
 											<Text text="{id}" wrapping="true"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="6rem">
+									<!--All custom columns (only for custom columns) require sortProperty to be provided to be available in View Settings-->
+									<table:Column width="6rem" sortProperty="inspection_id">
 										<table:customData>
 											<core:CustomData key="p13nData"
 												value='\{"columnKey": "inspection_id", "columnIndex":"0", "leadingProperty": "inspection_id","type":"numeric"}'/>
@@ -81,7 +86,7 @@
 											<Text text="{question_content}" wrapping="flase"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="11rem">
+									<table:Column width="11rem" sortProperty="Score">
 										<table:customData>
 											<core:CustomData key="p13nData" value='\{"columnKey": "Score", "columnIndex":"5", "leadingProperty": "Score","type":"numeric"}'/>
 										</table:customData>
@@ -90,7 +95,7 @@
 											<Text text="{Score}" wrapping="true"/>
 										</table:template>
 									</table:Column>
-									<table:Column width="6rem">
+									<table:Column width="6rem" sortProperty="Status">
 										<table:customData>
 											<core:CustomData key="p13nData" value='\{"columnKey": "Status", "columnIndex":"6", "leadingProperty": "Status","type":"numeric"}'/>
 										</table:customData>
