@@ -147,7 +147,7 @@ sap.ui.define([
 				};
 				jQuery.each(TableData, function(index, value) {
 					var Findings = {
-						"SubjectId": value.Status_id,
+						"SubjectId": value.subject_id,
 						"CategoryId": value.category_id,
 						"QuestionId": value.question_id,
 						"ScoreId": value.Score_id,
@@ -169,7 +169,7 @@ sap.ui.define([
 					success: function(data, responsee) {
 						var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 						MessageBox.success(
-							"New Inspection Id No:" + data.Id, {
+							"Created a new Inspection with Id: " + data.Id, {
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								onClose: function(sAction) {
 									this.getOwnerComponent().getRouter().navTo("ListView", {});
