@@ -10,7 +10,7 @@ span[data-colorclass="Late"] {
 color:red !important;
 }
 span[data-colorclass="In-Progress"] {
-color:blue !important;
+color: #5496cd !important;
 }
 span[data-colorclass="Closed"] {
 color:green !important;

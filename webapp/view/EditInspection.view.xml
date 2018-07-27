@@ -11,8 +11,11 @@
 					<headerContent>
 						<m:ObjectAttribute title="Inspection ID" text="{Id}"/>
 						<m:ToolbarSpacer width="70%"/>
-						<m:ObjectAttribute title="Inspection Status" text="{Status}"/>
-						
+						<m:ObjectAttribute title="Inspection Status" text="{Status}">
+							<!--<customData>-->
+							<!--	<core:CustomData key="colorClass" value="{ path:'Status'}" writeToDom="true"/>-->
+							<!--</customData>-->
+						</m:ObjectAttribute>
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">
@@ -59,71 +62,71 @@
 									<blocks>
 										<!--<m:VBox>-->
 										<!--	<m:HBox>-->
-												<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'Findings' }" mode="None">
-													<m:headerToolbar>
-														<m:OverflowToolbar>
-															<!--<Title text="Products" level="H2"/>-->
-															<m:ToolbarSpacer/>
-															<!-- Add the Personalization button -->
-															<!--<CheckBox text="Enable Personalization Grouping" select="onTableGrouping"/>-->
-															<!-- Add the Personalization button -->
-															<m:Button text="Add Finding" type="Transparent" press="onAddDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
-															<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
-																<m:layoutData>
-																	<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
-																</m:layoutData>
-															</m:Button>
-														</m:OverflowToolbar>
-													</m:headerToolbar>
-													<m:columns>
-														<m:Column id="FindingId" width="12em">
-															<m:Text text="Finding id"/>
-														</m:Column>
-														<m:Column id="Subject" width="12em">
-															<m:Text text="Subject"/>
-														</m:Column>
-														<m:Column id="Category">
-															<m:Text  text="Category"/>
-														</m:Column>
-														<m:Column id="Question" minScreenWidth="Desktop">
-															<m:Text text="Question"/>
-														</m:Column>
-														<m:Column id="Score" minScreenWidth="Desktop">
-															<m:Text text="Score"/>
-														</m:Column>
-														<m:Column id="Status" hAlign="End">
-															<m:Text text="Status"/>
-														</m:Column>
-														<m:Column id="Findings" hAlign="End">
-															<m:Text text="Findings"/>
-														</m:Column>
-														<m:Column id="Location" hAlign="End">
-															<m:Text text="Inspection Location"/>
-														</m:Column>
-														<m:Column id="Edit" hAlign="End" width="5rem">
-															<m:Text text="Edit"/>
-														</m:Column>
-														<m:Column id="Delete" hAlign="End" width="5rem">
-															<m:Text text="Delete"/>
-														</m:Column>
-													</m:columns>
-													<m:items>
-														<m:ColumnListItem>
-															<m:cells>
-																<m:Text text="{Id}"/>
-																<m:Text text="{Subject}"/>
-																<m:Text text="{Category}"/>
-																<m:Text text="{Question}"/>
-																<m:Text text="{Score}"/>
-																<m:Text text="{Status}"/>
-																<m:Text text="{Findings}"/>
-																<m:Text text="{Location}"/>
-																<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
-																<m:Button icon="sap-icon://delete" tooltip="Delete" press="onDeletePress"/>
-															</m:cells>
-														</m:ColumnListItem>
-													</m:items>
-												</m:Table>
+										<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'Findings' }" mode="None">
+											<m:headerToolbar>
+												<m:OverflowToolbar>
+													<!--<Title text="Products" level="H2"/>-->
+													<m:ToolbarSpacer/>
+													<!-- Add the Personalization button -->
+													<!--<CheckBox text="Enable Personalization Grouping" select="onTableGrouping"/>-->
+													<!-- Add the Personalization button -->
+													<m:Button text="Add Finding" type="Transparent" press="onAddDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
+													<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
+														<m:layoutData>
+															<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
+														</m:layoutData>
+													</m:Button>
+												</m:OverflowToolbar>
+											</m:headerToolbar>
+											<m:columns>
+												<m:Column id="FindingId" width="12em">
+													<m:Text text="Finding id"/>
+												</m:Column>
+												<m:Column id="Subject" width="12em">
+													<m:Text text="Subject"/>
+												</m:Column>
+												<m:Column id="Category">
+													<m:Text text="Category"/>
+												</m:Column>
+												<m:Column id="Question" minScreenWidth="Desktop">
+													<m:Text text="Question"/>
+												</m:Column>
+												<m:Column id="Score" minScreenWidth="Desktop">
+													<m:Text text="Score"/>
+												</m:Column>
+												<m:Column id="Status" hAlign="End">
+													<m:Text text="Status"/>
+												</m:Column>
+												<m:Column id="Findings" hAlign="End">
+													<m:Text text="Findings"/>
+												</m:Column>
+												<m:Column id="Location" hAlign="End">
+													<m:Text text="Inspection Location"/>
+												</m:Column>
+												<m:Column id="Edit" hAlign="End" width="5rem">
+													<m:Text text="Edit"/>
+												</m:Column>
+												<m:Column id="Delete" hAlign="End" width="5rem">
+													<m:Text text="Delete"/>
+												</m:Column>
+											</m:columns>
+											<m:items>
+												<m:ColumnListItem>
+													<m:cells>
+														<m:Text text="{Id}"/>
+														<m:Text text="{Subject}"/>
+														<m:Text text="{Category}"/>
+														<m:Text text="{Question}"/>
+														<m:Text text="{Score}"/>
+														<m:Text text="{Status}"/>
+														<m:Text text="{Findings}"/>
+														<m:Text text="{Location}"/>
+														<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
+														<m:Button icon="sap-icon://delete" tooltip="Delete" press="onDeletePress"/>
+													</m:cells>
+												</m:ColumnListItem>
+											</m:items>
+										</m:Table>
 										<!--	</m:HBox>-->
 										<!--</m:VBox>-->
 									</blocks>
