@@ -103,11 +103,11 @@ sap.ui.define([
 		},
 		HandleLiveSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
-			if (sValue.length > 3) {
-				var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+				var oNameFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
+				var oIdFilter = new Filter("lifnr", sap.ui.model.FilterOperator.Contains, sValue);
+				var oTotalFilter = new Filter({ filters:[oNameFilter, oIdFilter], and: false}); //Or Filter between ID and name
 				var oBinding = oEvent.getSource().getBinding("items");
-				oBinding.filter([oFilter]);
-			}
+				oBinding.filter(oTotalFilter);
 		},
 
 		handleSupplierClose: function(oEvent) {
