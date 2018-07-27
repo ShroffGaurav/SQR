@@ -2,9 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	'com/sapZSQRMBWA/Personalization/PersoServiceAdd',
-	'sap/m/MessageBox',
-	'sap/m/TablePersoController',
+	"com/sapZSQRMBWA/Personalization/PersoServiceAdd",
+	"sap/m/MessageBox",
+	"sap/m/TablePersoController",
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
@@ -162,7 +162,6 @@ sap.ui.define([
 					};
 					Inspection.Findings[index] = Findings;
 				}.bind(this));
-				// oModel.setData(Inspection);
 
 				var requestURLStatusUpdate = "/Inspections";
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Inspection, {
@@ -230,7 +229,6 @@ sap.ui.define([
 			var iKey;
 			var oFile;
 			var array = {
-				//"finding_id": "10053",
 				"subject": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
 					.getText()),
 				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
@@ -285,78 +283,74 @@ sap.ui.define([
 			jQuery.each(array, function(index, value) {
 				if (value !== null && value !== "") {
 					switch (index) {
-						case 'subject':
+						case "subject":
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'category':
+						case "category":
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'question':
+						case "question":
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'Score':
+						case "Score":
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'Status':
+						case "Status":
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'findings':
+						case "findings":
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'location':
+						case "location":
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case 'RiskCategorySelect':
+						case "RiskCategorySelect":
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 					}
 				} else {
 					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
-					//busyIndicator.close();
 					switch (index) {
-						case 'subject':
+						case "subject":
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'category':
+						case "category":
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'question':
+						case "question":
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'Score':
+						case "Score":
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'Status':
+						case "Status":
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'findings':
+						case "findings":
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'location':
+						case "location":
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case 'RiskCategorySelect':
+						case "RiskCategorySelect":
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
-
 				}
 			}.bind(this));
 
 			if (count === 8) {
 				this.arr.push(array);
 				oModel.setData(this.arr);
-				//oModel.getProperty("/data").push(arr);
 				this.getView().byId("addInspectionTable").setModel(oModel);
-				//this._oDialogAdd.close();
 				this._oDialogAdd.destroy();
 				this._oDialogAdd = undefined;
 			} else {
@@ -364,7 +358,6 @@ sap.ui.define([
 			}
 		},
 		onAddDialogCancelButton: function(oEvent) {
-			//	this._oDialogAdd.close();
 			this._oDialogAdd.destroy();
 			this._oDialogAdd = undefined;
 		},
@@ -377,7 +370,6 @@ sap.ui.define([
 				this.getView().byId("questionSelect").setSelectedKey("");
 				this.getView().byId("QualityCategorySelect").setSelectedKey("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
-
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
@@ -404,9 +396,9 @@ sap.ui.define([
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
 			var path = oEvent.getSource().getParent().getBindingContext().sPath;
-			var idx = parseInt(path.substring(path.lastIndexOf('/') + 1));
+			var idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
 			oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
-			oTable.removeItem(oEvent.getParameter('listItem'));
+			oTable.removeItem(oEvent.getParameter("listItem"));
 			oTable.getModel().refresh();
 		},
 		onTableEditPress: function(oEvent) {

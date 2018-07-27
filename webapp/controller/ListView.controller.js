@@ -141,7 +141,7 @@ sap.ui.define([
 			var FindingId = oEvent.getSource().getCustomData()[1].getValue();
 			var Status = this.getView().byId("StatusSelect").getSelectedKey();
 			var Findings = this.getView().byId("InspectionFindingsText").getValue();
-			var RiskCategory = this.getView().byId("RiskCategoryInput").getValue();
+			var RiskCategory = this.getView().byId("RiskCategorySelect").getSelectedKey();
 			var Containment = this.getView().byId("ContainmentInput").getValue();
 
 			var Payload = {};
