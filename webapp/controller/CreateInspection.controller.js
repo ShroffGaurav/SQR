@@ -24,6 +24,7 @@ sap.ui.define([
 		onInit: function() {
 
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
+			this.getOwnerComponent().getModel().setSizeLimit(1000);
 			var CurrentDate = new Date();
 			this.getView().byId("InspectionDate").setDateValue(CurrentDate);
 			if (sap.ushell.Container) {
