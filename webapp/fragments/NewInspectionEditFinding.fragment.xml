@@ -115,20 +115,6 @@
 								<ObjectListItem icon="{ path: 'AttachmentDisplayModel>type', formatter: '.formatter.attachmentIcon' }" title="{AttachmentDisplayModel>name}"/>
 							</items>
 						</List>
-						<!--<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."-->
-						<!--	uploadEnabled="true" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"-->
-						<!--	beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"-->
-						<!--	items="{ path: 'SelectedValueHelp>/Attachments', templateShareable: false }" uploadUrl="{SelectedValueHelp>/uploadUrl}">-->
-						<!--	<items>-->
-						<!--		<UploadCollectionItem id="oFileUploaderNewInspectionEdit" visibleDelete="true" visibleEdit="false" contributor="{SelectedValueHelp>CreatedByName}" fileName="{SelectedValueHelp>FileName}" documentId="{SelectedValueHelp>FileName}"-->
-						<!--			uploadedDate="{SelectedValueHelp>CreatedAt}" url="/sap/opu/odata/SAP/ZSQRMBWA_SRV/Attachments(FindingId='{FindingId}',Id='{Id}')/$value">-->
-						<!--			<customData>-->
-						<!--				<core:CustomData value="{Id}"/>-->
-						<!--				<core:CustomData value="{SelectedValueHelp>/Findingid}"/>-->
-						<!--			</customData>-->
-						<!--		</UploadCollectionItem>-->
-						<!--	</items>-->
-						<!--</UploadCollection>-->
 					</IconTabFilter>
 				</items>
 			</IconTabBar>

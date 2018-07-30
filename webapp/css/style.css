@@ -1,8 +1,4 @@
-/* Enter your custom styles here */
-/*bottomMargin{*/
-/* margin-bottom: -3rem !Important;*/
-/*}*/
-
+/*At Table level*/
 .statusColour{
 	color: red;
 }
@@ -15,3 +11,15 @@ color: #5496cd !important;
 span[data-colorclass="Closed"] {
 color:green !important;
 }
+
+/*At Header Level*/
+div[data-colorclass="Late"] .sapMTextLineClamp.sapMTextMaxLine{
+color:red !important;
+}
+div[data-colorclass="In-Progress"] .sapMTextLineClamp.sapMTextMaxLine{
+color:#5496cd !important;
+}
+div[data-colorclass="Closed"] .sapMTextLineClamp.sapMTextMaxLine{
+color:green !important;
+}
+

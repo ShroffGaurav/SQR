@@ -21,7 +21,7 @@
 										</f:FormElement>
 										<f:FormElement label="Subject">
 											<f:fields>
-												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" selectedKey=""
+												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" 
 													items="{ path: '/ZWM_SUBJECTS_VH', sorter: { path: 'name' } }">
 													<core:Item key="{id}" text="{name}"/>
 												</Select>

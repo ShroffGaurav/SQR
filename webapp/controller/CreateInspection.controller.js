@@ -34,12 +34,15 @@ sap.ui.define([
 				Attachment: []
 			});
 			this.getView().setModel(oModel, "AttachmentDisplayModel");
-			var AttachmentModel = new sap.ui.model.json.JSONModel({
-				Attachments: []
-			});
-			var HeaderModel = new sap.ui.model.json.JSONModel();
+			
+			// var AttachmentModel = new sap.ui.model.json.JSONModel({
+			// 	Attachments: []
+			// });
+			// this.getView().setModel(AttachmentModel, "AttachmentModel");
+			
+			var HeaderModel = new JSONModel();
 			this.getView().setModel(HeaderModel, "HeaderModel");
-			this.getView().setModel(AttachmentModel, "AttachmentModel");
+
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -119,11 +122,8 @@ sap.ui.define([
 
 				aContexts.map(function(oContext) {
 					this.getView().getModel("HeaderModel").setData(oContext.getObject());
-					//return oContext.getObject().lifnr;
 				}.bind(this));
-				//	this.getView().getModel("HeaderModel").setProperty("/supplier", ));
 			} else {
-				//MessageToast.show("No new item was selected.");
 				this.getOwnerComponent().getRouter().navTo("ListView", {});
 			}
 			oEvent.getSource().getBinding("items").filter([]);
@@ -202,13 +202,13 @@ sap.ui.define([
 			}
 
 		},
+		
 		onDialogPress: function(oEvent) {
 			var supplier = this.getView().byId("SupplierID").getValue();
 			if (!this._oDialogAdd) {
 				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
+				this.getView().addDependent(this._oDialogAdd);
 				this._oDialogAdd.setModel(this.getView().getModel());
-				//this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				//	0].setValue(supplier);
 				this._oDialogAdd.setContentHeight("60%");
 				this._oDialogAdd.setContentWidth("90%");
 			}
@@ -220,7 +220,6 @@ sap.ui.define([
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
-
 		},
 
 		onAddDialogSubmitButton: function(oEvent) {
@@ -271,11 +270,9 @@ sap.ui.define([
 				for (iKey = 0; iKey < aFiles.length; iKey++) {
 					oFile = aFiles[iKey];
 					aAttachments.push({
-						PRNumber: "",
 						FileName: oFile.name,
 						mime_type: oFile.type,
 						CreatedAt: new Date(),
-						//	CreatedByName: sName,
 						FileSize: oFile.size,
 						file: oFile
 					});
@@ -375,7 +372,6 @@ sap.ui.define([
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
-
 		},
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
@@ -407,6 +403,7 @@ sap.ui.define([
 			var supplier = this.getView().byId("SupplierID").getValue();
 			if (!this._oDialog) {
 				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.NewInspectionEditFinding", this);
+				
 				this._oDialog.setModel(this.getView().getModel());
 				this._oDialog.setContentHeight("60%");
 				this._oDialog.setContentWidth("90%");
@@ -419,22 +416,18 @@ sap.ui.define([
 
 			var Data = {
 				"rowIndex": oEvent.getSource().getParent().getBindingContext().sPath,
-				//		"Findingid": Findingid,
-				//		"InspectionId": inspectionid,
 				"Subject": oEvent.getSource().getParent().getBindingContext().getObject().subject_id,
 				"Category": oEvent.getSource().getParent().getBindingContext().getObject().category_id,
 				"Question": oEvent.getSource().getParent().getBindingContext().getObject().question_id,
 				"Score": oEvent.getSource().getParent().getBindingContext().getObject().Score_id,
 				"Status": oEvent.getSource().getParent().getBindingContext().getObject().Status_id,
 				"Finding": oEvent.getSource().getParent().getBindingContext().getObject().findings,
-				//	"SupplierId": SupplierName + "(" + SupplierId + ")",
 				"QualityCategory": oEvent.getSource().getParent().getBindingContext().getObject("QualityCategoryInput"),
 				"InspectionLocation": oEvent.getSource().getParent().getBindingContext().getObject().location,
 				"ShortTermContainment": oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment"),
 				"SupplerRiskCategory": oEvent.getSource().getParent().getBindingContext().getObject("RiskCategorySelect_id"),
 				"SupplierCasualFactor": oEvent.getSource().getParent().getBindingContext().getObject("CasualFactor"),
 				"Attachments": oEvent.getSource().getParent().getBindingContext().getObject().Attachments
-					//		"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments"
 			};
 			var SelectedValueHelp = new JSONModel();
 			SelectedValueHelp.setData(Data);
@@ -452,7 +445,6 @@ sap.ui.define([
 			this._oDialog.open();
 		},
 		onDialogCancelButton: function(oEvent) {
-
 			this._oDialog.destroy();
 			this._oDialog = undefined;
 		},
@@ -464,9 +456,6 @@ sap.ui.define([
 				var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("AttachmentDisplayModel").getData().Attachment;
 			}
 
-			// if (this.getView().byId("oFileUploaderNewInspectionEdit").oFileUpload) {
-			// 	var aFiles = this.getView().byId("oFileUploaderNewInspectionEdit").getModel("SelectedValueHelp").getData().Attachment;
-			// }
 			var count = 0;
 			var iKey;
 			var oFile;
@@ -512,7 +501,6 @@ sap.ui.define([
 				count++;
 			} else {
 				this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
-
 			}
 
 			if (this.getView().byId("InspectionFindingsText").getValue() !== "") {
@@ -570,18 +558,15 @@ sap.ui.define([
 						});
 					}
 				}
-
 				this.getView().byId("addInspectionTable").getModel().setData(DataArray);
 				this.getView().byId("addInspectionTable").getModel().refresh();
 
 				this._oDialog.destroy();
 				this._oDialog = undefined;
 			}
-
 		},
 
 		/// UploadCollection Code 
-
 		_uploadAttachments: function(Url, aAttachments) {
 			var aDeferreds = [];
 			// var sKey = this.oDataModel.createKey("PRs", {
@@ -620,12 +605,12 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
+		
 		onFileUploaderChangePress: function(oEvent) {
-
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
 			this.getView().getModel("AttachmentDisplayModel").refresh();
-
 		},
+		
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
@@ -640,6 +625,7 @@ sap.ui.define([
 			oData.Attachment.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
+		
 		handleDelete: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
@@ -659,29 +645,7 @@ sap.ui.define([
 			oTableData[rowIndex].Attachments.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
-		// onFileDeleted: function(oEvent) {
-		// 	var sItemToDeleteId = oEvent.getParameter("documentId");
-		// 	var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
-		// 	rowIndex = rowIndex.split("/");
-		// 	rowIndex = rowIndex[1];
-		// 	var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
-		// 	var oData = oEvent.getSource().getModel("SelectedValueHelp").getData();
-		// 	var aItems = jQuery.extend(true, {}, oData);
-		// 	jQuery.each(aItems.Attachments, function(index) {
-		// 		if (aItems.Attachments[index] && aItems.Attachments[index].FileName === sItemToDeleteId) {
-		// 			aItems.Attachments.splice(index, 1);
-		// 		}
-		// 	});
-		// 	var atableItems = jQuery.extend(true, {}, oTableData);
-		// 	jQuery.each(atableItems[rowIndex].Attachments, function(index) {
-		// 		if (atableItems[rowIndex].Attachments[index] && atableItems[rowIndex].Attachments[index].FileName === sItemToDeleteId) {
-		// 			atableItems[rowIndex].Attachments.splice(index, 1);
-		// 		}
-		// 	});
 
-		// 	this.getView().byId("addInspectionTable").getModel().setData(atableItems);
-		// 	oEvent.getSource().getModel("SelectedValueHelp").setData(aItems);
-		// },
 		// Table Personalization 
 		onPersoButtonPressed: function(oEvent) {
 			this._oTPCCreate.openDialog();
@@ -734,9 +698,7 @@ sap.ui.define([
 					}.bind(this)
 				}
 			);
-
-		},
-
+		}
 	});
 
 });
