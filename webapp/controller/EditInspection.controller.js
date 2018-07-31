@@ -57,10 +57,8 @@ sap.ui.define([
 				}
 			}
 			busyIndicator.destroy();
-
 		},
 		onDialogCancelButton: function(oEvent) {
-
 			this._oDialog.destroy();
 			this._oDialog = undefined;
 		},
@@ -99,8 +97,9 @@ sap.ui.define([
 			});
 
 		},
+		
+		//New Ispection button pressed
 		onAddDialogPress: function(oEvent) {
-
 			var supplier = this.getView().getBindingContext().getObject().SupplierId;
 			if (!this._oDialogAdd) {
 				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
@@ -117,6 +116,8 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
 		},
+		
+		//Save pressed on 'Create Finding' pop-up
 		onAddDialogSubmitButton: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
@@ -321,7 +322,8 @@ sap.ui.define([
 				}.bind(this)
 			});
 		},
-
+		
+		//Delete pressed on the Finding row
 		onDeletePress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var FindingId = oEvent.getSource().getParent().getBindingContext().getObject().Id;
@@ -337,13 +339,15 @@ sap.ui.define([
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
 									MessageToast.show("Successfully deleted the Finding");
+									
+									//Refresh the inspection screen
+									this.getView().getModel().refresh();
+									
 								}.bind(this),
 								error: function(err) {
 									MessageToast.show("Error in Delete service");
 								}.bind(this)
 							});
-						} else {
-							MessageToast.show("Action Cancelled.");
 						}
 					}.bind(this)
 				}

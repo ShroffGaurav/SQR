@@ -15,7 +15,9 @@ sap.ui.define([
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 		},
 		onHandleRouteMatched: function(oEvent) {
-			this.getView().byId("inspectionTable").getTable().getModel().refresh();
+			// this.getView().byId("inspectionTable").getTable().getModel().refresh();
+			this.getView().byId("inspectionTable").rebindTable();
+			
 		},
 		onBeforeRebindTableExtension: function(oEvent) {
 			var oBindingParams = oEvent.getParameter("bindingParams");
@@ -53,7 +55,6 @@ sap.ui.define([
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
-			//this._oDialogEdit.setModel(this.getView().getModel("ZSQRMBWA"), "ZSQRMBWA");
 
 			var oParams = {
 				"expand": "Attachments"
@@ -111,15 +112,9 @@ sap.ui.define([
 				}
 			});
 			this._oDialogEdit.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			//this._oDialogEdit.updateBindings();
-			//this._oDialogEdit.getModel().refresh();
-			//	this._oDialogEdit.getModel().updateBindings();
 			this._oDialogEdit.setModel(SelectedValueHelp, "SelectedValueHelp");
 			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
-			// toggle compact style
-			//	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
 			this._oDialogEdit.open();
-
 		},
 		onNewInspectionPress: function(oEvent) {
 			//var InspectionId = oEvent.getSource().getText();
@@ -153,12 +148,14 @@ sap.ui.define([
 			//UserStatusSet
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
-				// method: "PUT",
 				success: function(data, response) {
 					MessageToast.show("Successfully updated the Finding");
 					busyIndicator.close();
 					this._oDialogEdit.destroy();
 					this._oDialogEdit = undefined;
+					
+					//Refresh smart table
+					this.getView().byId("inspectionTable").rebindTable();
 				}.bind(this),
 				error: function() {
 					MessageToast.show("Error in Post service");

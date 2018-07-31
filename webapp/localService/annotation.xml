@@ -23,16 +23,16 @@
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
 			<Annotations Target="ZSQRMBWA_SRV.ZWM_FINDINGS_CType">
-				<Annotation Term="UI.LineItem">
-					<Collection>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="id"/>
-						</Record>
-						<Record Type="UI.DataField">
-							<PropertyValue Property="Value" Path="inspection_id"/>
-						</Record>
-					</Collection>
-				</Annotation>
+				<!--<Annotation Term="UI.LineItem">-->
+				<!--	<Collection>-->
+				<!--		<Record Type="UI.DataField">-->
+				<!--			<PropertyValue Property="Value" Path="id"/>-->
+				<!--		</Record>-->
+				<!--		<Record Type="UI.DataField">-->
+				<!--			<PropertyValue Property="Value" Path="inspection_id"/>-->
+				<!--		</Record>-->
+				<!--	</Collection>-->
+				<!--</Annotation>-->
 				<!--Below is for Filters in the List Screen-->
 				<Annotation Term="UI.SelectionFields">
 					<Collection>

@@ -139,7 +139,6 @@ sap.ui.define([
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
-
 				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
 				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
 				var Inspection = {
@@ -192,16 +191,13 @@ sap.ui.define([
 					error: function() {
 						MessageToast.show("Error in UserStatusSet service");
 					}
-
 				});
 			} else {
 
 				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
 				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
 				MessageToast.show("Please Fill All Mandatory Fields");
-
 			}
-
 		},
 		
 		onDialogPress: function(oEvent) {
@@ -570,9 +566,6 @@ sap.ui.define([
 		/// UploadCollection Code 
 		_uploadAttachments: function(Url, aAttachments) {
 			var aDeferreds = [];
-			// var sKey = this.oDataModel.createKey("PRs", {
-			// 	PRNumber: sPRNumber
-			// });
 			var sUploadURL = Url;
 			var sToken = this.getView().getModel().getSecurityToken();
 
@@ -659,33 +652,13 @@ sap.ui.define([
 		onTableGrouping: function(oEvent) {
 			this._oTPCCreate.setHasGrouping(oEvent.getSource().getSelected());
 		},
-		/**
-		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
-		 * (NOT before the first rendering! onInit() is used for that one!).
-		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
-		 */
+
 		onBeforeRendering: function() {
 			if (sap.ushell.Container) {
 				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());
 			}
 		},
 
-		/**
-		 * Called when the View has been rendered (so its HTML is part of the document). Post-rendering manipulations of the HTML could be done here.
-		 * This hook is the same one that SAPUI5 controls get after being rendered.
-		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
-		 */
-		//	onAfterRendering: function() {
-		//
-		//	},
-
-		/**
-		 * Called when the Controller is destroyed. Use this one to free resources and finalize activities.
-		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
-		 */
-		//	onExit: function() {
-		//
-		//	}
 		onNavBack: function(oEvent) {
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			MessageBox.alert(
