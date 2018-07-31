@@ -5,8 +5,9 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
-	"com/sapZSQRMBWA/util/formatter"
-], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast,formatter) {
+	"com/sapZSQRMBWA/util/formatter",
+	"sap/m/MessageBox"
+], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast,formatter, MessageBox) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
 		formatter: formatter,
@@ -106,9 +107,9 @@ sap.ui.define([
 					}
 					busyIndicator.close();
 				}.bind(this),
-				error: function(Error) {
+				error: function(error) {
 					busyIndicator.close();
-					MessageToast.show("Error in Backend service");
+					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 				}
 			});
 			this._oDialogEdit.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
@@ -117,7 +118,6 @@ sap.ui.define([
 			this._oDialogEdit.open();
 		},
 		onNewInspectionPress: function(oEvent) {
-			//var InspectionId = oEvent.getSource().getText();
 			var sPath = "";
 			this.getOwnerComponent().getRouter().getTargetHandler().setCloseDialogs(false);
 			this.getOwnerComponent().getRouter().navTo("AddInspection", {
@@ -157,8 +157,8 @@ sap.ui.define([
 					//Refresh smart table
 					this.getView().byId("inspectionTable").rebindTable();
 				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Post service");
+				error: function(error) {
+					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					busyIndicator.close();
 					this._oDialogEdit.destroy();
 					this._oDialogEdit = undefined;
@@ -190,12 +190,10 @@ sap.ui.define([
 				name: "x-csrf-token",
 				value: sToken
 			});
-
 			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
 		},
 
 		onUploadComplete: function(oEvent) {
-			//this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
@@ -205,9 +203,6 @@ sap.ui.define([
 				}
 			}
 			 oUploadCollection.getBinding("items").refresh();
-			//oEvent.getSource().getModel().updateBindings();
-			//oEvent.getSource()
-			//this.getView().getModel().refresh();
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
@@ -218,6 +213,7 @@ sap.ui.define([
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 		},
+		
 		onFileDeleted: function(oEvent) {
 			var FileId = oEvent.getParameters("documentId").documentId;
 			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
@@ -226,15 +222,13 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
 					MessageToast.show("Attachment Deleted");
-					//	this.getView().getModel().refresh();
 				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Delete service");
+				error: function(error) {
+					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 				}.bind(this)
-
 			});
-
 		},
+		
 		onIconTabBarChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedKey;
 			if (SelectedKey === "2") {

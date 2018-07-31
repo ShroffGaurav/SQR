@@ -79,7 +79,7 @@ sap.ui.define([
 			Payload.SupplierRiskCategory = RiskCategory;
 			Payload.ShortTermContainment = Containment;
 
-			//UserStatusSet
+			//Updating a Finding
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
@@ -88,8 +88,8 @@ sap.ui.define([
 					this._oDialog.destroy();
 					this._oDialog = undefined;
 				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Post service");
+				error: function(error) {
+					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;
@@ -167,11 +167,9 @@ sap.ui.define([
 				for (iKey = 0; iKey < aFiles.length; iKey++) {
 					oFile = aFiles[iKey];
 					aAttachments.push({
-						PRNumber: "",
 						FileName: oFile.name,
 						mime_type: oFile.type,
 						CreatedAt: new Date(),
-						//	CreatedByName: sName,
 						FileSize: oFile.size,
 						file: oFile
 					});
@@ -275,8 +273,8 @@ sap.ui.define([
 						this._oDialogAdd.destroy();
 						this._oDialogAdd = undefined;
 					}.bind(this),
-					error: function() {
-						MessageToast.show("Error in Post service");
+					error: function(error) {
+						MessageBox.error(JSON.parse(error.responseText).error.message.value);
 						busyIndicator.close();
 						this._oDialogAdd.destroy();
 						this._oDialogAdd = undefined;
@@ -316,8 +314,8 @@ sap.ui.define([
 					MessageToast.show("Successfully saved the Inspection");
 					busyIndicator.close();
 				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Post service");
+				error: function(err) {
+					MessageBox.error(JSON.parse(err.responseText).error.message.value);
 					busyIndicator.close();
 				}.bind(this)
 			});
@@ -339,13 +337,12 @@ sap.ui.define([
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
 									MessageToast.show("Successfully deleted the Finding");
-									
 									//Refresh the inspection screen
 									this.getView().getModel().refresh();
 									
 								}.bind(this),
 								error: function(err) {
-									MessageToast.show("Error in Delete service");
+									MessageBox.error(JSON.parse(err.responseText).error.message.value);
 								}.bind(this)
 							});
 						}
@@ -496,12 +493,12 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
+		
 		onFileUploaderChangePress: function(oEvent) {
-
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
 			this.getView().getModel("AttachmentDisplayModel").refresh();
-
 		},
+		
 		onChange: function(oEvent) {
 			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();
@@ -529,13 +526,14 @@ sap.ui.define([
 		},
 
 		onBeforeUploadStarts: function(oEvent) {
-			// Header Slug
+			// Header . Send File Name as Slug
 			var oCustomerHeaderSlug = new UploadCollectionParameter({
 				name: "slug",
 				value: oEvent.getParameter("fileName")
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 		},
+		
 		onIconTabBarChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedKey;
 			if (SelectedKey === "2") {
@@ -567,8 +565,8 @@ sap.ui.define([
 				success: function(data, response) {
 					MessageToast.show("Successfully deleted the attachment");
 				}.bind(this),
-				error: function() {
-					MessageToast.show("Error in Delete service");
+				error: function(err) {
+					MessageBox.error(JSON.parse(err.responseText).error.message.value);
 				}.bind(this)
 			});
 		}

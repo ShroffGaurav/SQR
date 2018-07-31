@@ -35,12 +35,7 @@ sap.ui.define([
 				Attachment: []
 			});
 			this.getView().setModel(oModel, "AttachmentDisplayModel");
-			
-			// var AttachmentModel = new sap.ui.model.json.JSONModel({
-			// 	Attachments: []
-			// });
-			// this.getView().setModel(AttachmentModel, "AttachmentModel");
-			
+
 			var HeaderModel = new JSONModel();
 			this.getView().setModel(HeaderModel, "HeaderModel");
 
@@ -57,7 +52,6 @@ sap.ui.define([
 				componentName: "PersoAppAdd",
 				persoService: PersoServiceAdd
 			}).activate();
-
 		},
 
 		handleSuggest: function(oEvent) {
@@ -130,7 +124,6 @@ sap.ui.define([
 			oEvent.getSource().getBinding("items").filter([]);
 		},
 		handleSupplierCloseNavigate: function(oEvent) {
-			MessageToast.show("No new item was selected.");
 			this.getOwnerComponent().getRouter().navTo("ListView");
 		},
 		onSaveInspectionPress: function(oEvent) {
@@ -178,7 +171,7 @@ sap.ui.define([
 								}.bind(this)
 							}
 						);
-						//	MessageToast.show("New Inspection Id No:" + data.Id);
+
 						var Spath;
 						var UploadURL;
 						jQuery.each(data.Findings.results, function(index, value) {
@@ -188,12 +181,11 @@ sap.ui.define([
 							this._uploadAttachments(UploadURL, oData);
 						}.bind(this));
 					}.bind(this),
-					error: function() {
-						MessageToast.show("Error in UserStatusSet service");
+					error: function(error) {
+						MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					}
 				});
 			} else {
-
 				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
 				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
 				MessageToast.show("Please Fill All Mandatory Fields");
@@ -391,7 +383,7 @@ sap.ui.define([
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
 			var path = oEvent.getSource().getParent().getBindingContext().sPath;
-			var idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
+			// var idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
 			oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
 			oTable.removeItem(oEvent.getParameter("listItem"));
 			oTable.getModel().refresh();
@@ -549,7 +541,6 @@ sap.ui.define([
 							FileName: oFile.name,
 							mime_type: oFile.type,
 							CreatedAt: new Date(),
-							//	CreatedByName: sName,
 							FileSize: oFile.size,
 							file: oFile
 						});
