@@ -11,7 +11,7 @@
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
-						<m:ObjectAttribute title="Inspection ID" text="{ZSQRMBWA>Id}"/>
+						<!--<m:ObjectAttribute title="Inspection ID" text="{ZSQRMBWA>Id}"/>-->
 					</headerContent>
 					<sections>
 						<ObjectPageSection title="Info">
@@ -21,36 +21,36 @@
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="SupplierID" width="100%" value="{HeaderModel>/lifnr}" editable="false"/>
+												<m:Input id="SupplierID" width="100%" value="{inspectionModel>/lifnr}" editable="false"/>
 												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/name1}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/name1}" editable="false"/>
 												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/stras}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/stras}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Inspection Conducted By:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" id="InspectionBy" type="Text" suggest="handleSuggest" maxSuggestionWidth="30%" showSuggestion="true"
+												<m:Input width="100%" id="InspectionBy" required="true" type="Text" liveChange="removeErrorStateInput" suggest="handleSuggest" maxSuggestionWidth="30%" showSuggestion="true" value="{inspectionModel>/InspectionBy}"
 													suggestionItems="{/ZWM_USER_VH}" startSuggestion="1">
 													<m:suggestionItems>
 														<core:ListItem text="{userId}" additionalText="{Name}"/>
 													</m:suggestionItems>
 												</m:Input>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/SupplierCategory}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/telephoneNumber}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/telephoneNumber}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:DatePicker id="InspectionDate" width="100%" displayFormat="medium"/>
+												<m:DatePicker id="InspectionDate" required="true" change="removeErrorStateInput" width="100%" displayFormat="medium" dateValue="{inspectionModel>/InspectionDate}"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/CommodityName}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/CommodityName}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input id="OtherContacts" width="100%" value="{ZSQRMBWA>OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{HeaderModel>/land1}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/land1}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>
@@ -61,11 +61,11 @@
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
-										<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: '/'}" mode="None">
+										<m:Table width="100%" id="addInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'inspectionModel>/Findings'}" mode="None">
 											<m:headerToolbar>
 												<m:OverflowToolbar>
 													<m:ToolbarSpacer/>
-													<m:Button text="Add Finding" type="Transparent" press="onDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
+													<m:Button text="Add Finding" type="Transparent" press="onNewFindingPress" icon="sap-icon://add" id="oButtonAddFinding"/>
 													<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
 														<m:layoutData>
 															<m:OverflowToolbarLayoutData priority="AlwaysOverflow"/>
@@ -74,9 +74,6 @@
 												</m:OverflowToolbar>
 											</m:headerToolbar>
 											<m:columns>
-												<m:Column id="FindingId" width="12em">
-													<m:Text text="Finding id"/>
-												</m:Column>
 												<m:Column id="Subject" width="12em">
 													<m:Text text="Subject"/>
 												</m:Column>
@@ -112,18 +109,17 @@
 											<m:items>
 												<m:ColumnListItem>
 													<m:cells>
-														<m:Text text="{Id}"/>
-														<m:Text text="{subject}"/>
-														<m:Text text="{category}"/>
-														<m:Text text="{question}"/>
-														<m:Text text="{Score}"/>
-														<m:Text text="{Status}">
+														<m:Text text="{inspectionModel>Subject}"/>
+														<m:Text text="{inspectionModel>Category}"/>
+														<m:Text text="{inspectionModel>Question}"/>
+														<m:Text text="{inspectionModel>Score}"/>
+														<m:Text text="{inspectionModel>Status}">
 															<m:customData>
 																<core:CustomData key="colorClass" value="{ path:'Status'}" writeToDom="true"/>
 															</m:customData>
 														</m:Text>
-														<m:Text text="{findings}"/>
-														<m:Text text="{location}"/>
+														<m:Text text="{inspectionModel>Findings}"/>
+														<m:Text text="{inspectionModel>Location}"/>
 														<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
 														<m:Button icon="sap-icon://delete" tooltip="Delete" press="onTableDeletePress"/>
 													</m:cells>

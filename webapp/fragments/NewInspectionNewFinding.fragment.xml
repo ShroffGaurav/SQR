@@ -1,0 +1,128 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	xmlns:table="sap.ui.table" xmlns:custom="com.sapZSQRMBWA.control">
+	<Dialog resizable="true" title="Add Finding" afterClose="dialogAfterClose" contentWidth="70%" draggable="true">
+		<VBox>
+			<IconTabBar class="sapUiResponsiveContentPadding" id="iconTabBarAdd">
+				<items>
+					<IconTabFilter icon="sap-icon://hint" text="Info" key="1">
+						<f:Form editable="true">
+							<f:layout>
+								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
+									emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="2" columnsM="2" singleContainerFullSize="false"/>
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="Supplier">
+											<f:fields>
+												<Input editable="false" required="true" value="{NewFindingModel>/SupplierId}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Subject">
+											<f:fields>
+												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" valueStateText="Subject must not be empty"
+												selectedKey="{path: 'NewFindingModel>/SubjectId', type: 'sap.ui.model.odata.type.String', constraints: {nullable: false} }"
+													items="{ path: '/ZWM_SUBJECTS_VH', sorter: { path: 'name' } }">
+													<core:Item key="{id}" text="{name}"/>
+												</Select>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Category">
+											<f:fields>
+												<Select forceSelection="false" id="CategorySelect" change="onCategoryChange" selectedKey="{NewFindingModel>/CategoryId}"
+													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
+													<core:Item key="{id}" text="{name}"/>
+												</Select>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Question">
+											<f:fields>
+												<Select id="questionSelect" change="onQuestionChange" forceSelection="false" selectedKey="{NewFindingModel>/QuestionId}"
+													items="{ path: '/ZWM_QUESTIONS_VH', sorter: { path: 'question_content' } }">
+													<core:Item key="{question_id}" text="{question_content}"/>												
+												</Select>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Score">
+											<f:fields>
+												<Select id="ScoreSelect" forceSelection="false" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }" selectedKey="{NewFindingModel>/ScoreId}">
+													<core:Item key="{Id}" text="{Text}"/>
+												</Select>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Quality Category">
+											<f:fields>
+												<Input id="QualityCategoryInput" enabled="false" value="{NewFindingModel>/QualityCategory}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Status">
+											<f:fields>
+												<Select id="StatusSelect" forceSelection="false" items="{path: '/ZWM_STATUS_VH', sorter: { path: 'Text' }}" selectedKey="{NewFindingModel>/StatusId}">
+													<core:Item key="{Id}" text="{Text}"/>
+												</Select>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+								<f:FormContainer>
+									<f:formElements>
+										<f:FormElement label="Inspection Findings">
+											<f:fields>
+												<TextArea id="findingText" maxLength="256" rows="3" required="true" value="{NewFindingModel>/Findings}"></TextArea>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Inspection Location">
+											<f:fields>
+												<Input id="Locationfrag" required="true" value="{NewFindingModel>/Location}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Supplier Risk Category">
+											<f:fields>
+												<Select id="RiskCategorySelect" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }" 
+												selectedKey="{NewFindingModel>/SupplierRiskCategory}" >
+													<core:Item key="{id}" text="{text}"/>
+												</Select>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Short term Containment">
+											<f:fields>
+												<Input id="ShortTermContainment" value="{NewFindingModel>/ShortTermContainment}"/>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="Supplier Causal Factor">
+											<f:fields>
+												<Input id="CasualFactor" value="{NewFindingModel>/SupplierCasualFactor}"/>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</IconTabFilter>
+					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
+						<List mode="Delete" delete="onDeletePressAdd"
+							items="{NewFindingModel>/Attachments}"
+							noDataText="No Attachments uploaded" >
+							<headerToolbar>
+								<Toolbar>
+									<ToolbarSpacer/>
+									<u:FileUploader id="oFileUploader" change="onFileUploaderChangePress" buttonOnly="true" iconOnly="true" icon="sap-icon://add" multiple="false" sameFilenameAllowed="true"/>
+								</Toolbar>
+							</headerToolbar>
+							<items>
+								<ObjectListItem icon="{ path: 'NewFindingModel>type', formatter: '.formatter.attachmentIcon' }" title="{NewFindingModel>name}"/>
+							</items>
+						</List>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</VBox>
+		<beginButton>
+			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onAddDialogSubmitButton"/>
+		</beginButton>
+		<endButton>
+			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onAddDialogCancelButton"/>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

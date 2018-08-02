@@ -62,6 +62,8 @@ sap.ui.define([
 			this._oDialog.destroy();
 			this._oDialog = undefined;
 		},
+		
+		//Save pressed on Edit Finding button
 		onDialogSubmitButton: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
@@ -95,7 +97,7 @@ sap.ui.define([
 					this._oDialog = undefined;
 				}.bind(this)
 			});
-
+			this.getView().getModel().refresh();
 		},
 		
 		//New Ispection button pressed

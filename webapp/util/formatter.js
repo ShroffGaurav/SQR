@@ -5,18 +5,15 @@ sap.ui.define([
 	"use strict";
 
 	return {
-
 		attachmentIcon: function(sMimeType) {
 			return IconPool.getIconForMimeType(sMimeType);
 		},
-		stringCheck: function(sValue){
-		if(sValue ===null){
-			return "";
-		}else{
-			return sValue;
-		}	
+		stringCheck: function(sValue) {
+			if (sValue === null) {
+				return "";
+			} else {
+				return sValue;
+			}
 		}
-
 	};
-
 });

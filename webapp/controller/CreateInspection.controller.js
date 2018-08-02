@@ -5,13 +5,13 @@ sap.ui.define([
 	"com/sapZSQRMBWA/Personalization/PersoServiceAdd",
 	"sap/m/MessageBox",
 	"sap/m/TablePersoController",
-	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/ui/core/ListItem",
-	"sap/ui/core/search/OpenSearchProvider"
-], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
-	formatter, ListItem, OpenSearchProvider) {
+	"sap/ui/core/message/ControlMessageProcessor",
+	"sap/ui/core/message/Message"
+], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, MessageToast,
+	formatter, ListItem, ControlMessageProcessor, Message) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.CreateInspection", {
@@ -24,21 +24,19 @@ sap.ui.define([
 		onInit: function() {
 
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
-			this.getOwnerComponent().getModel().setSizeLimit(1000);
-			var CurrentDate = new Date();
-			this.getView().byId("InspectionDate").setDateValue(CurrentDate);
+			// this.getOwnerComponent().getModel().setSizeLimit(1000);
 			if (sap.ushell.Container) {
-				this.getView().byId("InspectionBy").setValue(sap.ushell.Container.getUser().getId());
+				this.CurrentUser = sap.ushell.Container.getUser().getId();
 			}
 
-			var oModel = new JSONModel({
-				Attachment: []
-			});
-			this.getView().setModel(oModel, "AttachmentDisplayModel");
+			//Model for the New Inspection
+			var oInspectionModel = new JSONModel();
+			this.getView().setModel(oInspectionModel, "inspectionModel");
 
-			var HeaderModel = new JSONModel();
-			this.getView().setModel(HeaderModel, "HeaderModel");
+			//Model for new Finding
+			this.oNewFindingModel = new JSONModel();
 
+			//Ensure that 'Choose a Supplier' dialog comes when this view opens
 			var oView = this.getView();
 			oView.addEventDelegate({
 				onBeforeShow: function() {
@@ -46,12 +44,28 @@ sap.ui.define([
 				}.bind(this)
 			}, oView);
 
+			//Personalization option for Finding table inside the Inspection screen
 			this._oTPCCreate = new TablePersoController({
 				table: this.byId("addInspectionTable"),
 				//specify the first part of persistence ids e.g. 'demoApp-productsTable-dimensionsCol'
 				componentName: "PersoAppAdd",
 				persoService: PersoServiceAdd
 			}).activate();
+
+			//Pop-up for new Finding
+			this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.NewInspectionNewFinding", this);
+			// this._oDialogAdd = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.NewInspectionNewFinding", this);
+			this.getView().addDependent(this._oDialogAdd);
+			this._oDialogAdd.setContentHeight("60%");
+			this._oDialogAdd.setContentWidth("90%");
+			this._oDialogAdd.setModel(this.oNewFindingModel, "NewFindingModel");
+
+			//Pop-Up for Update the new Finding
+			this._oDialogUpdate = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.NewInspectionUpdateFinding", this);
+			this.getView().addDependent(this._oDialogUpdate);
+			this._oDialogUpdate.setContentHeight("60%");
+			this._oDialogUpdate.setContentWidth("90%");
+
 		},
 
 		handleSuggest: function(oEvent) {
@@ -70,15 +84,21 @@ sap.ui.define([
 
 		onHandleRouteMatched: function(oEvent) {
 			this.arr = [];
-			if (this.getView().getModel().getData()) {
-				this.getView().getModel().setData(null);
-			}
-			if (this.getView().getModel().getData()) {
-				this.getView().getModel().setData(null);
-			}
-			if (this.getView().byId("addInspectionTable").getModel()) {
-				this.getView().byId("addInspectionTable").setModel(null);
-			}
+			// if (this.getView().getModel().getData()) {
+			// 	this.getView().getModel().setData(null);
+			// }
+			// if (this.getView().getModel().getData()) {
+			// 	this.getView().getModel().setData(null);
+			// }
+			// if (this.getView().byId("addInspectionTable").getModel()) {
+			// 	this.getView().byId("addInspectionTable").setModel(null);
+			// }
+			//Clear JSON models if filled earlier
+			// this.getView().getModel("AttachmentDisplayModel").setData({
+			// 	Attachment: []
+			// });
+			// this.getView().getModel("HeaderModel").setData(null);
+			this.getView().getModel("inspectionModel").setData(null);
 		},
 
 		onSupplierDialog: function() {
@@ -111,18 +131,20 @@ sap.ui.define([
 			oBinding.filter(oTotalFilter);
 		},
 
+		//A supplier was selected in the pop-up
 		handleSupplierClose: function(oEvent) {
-			var aContexts = oEvent.getParameter("selectedContexts");
-			if (aContexts && aContexts.length) {
-
-				aContexts.map(function(oContext) {
-					this.getView().getModel("HeaderModel").setData(oContext.getObject());
-				}.bind(this));
+			var oContext = oEvent.getParameter("selectedItem").getBindingContext();
+			if (oContext) {
+				var oInspection = oContext.getObject();
+				oInspection.InspectionBy = this.CurrentUser;
+				oInspection.InspectionDate = new Date();
+				this.getView().getModel("inspectionModel").setData(oInspection);
 			} else {
 				this.getOwnerComponent().getRouter().navTo("ListView", {});
 			}
 			oEvent.getSource().getBinding("items").filter([]);
 		},
+
 		handleSupplierCloseNavigate: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView");
 		},
@@ -186,178 +208,254 @@ sap.ui.define([
 					}
 				});
 			} else {
-				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
-				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
-				MessageToast.show("Please Fill All Mandatory Fields");
+				if (this.getView().byId("InspectionBy").getValue() === "") {
+					this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
+				}
+
+				if (this.getView().byId("InspectionDate").getValue() === "") {
+					this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
+				}
+				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("enterMandatoryFields"));
 			}
 		},
-		
-		onDialogPress: function(oEvent) {
-			var supplier = this.getView().byId("SupplierID").getValue();
-			if (!this._oDialogAdd) {
-				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
-				this.getView().addDependent(this._oDialogAdd);
-				this._oDialogAdd.setModel(this.getView().getModel());
-				this._oDialogAdd.setContentHeight("60%");
-				this._oDialogAdd.setContentWidth("90%");
-			}
-			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
-			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0, Length);
-			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				0].setValue(supplier);
-			this._oDialogAdd.setModel(this.getView().getModel("AttachmentDisplayModel"), "AttachmentDisplayModel");
-			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
+		removeErrorStateInput: function(evt){
+			if (evt.getSource().getValue() !== ""){
+			evt.getSource().setValueState(sap.ui.core.ValueState.None);}
+		},
+		//New Finding icon pressed
+		onNewFindingPress: function(oEvent) {
+			var oInspectionModel = this.getView().getModel("inspectionModel");
+
+			//Create a new empty Finding and add it to the model and assign to the dialog
+			var oFinding = {
+				"SupplierId": oInspectionModel.getProperty("/lifnr"),
+				"SubjectId": "",
+				"CategoryId": "",
+				"QuestionId": "",
+				"ScoreId": "",
+				"StatusId": "",
+				"Findings": "",
+				"Location": "",
+				"SupplierRiskCategory": "",
+				"ShortTermContainment": "",
+				"SupplierCasualFactor": "",
+				"QualityCategory": "",
+				"Attachments": []
+			};
+
+			//Set initial data to the model
+			this.oNewFindingModel.setData(oFinding);
 			this._oDialogAdd.open();
 		},
 
-		onAddDialogSubmitButton: function(oEvent) {
-			var oModel = new JSONModel();
+		//Save pressed on Edit Pop-Up
+		onUpdateDialogSubmitButton: function(oEvent) {
 			var count = 0;
-			if (this.getView().byId("oFileUploader").oFileUpload) {
-				var aFiles = this.getView().byId("oFileUploader").getModel("AttachmentDisplayModel").getData().Attachment;
-			}
 			var iKey;
 			var oFile;
-			var array = {
-				"subject": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
-					.getText()),
-				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
-					.getKey()),
-				"category": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
-					.getText()),
-				"category_id": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
-					.getKey()),
-				"question": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
-					.getText()),
-				"question_id": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
-					.getKey()),
-				"Score": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
-					.getText()),
-				"Score_id": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
-					.getKey()),
-				"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
-					.getText()),
-				"Status_id": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
-					.getKey()),
-				"findings": this.getView().byId("findingText").getValue(),
-				"location": this.getView().byId("Locationfrag").getValue(),
-				"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
-						"RiskCategorySelect").getSelectedItem()
-					.getText()),
-				"RiskCategorySelect_id": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
-						"RiskCategorySelect").getSelectedItem()
-					.getKey()),
-				"QualityCategoryInput": (this.getView().byId("QualityCategoryInput").getValue() === null ? "" : this.getView().byId(
-					"QualityCategoryInput").getValue()),
-				"ShortTermContainment": this.getView().byId("ShortTermContainment").getValue(),
-				"CasualFactor": this.getView().byId("CasualFactor").getValue(),
-				"Attachments": []
-			};
-			if (aFiles) {
-				var aAttachments = array.Attachments;
-				for (iKey = 0; iKey < aFiles.length; iKey++) {
-					oFile = aFiles[iKey];
-					aAttachments.push({
-						FileName: oFile.name,
-						mime_type: oFile.type,
-						CreatedAt: new Date(),
-						FileSize: oFile.size,
-						file: oFile
-					});
-				}
-			}
 
-			jQuery.each(array, function(index, value) {
-				if (value !== null && value !== "") {
-					switch (index) {
-						case "subject":
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+			var oFindingData = this.oNewFindingModel.getData();
+			for (var property in oFindingData) {
+
+				if (oFindingData[property] !== null && oFindingData[property] !== "") {
+					switch (property) {
+						case "SubjectId":
+							this.getView().byId("SubjectSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Subject = this.getView().byId("SubjectSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
-						case "category":
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+						case "CategoryId":
+							this.getView().byId("CategorySelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Category = this.getView().byId("CategorySelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
-						case "question":
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+						case "QuestionId":
+							this.getView().byId("questionSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Question = this.getView().byId("questionSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
-						case "Score":
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+						case "ScoreId":
+							this.getView().byId("ScoreSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Score = this.getView().byId("ScoreSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
-						case "Status":
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+						case "StatusId":
+							this.getView().byId("StatusSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Status = this.getView().byId("StatusSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
-						case "findings":
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+						case "Findings":
+							this.getView().byId("findingTextUpdate").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "location":
-							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
+						case "Location":
+							this.getView().byId("LocationfragUpdate").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "RiskCategorySelect":
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+						case "SupplierRiskCategory":
+							this.getView().byId("RiskCategorySelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							// oFindingData.Subject = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
 							count++;
 							break;
 					}
 				} else {
+					//Show the form, show the errors
+					this.getView().byId("iconTabBarAddUpdate").setSelectedKey("1");
+					switch (property) {
+						case "SubjectId":
+							this.getView().byId("SubjectSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "CategoryId":
+							this.getView().byId("CategorySelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "QuestionId":
+							this.getView().byId("questionSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "ScoreId":
+							this.getView().byId("ScoreSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "StatusId":
+							this.getView().byId("StatusSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "Findings":
+							this.getView().byId("findingTextUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "Location":
+							this.getView().byId("LocationfragUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+						case "SupplierRiskCategory":
+							this.getView().byId("RiskCategorySelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							break;
+					}
+				}
+			}
+			if (count === 8) {
+				//If all mandatory fields are entered, only then close the pop-up
+				this._oDialogUpdate.close();
+			}
+		},
+
+		//Save pressed on new Finding Pop-up
+		onAddDialogSubmitButton: function(oEvent) {
+			var count = 0;
+			var iKey;
+			var oFile;
+
+			var oFindingData = this.oNewFindingModel.getData();
+			for (var property in oFindingData) {
+
+				if (oFindingData[property] !== null && oFindingData[property] !== "") {
+					switch (property) {
+						case "SubjectId":
+							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Subject = this.getView().byId("SubjectSelect").getSelectedItem().getText();
+							count++;
+							break;
+						case "CategoryId":
+							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Category = this.getView().byId("CategorySelect").getSelectedItem().getText();
+							count++;
+							break;
+						case "QuestionId":
+							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Question = this.getView().byId("questionSelect").getSelectedItem().getText();
+							count++;
+							break;
+						case "ScoreId":
+							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();
+							count++;
+							break;
+						case "StatusId":
+							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+							oFindingData.Status = this.getView().byId("StatusSelect").getSelectedItem().getText();
+							count++;
+							break;
+						case "Findings":
+							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							count++;
+							break;
+						case "Location":
+							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
+							count++;
+							break;
+						case "SupplierRiskCategory":
+							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+							// oFindingData.Subject = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
+							count++;
+							break;
+					}
+				} else {
+					//Show the form, show the errors
 					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
-					switch (index) {
-						case "subject":
+					switch (property) {
+						case "SubjectId":
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "category":
+						case "CategoryId":
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "question":
+						case "QuestionId":
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "Score":
+						case "ScoreId":
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "Status":
+						case "StatusId":
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "findings":
+						case "Findings":
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "location":
+						case "Location":
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "RiskCategorySelect":
+						case "SupplierRiskCategory":
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
 				}
-			}.bind(this));
+			}
 
 			if (count === 8) {
-				this.arr.push(array);
-				oModel.setData(this.arr);
-				this.getView().byId("addInspectionTable").setModel(oModel);
-				this._oDialogAdd.destroy();
-				this._oDialogAdd = undefined;
+
+				//Add the finding to the inspection model
+				var aFindings = this.getView().getModel("inspectionModel").getData().Findings;
+				if (aFindings === undefined) {
+					aFindings = [];
+				}
+				aFindings.push(oFindingData);
+				this.getView().getModel("inspectionModel").setProperty("/Findings", aFindings);
+
+				this._oDialogAdd.close();
 			} else {
 
 			}
 		},
 		onAddDialogCancelButton: function(oEvent) {
-			this._oDialogAdd.destroy();
-			this._oDialogAdd = undefined;
+			this._oDialogAdd.close();
+		},
+		onUpdateDialogCancelButton: function(oEvent) {
+			this._oDialogUpdate.close();
 		},
 		onSubjectChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
-				this.getView().byId("CategorySelect").setSelectedKey("");
-				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategoryInput").setValue("");
-				this.getView().byId("RiskCategorySelect").setSelectedKey("");
+				oEvent.getSource().getParent().getParent().getFormElements()[2].getFields()[0].getBinding("items").filter([oFilter]);
+				// this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
+				if (oEvent.getSource().getParent().getParent().getFormElements()[2].getFields()[0].getId().endsWith("CategorySelect")) {
+					this.getView().byId("CategorySelectUpdate").getBinding("items").filter([oFilter]);
+				}
+				oEvent.getSource().getParent().getParent().getFormElements()[2].getFields()[0].setSelectedKey(""); //Category Select
+				oEvent.getSource().getParent().getParent().getFormElements()[3].getFields()[0].setSelectedKey(""); //Question Select
+				oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(""); //Quality Category 
+				oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
+					""); //Supplier Risk Category
+				// this.getView().byId("CategorySelect").setSelectedKey("");
+				// this.getView().byId("questionSelect").setSelectedKey("");
+				// this.getView().byId("QualityCategoryInput").setValue("");
+				// this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
@@ -366,10 +464,20 @@ sap.ui.define([
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
-				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategoryInput").setValue("");
-				this.getView().byId("RiskCategorySelect").setSelectedKey("");
+				oEvent.getSource().getParent().getParent().getFormElements()[3].getFields()[0].getBinding("items").filter([oFilter]);
+				if (oEvent.getSource().getParent().getParent().getFormElements()[3].getFields()[0].getId().endsWith("questionSelect")) {
+					this.getView().byId("questionSelectUpdate").getBinding("items").filter([oFilter]);
+				}
+				oEvent.getSource().getParent().getParent().getFormElements()[3].getFields()[0].setSelectedKey(""); //Question Select
+				oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(""); //Quality Category 
+				oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
+					""); //Supplier Risk Category
+
+				// this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
+				// this.getView().byId("questionSelectUpdate").getBinding("items").filter([oFilter]);
+				// this.getView().byId("questionSelect").setSelectedKey("");
+				// this.getView().byId("QualityCategoryInput").setValue("");
+				// this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
@@ -377,8 +485,11 @@ sap.ui.define([
 		onQuestionChange: function(oEvent) {
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
-			this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
-			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
+			// this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
+			// this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
+			oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(QualityCategory); //Quality Category 
+			oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
+				RiskCategory);
 		},
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
@@ -389,50 +500,13 @@ sap.ui.define([
 			oTable.getModel().refresh();
 		},
 		onTableEditPress: function(oEvent) {
-			var supplier = this.getView().byId("SupplierID").getValue();
-			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.NewInspectionEditFinding", this);
-				
-				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.setContentHeight("60%");
-				this._oDialog.setContentWidth("90%");
-				this.getView().addDependent(this._oDialog);
-			}
-			this._oDialog.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
-				0].setValue(supplier);
-			var editVisibilityModel = new JSONModel();
-			var Status = oEvent.getSource().getParent().getBindingContext().getObject().Status_id;
-
-			var Data = {
-				"rowIndex": oEvent.getSource().getParent().getBindingContext().sPath,
-				"Subject": oEvent.getSource().getParent().getBindingContext().getObject().subject_id,
-				"Category": oEvent.getSource().getParent().getBindingContext().getObject().category_id,
-				"Question": oEvent.getSource().getParent().getBindingContext().getObject().question_id,
-				"Score": oEvent.getSource().getParent().getBindingContext().getObject().Score_id,
-				"Status": oEvent.getSource().getParent().getBindingContext().getObject().Status_id,
-				"Finding": oEvent.getSource().getParent().getBindingContext().getObject().findings,
-				"QualityCategory": oEvent.getSource().getParent().getBindingContext().getObject("QualityCategoryInput"),
-				"InspectionLocation": oEvent.getSource().getParent().getBindingContext().getObject().location,
-				"ShortTermContainment": oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment"),
-				"SupplerRiskCategory": oEvent.getSource().getParent().getBindingContext().getObject("RiskCategorySelect_id"),
-				"SupplierCasualFactor": oEvent.getSource().getParent().getBindingContext().getObject("CasualFactor"),
-				"Attachments": oEvent.getSource().getParent().getBindingContext().getObject().Attachments
-			};
-			var SelectedValueHelp = new JSONModel();
-			SelectedValueHelp.setData(Data);
-			if (Status === "4") {
-				editVisibilityModel.setData({
-					visible: false
-				});
-			} else {
-				editVisibilityModel.setData({
-					visible: true
-				});
-			}
-			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
-
-			this._oDialog.open();
+			var oBindingContext = oEvent.getSource().getParent().getBindingContext("inspectionModel");
+			this._oDialogUpdate.setBindingContext(oBindingContext, "inspectionModel");
+			//Show the first tab when opened
+			this.getView().byId("iconTabBarUpdate").setSelectedKey("1");
+			this._oDialogUpdate.open();
 		},
+
 		onDialogCancelButton: function(oEvent) {
 			this._oDialog.destroy();
 			this._oDialog = undefined;
@@ -590,12 +664,21 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
-		
+
 		onFileUploaderChangePress: function(oEvent) {
-			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
-			this.getView().getModel("AttachmentDisplayModel").refresh();
+			var oUploadedFile = oEvent.getParameters().files[0];
+			this.oNewFindingModel.getData().Attachments.push(oUploadedFile);
+			//Force to show the uploaded document
+			this.oNewFindingModel.refresh();
 		},
-		
+
+		onFileUploaderChangePressUpdate: function(oEvent) {
+			var oUploadedFile = oEvent.getParameters().files[0];
+			this.oNewFindingModel.getData().Attachments.push(oUploadedFile);
+			//Refresh the model to show the new uploads
+			this.getView().getModel("inspectionModel").refresh();
+		},
+
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
@@ -610,7 +693,7 @@ sap.ui.define([
 			oData.Attachment.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
-		
+
 		handleDelete: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
