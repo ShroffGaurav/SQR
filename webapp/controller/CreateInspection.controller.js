@@ -16,15 +16,9 @@ sap.ui.define([
 
 	return Controller.extend("com.sapZSQRMBWA.controller.CreateInspection", {
 		formatter: formatter,
-		/**
-		 * Called when a controller is instantiated and its View controls (if available) are already created.
-		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
-		 * @memberOf com.sapZSQRMBWA.view.CreateInspection
-		 */
 		onInit: function() {
 
 			this.getOwnerComponent().getRouter().getRoute("AddInspection").attachPatternMatched(this.onHandleRouteMatched, this);
-			// this.getOwnerComponent().getModel().setSizeLimit(1000);
 			if (sap.ushell.Container) {
 				this.CurrentUser = sap.ushell.Container.getUser().getId();
 			}
@@ -84,20 +78,6 @@ sap.ui.define([
 
 		onHandleRouteMatched: function(oEvent) {
 			this.arr = [];
-			// if (this.getView().getModel().getData()) {
-			// 	this.getView().getModel().setData(null);
-			// }
-			// if (this.getView().getModel().getData()) {
-			// 	this.getView().getModel().setData(null);
-			// }
-			// if (this.getView().byId("addInspectionTable").getModel()) {
-			// 	this.getView().byId("addInspectionTable").setModel(null);
-			// }
-			//Clear JSON models if filled earlier
-			// this.getView().getModel("AttachmentDisplayModel").setData({
-			// 	Attachment: []
-			// });
-			// this.getView().getModel("HeaderModel").setData(null);
 			this.getView().getModel("inspectionModel").setData(null);
 		},
 
@@ -113,12 +93,14 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
 			this.supplierDialog.open();
 		},
+		
 		handleSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
 			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
 			var oBinding = oEvent.getSource().getBinding("items");
 			oBinding.filter([oFilter]);
 		},
+		
 		HandleLiveSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
 			var oNameFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
@@ -148,8 +130,8 @@ sap.ui.define([
 		handleSupplierCloseNavigate: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView");
 		},
+		
 		onSaveInspectionPress: function(oEvent) {
-			//	var oModel = new JSONModel();
 			var TableData = this.getView().byId("addInspectionTable").getModel().getData();
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
@@ -186,7 +168,7 @@ sap.ui.define([
 					success: function(data, responsee) {
 						var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 						MessageBox.success(
-							"Created a new Inspection with Id: " + data.Id, {
+							this.getView().getModel("i18n").getResourceBundle().getText("createdInspection") + data.Id, {
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								onClose: function(sAction) {
 									this.getOwnerComponent().getRouter().navTo("ListView", {});
@@ -218,10 +200,19 @@ sap.ui.define([
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("enterMandatoryFields"));
 			}
 		},
-		removeErrorStateInput: function(evt){
-			if (evt.getSource().getValue() !== ""){
-			evt.getSource().setValueState(sap.ui.core.ValueState.None);}
+		
+		removeErrorStateInput: function(evt) {
+			if (evt.getSource().getValue() !== "") {
+				evt.getSource().setValueState(sap.ui.core.ValueState.None);
+			}
 		},
+		
+		removeErrorStateSelect: function(evt) {
+			if (evt.getSource().getSelectedKey() !== "") {
+				evt.getSource().setValueState(sap.ui.core.ValueState.None);
+			}
+		},
+		
 		//New Finding icon pressed
 		onNewFindingPress: function(oEvent) {
 			var oInspectionModel = this.getView().getModel("inspectionModel");
@@ -294,13 +285,12 @@ sap.ui.define([
 							break;
 						case "SupplierRiskCategory":
 							this.getView().byId("RiskCategorySelectUpdate").setValueState(sap.ui.core.ValueState.None);
-							// oFindingData.Subject = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
 							count++;
 							break;
 					}
 				} else {
 					//Show the form, show the errors
-					this.getView().byId("iconTabBarAddUpdate").setSelectedKey("1");
+					this.getView().byId("iconTabBarUpdate").setSelectedKey("1");
 					switch (property) {
 						case "SubjectId":
 							this.getView().byId("SubjectSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
@@ -381,7 +371,6 @@ sap.ui.define([
 							break;
 						case "SupplierRiskCategory":
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
-							// oFindingData.Subject = this.getView().byId("RiskCategorySelect").getSelectedItem().getText();
 							count++;
 							break;
 					}
@@ -439,6 +428,7 @@ sap.ui.define([
 			this._oDialogUpdate.close();
 		},
 		onSubjectChange: function(oEvent) {
+			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
@@ -452,15 +442,12 @@ sap.ui.define([
 				oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(""); //Quality Category 
 				oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
 					""); //Supplier Risk Category
-				// this.getView().byId("CategorySelect").setSelectedKey("");
-				// this.getView().byId("questionSelect").setSelectedKey("");
-				// this.getView().byId("QualityCategoryInput").setValue("");
-				// this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
 		},
 		onCategoryChange: function(oEvent) {
+			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
@@ -472,29 +459,22 @@ sap.ui.define([
 				oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(""); //Quality Category 
 				oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
 					""); //Supplier Risk Category
-
-				// this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
-				// this.getView().byId("questionSelectUpdate").getBinding("items").filter([oFilter]);
-				// this.getView().byId("questionSelect").setSelectedKey("");
-				// this.getView().byId("QualityCategoryInput").setValue("");
-				// this.getView().byId("RiskCategorySelect").setSelectedKey("");
 			} else {
 				this.getView().byId("questionSelect").getBinding("items").filter([]);
 			}
 		},
 		onQuestionChange: function(oEvent) {
+			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
-			// this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
-			// this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
 			oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(QualityCategory); //Quality Category 
-			oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0].setSelectedKey(
-				RiskCategory);
+			var oSuppRiskCategory = oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0];
+			oSuppRiskCategory.setSelectedKey(RiskCategory);
+			oSuppRiskCategory.setValueState(sap.ui.core.ValueState.None);
 		},
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
 			var path = oEvent.getSource().getParent().getBindingContext().sPath;
-			// var idx = parseInt(path.substring(path.lastIndexOf("/") + 1));
 			oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
 			oTable.removeItem(oEvent.getParameter("listItem"));
 			oTable.getModel().refresh();

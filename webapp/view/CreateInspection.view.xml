@@ -4,31 +4,30 @@
 	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" controllerName="com.sapZSQRMBWA.controller.CreateInspection">
 	<m:App id="addinspection">
 		<m:pages>
-			<m:Page title="New Inspection" showNavButton="true" navButtonPress="onNavBack">
+			<m:Page title="{i18n>newInspection}" showNavButton="true" navButtonPress="onNavBack">
 				<!--<content>-->
 				<ObjectPageLayout enableLazyLoading="false">
 					<headerTitle>
-						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
+						<ObjectPageHeader objectTitle="{i18n>inspection}"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
-						<!--<m:ObjectAttribute title="Inspection ID" text="{ZSQRMBWA>Id}"/>-->
 					</headerContent>
 					<sections>
-						<ObjectPageSection title="Info">
+						<ObjectPageSection title="{i18n>info}">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="Supplier:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplier}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input id="SupplierID" width="100%" value="{inspectionModel>/lifnr}" editable="false"/>
-												<m:Label text="Supplier Name:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplierName}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/name1}" editable="false"/>
-												<m:Label text="Supplier Contact1:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplierContact}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/stras}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="Inspection Conducted By:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>inspectionCOnductedBy}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" id="InspectionBy" required="true" type="Text" liveChange="removeErrorStateInput" suggest="handleSuggest" maxSuggestionWidth="30%" showSuggestion="true" value="{inspectionModel>/InspectionBy}"
 													suggestionItems="{/ZWM_USER_VH}" startSuggestion="1">
 													<m:suggestionItems>
@@ -136,7 +135,7 @@
 					<m:Toolbar>
 						<m:ToolbarSpacer/>
 						<m:Button type="Accept" text="Save" press="onSaveInspectionPress"/>
-						<m:Button type="Reject" text="Cancel" press="onAllInspectionPress"/>
+						<m:Button type="Reject" text="Cancel" press="onNavBack"/>
 					</m:Toolbar>
 				</m:footer>
 			</m:Page>

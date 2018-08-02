@@ -46,7 +46,7 @@
 										</f:FormElement>
 										<f:FormElement label="Score">
 											<f:fields>
-												<Select id="ScoreSelectUpdate" forceSelection="false" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }" selectedKey="{inspectionModel>ScoreId}">
+												<Select id="ScoreSelectUpdate" change=".removeErrorStateSelect" forceSelection="false" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }" selectedKey="{inspectionModel>ScoreId}">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -58,7 +58,7 @@
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select id="StatusSelectUpdate" forceSelection="false" items="{path: '/ZWM_STATUS_VH', sorter: { path: 'Text' }}" selectedKey="{inspectionModel>StatusId}">
+												<Select id="StatusSelectUpdate" change=".removeErrorStateSelect" forceSelection="false" items="{path: '/ZWM_STATUS_VH', sorter: { path: 'Text' }}" selectedKey="{inspectionModel>StatusId}">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -69,17 +69,17 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea id="findingTextUpdate" maxLength="256" rows="3" required="true" value="{inspectionModel>Findings}"></TextArea>
+												<TextArea id="findingTextUpdate" change="removeErrorStateInput" maxLength="256" rows="3" required="true" value="{inspectionModel>Findings}"></TextArea>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
 											<f:fields>
-												<Input id="LocationfragUpdate" required="true" value="{inspectionModel>Location}"/>
+												<Input id="LocationfragUpdate" change="removeErrorStateInput" required="true" value="{inspectionModel>Location}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
-												<Select id="RiskCategorySelectUpdate" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }" 
+												<Select id="RiskCategorySelectUpdate" change=".removeErrorStateSelect" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }" 
 												selectedKey="{inspectionModel>SupplierRiskCategory}" >
 													<core:Item key="{id}" text="{text}"/>
 												</Select>
