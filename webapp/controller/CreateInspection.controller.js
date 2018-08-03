@@ -93,14 +93,14 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
 			this.supplierDialog.open();
 		},
-		
+
 		handleSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
 			var oFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
 			var oBinding = oEvent.getSource().getBinding("items");
 			oBinding.filter([oFilter]);
 		},
-		
+
 		HandleLiveSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
 			var oNameFilter = new Filter("name1", sap.ui.model.FilterOperator.Contains, sValue);
@@ -117,9 +117,18 @@ sap.ui.define([
 		handleSupplierClose: function(oEvent) {
 			var oContext = oEvent.getParameter("selectedItem").getBindingContext();
 			if (oContext) {
-				var oInspection = oContext.getObject();
+				var oSupplier = oContext.getObject();
+				var oInspection = {};
+				oInspection.SupplierId = oSupplier.lifnr;
 				oInspection.InspectionBy = this.CurrentUser;
 				oInspection.InspectionDate = new Date();
+				oInspection.SupplierName = oSupplier.name1;
+				oInspection.SupplierDetail = {};
+				oInspection.SupplierDetail.SupplierCategory = oSupplier.SupplierCategory;
+				oInspection.SupplierDetail.Commodity = oSupplier.CommodityName;
+				oInspection.SupplierDetail.Country = oSupplier.land1;
+				oInspection.SupplierDetail.SupplierContact1 = oSupplier.stras;
+				oInspection.SupplierDetail.SupplierContact2 = oSupplier.telephoneNumber;
 				this.getView().getModel("inspectionModel").setData(oInspection);
 			} else {
 				this.getOwnerComponent().getRouter().navTo("ListView", {});
@@ -130,42 +139,47 @@ sap.ui.define([
 		handleSupplierCloseNavigate: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView");
 		},
-		
+
 		onSaveInspectionPress: function(oEvent) {
-			var TableData = this.getView().byId("addInspectionTable").getModel().getData();
+			// var TableData = this.getView().byId("addInspectionTable").getModel().getData();
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
-				this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
-				this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
-				var Inspection = {
-					"InspectionBy": this.getView().byId("InspectionBy").getValue(),
-					"SupplierId": this.getView().byId("SupplierID").getValue(),
-					"InspectionDate": InspectionDate,
-					"OtherContacts": this.getView().byId("OtherContacts").getValue(),
-					"Findings": []
-				};
-				jQuery.each(TableData, function(index, value) {
-					var Findings = {
-						"SubjectId": value.subject_id,
-						"CategoryId": value.category_id,
-						"QuestionId": value.question_id,
-						"ScoreId": value.Score_id,
-						"StatusId": value.Status_id,
-						"Findings": value.findings,
-						"Location": value.location,
-						"SupplierRiskCategory": value.RiskCategorySelect_id,
-						"ShortTermContainment": value.ShortTermContainment,
-						"SupplierCasualFactor": value.CasualFactor,
-						"SupplierId": this.getView().byId("SupplierID").getValue(),
-						"QualityCategory": value.QualityCategoryInput
-					};
-					Inspection.Findings[index] = Findings;
-				}.bind(this));
+				// this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
+				// this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
+				// var Inspection = {
+				// 	"InspectionBy": this.getView().byId("InspectionBy").getValue(),
+				// 	"SupplierId": this.getView().byId("SupplierID").getValue(),
+				// 	"InspectionDate": InspectionDate,
+				// 	"OtherContacts": this.getView().byId("OtherContacts").getValue(),
+				// 	"Findings": []
+				// };
+				// jQuery.each(TableData, function(index, value) {
+				// 	var Findings = {
+				// 		"SubjectId": value.subject_id,
+				// 		"CategoryId": value.category_id,
+				// 		"QuestionId": value.question_id,
+				// 		"ScoreId": value.Score_id,
+				// 		"StatusId": value.Status_id,
+				// 		"Findings": value.findings,
+				// 		"Location": value.location,
+				// 		"SupplierRiskCategory": value.RiskCategorySelect_id,
+				// 		"ShortTermContainment": value.ShortTermContainment,
+				// 		"SupplierCasualFactor": value.CasualFactor,
+				// 		"SupplierId": this.getView().byId("SupplierID").getValue(),
+				// 		"QualityCategory": value.QualityCategoryInput
+				// 	};
+				// 	Inspection.Findings[index] = Findings;
+				// }.bind(this));
 
+				var requestData = this.getView().getModel("inspectionModel").getData();
+				//Get rid of __metadata
+				delete requestData.__metadata;
 				var requestURLStatusUpdate = "/Inspections";
-				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Inspection, {
+				this.getView().setBusy(true);
+				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, requestData, {
 					success: function(data, responsee) {
+						this.getView().setBusy(false);
 						var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 						MessageBox.success(
 							this.getView().getModel("i18n").getResourceBundle().getText("createdInspection") + data.Id, {
@@ -186,8 +200,9 @@ sap.ui.define([
 						}.bind(this));
 					}.bind(this),
 					error: function(error) {
+						this.getView().setBusy(false);
 						MessageBox.error(JSON.parse(error.responseText).error.message.value);
-					}
+					}.bind(this)
 				});
 			} else {
 				if (this.getView().byId("InspectionBy").getValue() === "") {
@@ -200,26 +215,26 @@ sap.ui.define([
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("enterMandatoryFields"));
 			}
 		},
-		
+
 		removeErrorStateInput: function(evt) {
 			if (evt.getSource().getValue() !== "") {
 				evt.getSource().setValueState(sap.ui.core.ValueState.None);
 			}
 		},
-		
+
 		removeErrorStateSelect: function(evt) {
 			if (evt.getSource().getSelectedKey() !== "") {
 				evt.getSource().setValueState(sap.ui.core.ValueState.None);
 			}
 		},
-		
+
 		//New Finding icon pressed
 		onNewFindingPress: function(oEvent) {
 			var oInspectionModel = this.getView().getModel("inspectionModel");
 
 			//Create a new empty Finding and add it to the model and assign to the dialog
 			var oFinding = {
-				"SupplierId": oInspectionModel.getProperty("/lifnr"),
+				"SupplierId": oInspectionModel.getProperty("/SupplierId"),
 				"SubjectId": "",
 				"CategoryId": "",
 				"QuestionId": "",
@@ -468,7 +483,8 @@ sap.ui.define([
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
 			oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(QualityCategory); //Quality Category 
-			var oSuppRiskCategory = oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[0];
+			var oSuppRiskCategory = oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[
+				0];
 			oSuppRiskCategory.setSelectedKey(RiskCategory);
 			oSuppRiskCategory.setValueState(sap.ui.core.ValueState.None);
 		},
@@ -478,6 +494,7 @@ sap.ui.define([
 			oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
 			oTable.removeItem(oEvent.getParameter("listItem"));
 			oTable.getModel().refresh();
+
 		},
 		onTableEditPress: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getParent().getBindingContext("inspectionModel");

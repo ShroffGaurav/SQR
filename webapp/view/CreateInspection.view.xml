@@ -20,11 +20,11 @@
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="{i18n>supplier}" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="SupplierID" width="100%" value="{inspectionModel>/lifnr}" editable="false"/>
+												<m:Input id="SupplierID" width="100%" value="{inspectionModel>/SupplierId}" editable="false"/>
 												<m:Label text="{i18n>supplierName}" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/name1}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierName}" editable="false"/>
 												<m:Label text="{i18n>supplierContact}" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/stras}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/SupplierContact1}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="{i18n>inspectionCOnductedBy}" width="100%" class="sapUiSmallMarginTop"/>
@@ -35,21 +35,21 @@
 													</m:suggestionItems>
 												</m:Input>
 												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/SupplierCategory}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/SupplierCategory}" editable="false"/>
 												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/telephoneNumber}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/SupplierContact2}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
 												<m:DatePicker id="InspectionDate" required="true" change="removeErrorStateInput" width="100%" displayFormat="medium" dateValue="{inspectionModel>/InspectionDate}"/>
 												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/CommodityName}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input id="OtherContacts" width="100%" value="{ZSQRMBWA>OtherContacts}"/>
+												<m:Input id="OtherContacts" width="100%" value="{inspectionModel>/OtherContacts}"/>
 												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" value="{inspectionModel>/land1}" editable="false"/>
+												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/Country}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
 									</blocks>
