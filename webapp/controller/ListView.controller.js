@@ -16,9 +16,7 @@ sap.ui.define([
 			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 		},
 		onHandleRouteMatched: function(oEvent) {
-			// this.getView().byId("inspectionTable").getTable().getModel().refresh();
 			this.getView().byId("inspectionTable").rebindTable();
-
 		},
 		onBeforeRebindTableExtension: function(oEvent) {
 			var oBindingParams = oEvent.getParameter("bindingParams");
@@ -106,7 +104,6 @@ sap.ui.define([
 					this._oDialogEdit.destroy();
 					this._oDialogEdit = undefined;
 				}.bind(this)
-
 			});
 
 		},

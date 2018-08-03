@@ -33,12 +33,6 @@ sap.ui.define([
 				componentName: "PersoApp",
 				persoService: PersoServiceEdit
 			}).activate();
-
-			// this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
-			// this._oDialog.setContentHeight("60%");
-			// this._oDialog.setContentWidth("90%");
-			// this.getView().addDependent(this._oDialog);
-
 		},
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
@@ -60,18 +54,9 @@ sap.ui.define([
 					path: "/" + encodeURI(this.sContext),
 					parameters: oParams
 				};
-				// var oContext = this.getView().getModel().createBindingContext(oPath);
-				if (this.sContext) {
-					// this.getView().setBindingContext(oContext);
-					// oPath = {
-					// 	path: "/" + encodeURI(this.sContext),
-					// 	parameters: oParams
-					// };
 
+				if (this.sContext) {
 					this.getView().bindObject(oPath);
-					// this.getView().getModel().updateBindings();
-					// this.getView().getModel().updateBindings();
-					// this.getView().getModel().refresh();
 				}
 			}
 			busyIndicator.destroy();
@@ -79,7 +64,6 @@ sap.ui.define([
 		onDialogCancelButton: function(oEvent) {
 			this._oDialog.destroy();
 			this._oDialog = undefined;
-			// this._oDialog.close();
 		},
 
 		//Save pressed on Edit Finding button
@@ -105,15 +89,11 @@ sap.ui.define([
 			//Updating a Finding
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
-				// method: "PUT",
 				success: function(data, response) {
-					MessageToast.show("Action Complete");
-					//this.getView().getModel().refresh();
-					//this.getView().getModel().refresh();
+					MessageToast.show("Successfully updated the Finding");
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;
-					// this._oDialog.close();
 				}.bind(this),
 				error: function(error) {
 					MessageBox.error(JSON.parse(error.responseText).error.message.value);
@@ -151,14 +131,10 @@ sap.ui.define([
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var count = 0;
-			// if (this.getView().byId("oFileUploader").oFileUpload) {
-			// 	var aFiles = this.getView().byId("oFileUploader").oFileUpload.files;
-			// }
 			var iKey;
 			var oFile;
 
 			var array = {
-				//"finding_id": "10053",
 				"subject": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
 					.getText()),
 				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
