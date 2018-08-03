@@ -5,15 +5,14 @@
 	<m:App id="addinspection">
 		<m:pages>
 			<m:Page title="{i18n>newInspection}" showNavButton="true" navButtonPress="onNavBack">
-				<!--<content>-->
-				<ObjectPageLayout enableLazyLoading="false">
+				<ObjectPageLayout enableLazyLoading="false" upperCaseAnchorBar="false">
 					<headerTitle>
 						<ObjectPageHeader objectTitle="{i18n>inspection}"></ObjectPageHeader>
 					</headerTitle>
 					<headerContent>
 					</headerContent>
 					<sections>
-						<ObjectPageSection title="{i18n>info}">
+						<ObjectPageSection title="{i18n>info}" titleUppercase="false">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
@@ -56,7 +55,7 @@
 								</ObjectPageSubSection>
 							</subSections>
 						</ObjectPageSection>
-						<ObjectPageSection title="Findings">
+						<ObjectPageSection title="Findings" titleUppercase="false">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>

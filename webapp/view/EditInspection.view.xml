@@ -4,7 +4,7 @@
 	<m:App id="newinspection">
 		<m:pages>
 			<m:Page title="Edit Inspection" showNavButton="true" navButtonPress="onNavBack">
-				<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false">
+				<ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false" upperCaseAnchorBar="false">
 					<headerTitle>
 						<ObjectPageHeader objectTitle="Inspection"></ObjectPageHeader>
 					</headerTitle>
@@ -18,7 +18,7 @@
 						</m:ObjectAttribute>
 					</headerContent>
 					<sections>
-						<ObjectPageSection title="Info">
+						<ObjectPageSection title="Info" titleUppercase="false">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
@@ -56,7 +56,7 @@
 								</ObjectPageSubSection>
 							</subSections>
 						</ObjectPageSection>
-						<ObjectPageSection title="Findings">
+						<ObjectPageSection title="Findings" titleUppercase="false">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>

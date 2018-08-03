@@ -48,7 +48,6 @@ sap.ui.define([
 
 			//Pop-up for new Finding
 			this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.NewInspectionNewFinding", this);
-			// this._oDialogAdd = sap.ui.xmlfragment("com.sapZSQRMBWA.fragments.NewInspectionNewFinding", this);
 			this.getView().addDependent(this._oDialogAdd);
 			this._oDialogAdd.setContentHeight("60%");
 			this._oDialogAdd.setContentWidth("90%");
@@ -145,32 +144,6 @@ sap.ui.define([
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
-				// this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.None);
-				// this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.None);
-				// var Inspection = {
-				// 	"InspectionBy": this.getView().byId("InspectionBy").getValue(),
-				// 	"SupplierId": this.getView().byId("SupplierID").getValue(),
-				// 	"InspectionDate": InspectionDate,
-				// 	"OtherContacts": this.getView().byId("OtherContacts").getValue(),
-				// 	"Findings": []
-				// };
-				// jQuery.each(TableData, function(index, value) {
-				// 	var Findings = {
-				// 		"SubjectId": value.subject_id,
-				// 		"CategoryId": value.category_id,
-				// 		"QuestionId": value.question_id,
-				// 		"ScoreId": value.Score_id,
-				// 		"StatusId": value.Status_id,
-				// 		"Findings": value.findings,
-				// 		"Location": value.location,
-				// 		"SupplierRiskCategory": value.RiskCategorySelect_id,
-				// 		"ShortTermContainment": value.ShortTermContainment,
-				// 		"SupplierCasualFactor": value.CasualFactor,
-				// 		"SupplierId": this.getView().byId("SupplierID").getValue(),
-				// 		"QualityCategory": value.QualityCategoryInput
-				// 	};
-				// 	Inspection.Findings[index] = Findings;
-				// }.bind(this));
 
 				var requestData = this.getView().getModel("inspectionModel").getData();
 				//Get rid of __metadata
@@ -195,8 +168,8 @@ sap.ui.define([
 						jQuery.each(data.Findings.results, function(index, value) {
 							Spath = "/Findings(InspectionId='" + data.Id + "',Id='" + data.Findings.results[index].Id + "')";
 							UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
-							var oData = this.getView().byId("addInspectionTable").getModel().getData()[index].Attachments;
-							this._uploadAttachments(UploadURL, oData);
+							var aAttachments = this.getView().getModel("inspectionModel").getData().Findings[index].Attachments;
+							this._uploadAttachments(UploadURL, aAttachments);
 						}.bind(this));
 					}.bind(this),
 					error: function(error) {
@@ -490,11 +463,9 @@ sap.ui.define([
 		},
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
-			var path = oEvent.getSource().getParent().getBindingContext().sPath;
-			oTable.getModel().getData().splice(parseInt(path.substring(1)), 1);
-			oTable.removeItem(oEvent.getParameter("listItem"));
-			oTable.getModel().refresh();
-
+			var path = oEvent.getSource().getParent().getBindingContext("inspectionModel").sPath;
+			oTable.getModel("inspectionModel").getData().Findings.splice(parseInt(path.split("/")[2]), 1);
+			oTable.getModel("inspectionModel").refresh();
 		},
 		onTableEditPress: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getParent().getBindingContext("inspectionModel");

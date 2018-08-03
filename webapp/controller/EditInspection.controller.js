@@ -33,8 +33,16 @@ sap.ui.define([
 				componentName: "PersoApp",
 				persoService: PersoServiceEdit
 			}).activate();
+
+			// this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
+			// this._oDialog.setContentHeight("60%");
+			// this._oDialog.setContentWidth("90%");
+			// this.getView().addDependent(this._oDialog);
+
 		},
 		onHandleRouteMatched: function(oEvent) {
+			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
+
 			this.addFindingArr = [];
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
@@ -61,19 +69,21 @@ sap.ui.define([
 		onDialogCancelButton: function(oEvent) {
 			this._oDialog.destroy();
 			this._oDialog = undefined;
+			// this._oDialog.close();
 		},
-		
+
 		//Save pressed on Edit Finding button
 		onDialogSubmitButton: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
-			var Inspection = oEvent.getSource().getCustomData()[0].getValue();
-			var FindingId = oEvent.getSource().getCustomData()[1].getValue();
-			var Status = this.getView().byId("StatusSelect").getSelectedKey();
-			var Findings = this.getView().byId("InspectionFindingsText").getValue();
-			var RiskCategory = this.getView().byId("RiskCategorySelect").getSelectedKey();
-			var Containment = this.getView().byId("ContainmentInput").getValue();
+			var oFinding = this._oDialog.getBindingContext().getObject();
+			var Inspection = oFinding.InspectionId;
+			var FindingId = oFinding.Id;
+			var Status = oFinding.StatusId;
+			var Findings = oFinding.Findings;
+			var RiskCategory = oFinding.SupplierRiskCategory;
+			var Containment = oFinding.ShortTermContainment;
 
 			var Payload = {};
 			Payload.StatusId = Status;
@@ -89,6 +99,7 @@ sap.ui.define([
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;
+					// this._oDialog.close();
 				}.bind(this),
 				error: function(error) {
 					MessageBox.error(JSON.parse(error.responseText).error.message.value);
@@ -99,7 +110,7 @@ sap.ui.define([
 			});
 			this.getView().getModel().refresh();
 		},
-		
+
 		//New Ispection button pressed
 		onAddDialogPress: function(oEvent) {
 			var supplier = this.getView().getBindingContext().getObject().SupplierId;
@@ -118,7 +129,7 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogAdd);
 			this._oDialogAdd.open();
 		},
-		
+
 		//Save pressed on 'Create Finding' pop-up
 		onAddDialogSubmitButton: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
@@ -272,6 +283,7 @@ sap.ui.define([
 						var oData = array.Attachments;
 						this._uploadAttachments(UploadURL, oData);
 						busyIndicator.close();
+
 						this._oDialogAdd.destroy();
 						this._oDialogAdd = undefined;
 					}.bind(this),
@@ -322,7 +334,7 @@ sap.ui.define([
 				}.bind(this)
 			});
 		},
-		
+
 		//Delete pressed on the Finding row
 		onDeletePress: function(oEvent) {
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
@@ -341,7 +353,7 @@ sap.ui.define([
 									MessageToast.show("Successfully deleted the Finding");
 									//Refresh the inspection screen
 									this.getView().getModel().refresh();
-									
+
 								}.bind(this),
 								error: function(err) {
 									MessageBox.error(JSON.parse(err.responseText).error.message.value);
@@ -353,66 +365,27 @@ sap.ui.define([
 			);
 		},
 		onTableEditPress: function(oEvent) {
-			if (!this._oDialog) {
-				this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
-				this._oDialog.setModel(this.getView().getModel());
-				this._oDialog.setContentHeight("60%");
-				this._oDialog.setContentWidth("90%");
-				this.getView().addDependent(this._oDialog);
-			}
-			var oPath;
-			var Spath = oEvent.getSource().getParent().getBindingContext().sPath;
+			this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
+			this._oDialog.setContentHeight("60%");
+			this._oDialog.setContentWidth("90%");
+			this._oDialog.setModel(this.getView().getModel());
+			this._oDialog.setBindingContext(oEvent.getSource().getParent().getBindingContext());
+
+			var sPath = oEvent.getSource().getParent().getBindingContext().sPath;
 			var editVisibilityModel = new JSONModel();
-			oPath = {
-				path: Spath,
-				parameters: {}
-			};
-			this._oDialog.getContent()[0].getItems()[0].getAggregation("_header").getItems()[1].getContent()[0].bindObject(oPath);
-			var Findingid = oEvent.getSource().getParent().getBindingContext().getObject().Id;
-			this._oDialog.setTitle("Edit Finding (" + Findingid + ")");
-			var inspectionid = oEvent.getSource().getParent().getBindingContext().getObject().InspectionId;
-			var Subject = oEvent.getSource().getParent().getBindingContext().getObject().Subject;
-			var Category = oEvent.getSource().getParent().getBindingContext().getObject().Category;
-			var Question = oEvent.getSource().getParent().getBindingContext().getObject().Question;
-			var Score = oEvent.getSource().getParent().getBindingContext().getObject().Score;
 			var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
-			var Finding = oEvent.getSource().getParent().getBindingContext().getObject().Findings;
-			var InspectionLocation = oEvent.getSource().getParent().getBindingContext().getObject().Location;
-			var ShortTermContainment = oEvent.getSource().getParent().getBindingContext().getObject("ShortTermContainment");
-			var SupplerRiskCategory = oEvent.getSource().getParent().getBindingContext().getObject("SupplerRiskCategory");
-			var SupplierCasualFactor = oEvent.getSource().getParent().getBindingContext().getObject("SupplierCasualFactor");
-			var QualityCategory = oEvent.getSource().getParent().getBindingContext().getObject("QualityCategory");
-			var SupplierId = oEvent.getSource().getParent().getBindingContext().getObject("SupplierId");
-			var SupplierName = oEvent.getSource().getParent().getBindingContext().getObject("SupplierName");
-			var Data = {
-				"Findingid": Findingid,
-				"InspectionId": inspectionid,
-				"Subject": Subject,
-				"Category": Category,
-				"Question": Question,
-				"Score": Score,
-				"Status": Status,
-				"Finding": Finding,
-				"SupplierId": SupplierName + " (" + SupplierId + ")",
-				"QualityCategory": QualityCategory,
-				"InspectionLocation": InspectionLocation,
-				"ShortTermContainment": ShortTermContainment,
-				"SupplerRiskCategory": SupplerRiskCategory,
-				"SupplierCasualFactor": SupplierCasualFactor,
-				"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments"
-			};
-			var SelectedValueHelp = new JSONModel();
-			SelectedValueHelp.setData(Data);
+
 			if (Status === "4") {
 				editVisibilityModel.setData({
-					visible: false
+					visible: false,
+					"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + sPath) + "/Attachments"
 				});
 			} else {
 				editVisibilityModel.setData({
-					visible: true
+					visible: true,
+					"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + sPath) + "/Attachments"
 				});
 			}
-			this._oDialog.setModel(SelectedValueHelp, "SelectedValueHelp");
 			this._oDialog.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
@@ -465,6 +438,7 @@ sap.ui.define([
 			var aDeferreds = [];
 			var sUploadURL = Url;
 			var sToken = this.getView().getModel().getSecurityToken();
+
 			aAttachments.forEach(function(oAttachment) {
 				var sFileName;
 				var sFileType;
@@ -495,12 +469,12 @@ sap.ui.define([
 
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
-		
+
 		onFileUploaderChangePress: function(oEvent) {
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").push(oEvent.getParameters().files[0]);
 			this.getView().getModel("AttachmentDisplayModel").refresh();
 		},
-		
+
 		onChange: function(oEvent) {
 			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();
@@ -535,7 +509,7 @@ sap.ui.define([
 			});
 			oEvent.getParameters().addHeaderParameter(oCustomerHeaderSlug);
 		},
-		
+
 		onIconTabBarChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedKey;
 			if (SelectedKey === "2") {
