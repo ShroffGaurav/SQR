@@ -5,6 +5,7 @@ sap.ui.define([
 	"com/sapZSQRMBWA/Personalization/PersoServiceAdd",
 	"sap/m/MessageBox",
 	"sap/m/TablePersoController",
+
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/ui/core/ListItem",
@@ -148,6 +149,7 @@ sap.ui.define([
 				var requestData = this.getView().getModel("inspectionModel").getData();
 				//Get rid of __metadata
 				delete requestData.__metadata;
+
 				var requestURLStatusUpdate = "/Inspections";
 				this.getView().setBusy(true);
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, requestData, {
@@ -193,6 +195,7 @@ sap.ui.define([
 			if (evt.getSource().getValue() !== "") {
 				evt.getSource().setValueState(sap.ui.core.ValueState.None);
 			}
+
 		},
 
 		removeErrorStateSelect: function(evt) {
@@ -219,6 +222,7 @@ sap.ui.define([
 				"ShortTermContainment": "",
 				"SupplierCasualFactor": "",
 				"QualityCategory": "",
+
 				"Attachments": []
 			};
 
@@ -313,6 +317,7 @@ sap.ui.define([
 			}
 		},
 
+
 		//Save pressed on new Finding Pop-up
 		onAddDialogSubmitButton: function(oEvent) {
 			var count = 0;
@@ -325,31 +330,41 @@ sap.ui.define([
 				if (oFindingData[property] !== null && oFindingData[property] !== "") {
 					switch (property) {
 						case "SubjectId":
+
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
 							oFindingData.Subject = this.getView().byId("SubjectSelect").getSelectedItem().getText();
 							count++;
 							break;
+
 						case "CategoryId":
+
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
 							oFindingData.Category = this.getView().byId("CategorySelect").getSelectedItem().getText();
 							count++;
 							break;
+
 						case "QuestionId":
+
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
 							oFindingData.Question = this.getView().byId("questionSelect").getSelectedItem().getText();
 							count++;
 							break;
 						case "ScoreId":
+
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
 							oFindingData.Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();
 							count++;
 							break;
+
 						case "StatusId":
+
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
 							oFindingData.Status = this.getView().byId("StatusSelect").getSelectedItem().getText();
 							count++;
 							break;
+
 						case "Findings":
+
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
@@ -372,18 +387,23 @@ sap.ui.define([
 						case "CategoryId":
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
+
 						case "QuestionId":
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
+
 						case "ScoreId":
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
+
 						case "StatusId":
+
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case "Findings":
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
+
 						case "Location":
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
@@ -391,11 +411,11 @@ sap.ui.define([
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
+
 				}
 			}
 
 			if (count === 8) {
-
 				//Add the finding to the inspection model
 				var aFindings = this.getView().getModel("inspectionModel").getData().Findings;
 				if (aFindings === undefined) {
@@ -403,13 +423,14 @@ sap.ui.define([
 				}
 				aFindings.push(oFindingData);
 				this.getView().getModel("inspectionModel").setProperty("/Findings", aFindings);
-
 				this._oDialogAdd.close();
+
 			} else {
 
 			}
 		},
 		onAddDialogCancelButton: function(oEvent) {
+
 			this._oDialogAdd.close();
 		},
 		onUpdateDialogCancelButton: function(oEvent) {
@@ -466,6 +487,7 @@ sap.ui.define([
 			var path = oEvent.getSource().getParent().getBindingContext("inspectionModel").sPath;
 			oTable.getModel("inspectionModel").getData().Findings.splice(parseInt(path.split("/")[2]), 1);
 			oTable.getModel("inspectionModel").refresh();
+
 		},
 		onTableEditPress: function(oEvent) {
 			var oBindingContext = oEvent.getSource().getParent().getBindingContext("inspectionModel");

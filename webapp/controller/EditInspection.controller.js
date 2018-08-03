@@ -2,9 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	"com/sapZSQRMBWA/Personalization/PersoServiceEdit",
-	"sap/m/MessageBox",
-	"sap/m/TablePersoController",
+	'com/sapZSQRMBWA/Personalization/PersoServiceEdit',
+	'sap/m/MessageBox',
+	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter"
@@ -60,8 +60,18 @@ sap.ui.define([
 					path: "/" + encodeURI(this.sContext),
 					parameters: oParams
 				};
+				// var oContext = this.getView().getModel().createBindingContext(oPath);
 				if (this.sContext) {
+					// this.getView().setBindingContext(oContext);
+					// oPath = {
+					// 	path: "/" + encodeURI(this.sContext),
+					// 	parameters: oParams
+					// };
+
 					this.getView().bindObject(oPath);
+					// this.getView().getModel().updateBindings();
+					// this.getView().getModel().updateBindings();
+					// this.getView().getModel().refresh();
 				}
 			}
 			busyIndicator.destroy();
@@ -85,6 +95,7 @@ sap.ui.define([
 			var RiskCategory = oFinding.SupplierRiskCategory;
 			var Containment = oFinding.ShortTermContainment;
 
+
 			var Payload = {};
 			Payload.StatusId = Status;
 			Payload.Findings = Findings;
@@ -94,8 +105,11 @@ sap.ui.define([
 			//Updating a Finding
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
+				// method: "PUT",
 				success: function(data, response) {
-					MessageToast.show("Successfully updated the Finding");
+					MessageToast.show("Action Complete");
+					//this.getView().getModel().refresh();
+					//this.getView().getModel().refresh();
 					busyIndicator.close();
 					this._oDialog.destroy();
 					this._oDialog = undefined;
@@ -107,6 +121,7 @@ sap.ui.define([
 					this._oDialog.destroy();
 					this._oDialog = undefined;
 				}.bind(this)
+
 			});
 			this.getView().getModel().refresh();
 		},
@@ -136,10 +151,14 @@ sap.ui.define([
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var count = 0;
+			// if (this.getView().byId("oFileUploader").oFileUpload) {
+			// 	var aFiles = this.getView().byId("oFileUploader").oFileUpload.files;
+			// }
 			var iKey;
 			var oFile;
 
 			var array = {
+				//"finding_id": "10053",
 				"subject": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
 					.getText()),
 				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
@@ -192,35 +211,35 @@ sap.ui.define([
 			jQuery.each(array, function(index, value) {
 				if (value !== null && value !== "") {
 					switch (index) {
-						case "subject":
+						case 'subject':
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "category":
+						case 'category':
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "question":
+						case 'question':
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "Score":
+						case 'Score':
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "Status":
+						case 'Status':
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "findings":
+						case 'findings':
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "location":
+						case 'location':
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
-						case "RiskCategorySelect":
+						case 'RiskCategorySelect':
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
@@ -229,31 +248,32 @@ sap.ui.define([
 					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
 					busyIndicator.close();
 					switch (index) {
-						case "subject":
+						case 'subject':
 							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "category":
+						case 'category':
 							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "question":
+						case 'question':
 							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "Score":
+						case 'Score':
 							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "Status":
+						case 'Status':
 							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "findings":
+						case 'findings':
 							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "location":
+						case 'location':
 							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
-						case "RiskCategorySelect":
+						case 'RiskCategorySelect':
 							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
+
 				}
 			}.bind(this));
 
@@ -276,12 +296,15 @@ sap.ui.define([
 
 				var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')/Findings";
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Payload, {
+					// method: "PUT",
 					success: function(data, response) {
 						MessageToast.show("Successfully created the Finding :" + data.Id);
 						Spath = "/Findings(InspectionId='" + data.InspectionId + "',Id='" + data.Id + "')";
 						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = array.Attachments;
 						this._uploadAttachments(UploadURL, oData);
+						//this.getView().getModel().refresh();
+						//this.getView().getModel().updateBindings();
 						busyIndicator.close();
 
 						this._oDialogAdd.destroy();
@@ -308,9 +331,12 @@ sap.ui.define([
 		},
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
+
 		},
 		onAllInspectionPress: function() {
+
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
+
 		},
 		onSaveInspectionPress: function(oEvent) {
 			var busyIndicator = new sap.m.BusyDialog();
@@ -325,18 +351,24 @@ sap.ui.define([
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
+
 					MessageToast.show("Successfully saved the Inspection");
+
 					busyIndicator.close();
 				}.bind(this),
 				error: function(err) {
 					MessageBox.error(JSON.parse(err.responseText).error.message.value);
 					busyIndicator.close();
 				}.bind(this)
+
 			});
+
 		},
 
 		//Delete pressed on the Finding row
 		onDeletePress: function(oEvent) {
+			//var deleteRecord = oEvent.getSource().getBindingContext().getObject();
+			var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var FindingId = oEvent.getSource().getParent().getBindingContext().getObject().Id;
 
@@ -350,19 +382,25 @@ sap.ui.define([
 							var requestURLStatusUpdate = "/Findings(InspectionId='" + InspectionId + "',Id='" + FindingId + "')";
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
+
 									MessageToast.show("Successfully deleted the Finding");
 									//Refresh the inspection screen
 									this.getView().getModel().refresh();
 
 								}.bind(this),
+
 								error: function(err) {
 									MessageBox.error(JSON.parse(err.responseText).error.message.value);
+
 								}.bind(this)
+
 							});
 						}
+
 					}.bind(this)
 				}
 			);
+
 		},
 		onTableEditPress: function(oEvent) {
 			this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
@@ -400,9 +438,11 @@ sap.ui.define([
 				this.getView().byId("questionSelect").setSelectedKey("");
 				this.getView().byId("QualityCategoryInput").setValue("");
 				this.getView().byId("RiskCategorySelect").setSelectedKey("");
+
 			} else {
 				this.getView().byId("CategorySelect").getBinding("items").filter([]);
 			}
+
 		},
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
@@ -434,8 +474,12 @@ sap.ui.define([
 			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
 		},
 		/// UploadCollection Code 
+
 		_uploadAttachments: function(Url, aAttachments) {
 			var aDeferreds = [];
+			// var sKey = this.oDataModel.createKey("PRs", {
+			// 	PRNumber: sPRNumber
+			// });
 			var sUploadURL = Url;
 			var sToken = this.getView().getModel().getSecurityToken();
 
@@ -479,7 +523,7 @@ sap.ui.define([
 			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();
 			var oHeaders = oModel.oHeaders;
-			var sToken = oHeaders["x-csrf-token"];
+			var sToken = oHeaders['x-csrf-token'];
 			var oUploadCollection = oEvent.getSource();
 			var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
 				name: "x-csrf-token",
@@ -490,6 +534,7 @@ sap.ui.define([
 		},
 
 		onUploadComplete: function(oEvent) {
+		//	this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
@@ -536,7 +581,6 @@ sap.ui.define([
 			var FileId = oEvent.getParameters("documentId").documentId;
 			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
-
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
 					MessageToast.show("Successfully deleted the attachment");
@@ -546,5 +590,7 @@ sap.ui.define([
 				}.bind(this)
 			});
 		}
+
 	});
+
 });

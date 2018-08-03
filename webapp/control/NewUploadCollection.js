@@ -1,5 +1,5 @@
 sap.ui.define([
-	"sap/m/UploadCollectionParameter","sap/m/library"
+	'sap/m/UploadCollectionParameter','sap/m/library'
 ], function(UploadCollectionParameter,library) {
 	"use strict";
 	

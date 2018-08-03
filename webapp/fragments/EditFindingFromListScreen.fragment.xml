@@ -46,7 +46,7 @@
 										</f:FormElement>
 										<f:FormElement label="Status">
 											<f:fields>
-												<Select id="StatusSelect" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" selectedKey="{StatusId}"
+												<Select id="StatusSelect" enabled="{editVisibilityModel>/visible}" selectedKey="{StatusId}"
 													items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
@@ -58,7 +58,7 @@
 									<f:formElements>
 										<f:FormElement label="Inspection Findings">
 											<f:fields>
-												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" value="{Findings}"/>
+												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="{editVisibilityModel>/visible}" value="{Findings}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Inspection Location">
@@ -72,11 +72,12 @@
 													items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }">
 													<core:Item key="{id}" text="{text}"/>
 												</Select>
+												<!--<Input id="RiskCategoryInput"  value="{SelectedValueHelp>/SupplerRiskCategory}"/>-->
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Short term Containment">
 											<f:fields>
-												<Input id="ContainmentInput" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" maxLength="256" value="{ShortTermContainment}"/>
+												<Input id="ContainmentInput" enabled="{editVisibilityModel>/visible}" maxLength="256" value="{ShortTermContainment}"/>
 											</f:fields>
 										</f:FormElement>
 										<f:FormElement label="Supplier Causal Factor:">
@@ -91,7 +92,7 @@
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
 						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
-							uploadEnabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
+							uploadEnabled="{editVisibilityModel>/visible}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'Attachments', templateShareable: false }"
 							uploadUrl="{editVisibilityModel>/uploadUrl}">

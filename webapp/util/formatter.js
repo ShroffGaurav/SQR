@@ -14,6 +14,14 @@ sap.ui.define([
 			} else {
 				return sValue;
 			}
+		},
+		isItClosed: function(status){
+			if (status === "4"){
+				return false;
+			} else{
+				return true;
+			}
+		
 		}
 	};
 });
