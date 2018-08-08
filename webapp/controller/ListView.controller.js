@@ -30,10 +30,23 @@ sap.ui.define([
 			return sap.ui.component(sComponentId);
 		},
 		onBeforeRendering: function() {
-			// var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
-			// var oVal = {};
-			// oVal.StatusId = "1";
-			// this.getView().byId("smartFilterBar").setFilterData(oVal);
+
+		},
+		setNavigationParameters: function(){
+			var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
+			var oVal = {};
+			
+			for (var property in oStartupParameters ) {
+    			if (oStartupParameters.hasOwnProperty(property)) {
+        		   //Set filters
+        			oVal[property] = {};
+        			oVal[property].items = [];
+        			for (var i = 0; i < oStartupParameters[property].length; i++){
+        				oVal[property].items.push({key: oStartupParameters[property][i] });
+        			}
+    			}
+			}
+			this.getView().byId("smartFilterBar").setFilterData(oVal);			
 		},
 		onSmartTableEdit: function(oEvent) {
 			if (!this._oDialogEdit) {

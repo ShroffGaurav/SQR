@@ -5,13 +5,13 @@ sap.ui.define([
 	"com/sapZSQRMBWA/Personalization/PersoServiceAdd",
 	"sap/m/MessageBox",
 	"sap/m/TablePersoController",
-
+	"sap/ui/core/ValueState",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/ui/core/ListItem",
 	"sap/ui/core/message/ControlMessageProcessor",
 	"sap/ui/core/message/Message"
-], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, MessageToast,
+], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, ValueState, MessageToast,
 	formatter, ListItem, ControlMessageProcessor, Message) {
 	"use strict";
 
@@ -75,7 +75,12 @@ sap.ui.define([
 			}
 			oEvent.getSource().getBinding("suggestionItems").filter(oFilter);
 		},
-
+		setErrorState: function(oEvt) {
+			oEvt.getSource().setValueState(ValueState.Error);
+		},	
+		removeErrorState: function(oEvt) {
+			oEvt.getSource().setValueState(ValueState.None);
+		},
 		onHandleRouteMatched: function(oEvent) {
 			this.arr = [];
 			this.getView().getModel("inspectionModel").setData(null);
@@ -181,11 +186,11 @@ sap.ui.define([
 				});
 			} else {
 				if (this.getView().byId("InspectionBy").getValue() === "") {
-					this.getView().byId("InspectionBy").setValueState(sap.ui.core.ValueState.Error);
+					this.getView().byId("InspectionBy").setValueState(ValueState.Error);
 				}
 
 				if (this.getView().byId("InspectionDate").getValue() === "") {
-					this.getView().byId("InspectionDate").setValueState(sap.ui.core.ValueState.Error);
+					this.getView().byId("InspectionDate").setValueState(ValueState.Error);
 				}
 				MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("enterMandatoryFields"));
 			}
@@ -193,14 +198,13 @@ sap.ui.define([
 
 		removeErrorStateInput: function(evt) {
 			if (evt.getSource().getValue() !== "") {
-				evt.getSource().setValueState(sap.ui.core.ValueState.None);
+				evt.getSource().setValueState(ValueState.None);
 			}
-
 		},
 
 		removeErrorStateSelect: function(evt) {
 			if (evt.getSource().getSelectedKey() !== "") {
-				evt.getSource().setValueState(sap.ui.core.ValueState.None);
+				evt.getSource().setValueState(ValueState.None);
 			}
 		},
 
@@ -243,40 +247,40 @@ sap.ui.define([
 				if (oFindingData[property] !== null && oFindingData[property] !== "") {
 					switch (property) {
 						case "SubjectId":
-							this.getView().byId("SubjectSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("SubjectSelectUpdate").setValueState(ValueState.None);
 							oFindingData.Subject = this.getView().byId("SubjectSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
 						case "CategoryId":
-							this.getView().byId("CategorySelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("CategorySelectUpdate").setValueState(ValueState.None);
 							oFindingData.Category = this.getView().byId("CategorySelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
 						case "QuestionId":
-							this.getView().byId("questionSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("questionSelectUpdate").setValueState(ValueState.None);
 							oFindingData.Question = this.getView().byId("questionSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
 						case "ScoreId":
-							this.getView().byId("ScoreSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("ScoreSelectUpdate").setValueState(ValueState.None);
 							oFindingData.Score = this.getView().byId("ScoreSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
 						case "StatusId":
-							this.getView().byId("StatusSelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("StatusSelectUpdate").setValueState(ValueState.None);
 							oFindingData.Status = this.getView().byId("StatusSelectUpdate").getSelectedItem().getText();
 							count++;
 							break;
 						case "Findings":
-							this.getView().byId("findingTextUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("findingTextUpdate").setValueState(ValueState.None);
 							count++;
 							break;
 						case "Location":
-							this.getView().byId("LocationfragUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("LocationfragUpdate").setValueState(ValueState.None);
 							count++;
 							break;
 						case "SupplierRiskCategory":
-							this.getView().byId("RiskCategorySelectUpdate").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("RiskCategorySelectUpdate").setValueState(ValueState.None);
 							count++;
 							break;
 					}
@@ -285,28 +289,28 @@ sap.ui.define([
 					this.getView().byId("iconTabBarUpdate").setSelectedKey("1");
 					switch (property) {
 						case "SubjectId":
-							this.getView().byId("SubjectSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("SubjectSelectUpdate").setValueState(ValueState.Error);
 							break;
 						case "CategoryId":
-							this.getView().byId("CategorySelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("CategorySelectUpdate").setValueState(ValueState.Error);
 							break;
 						case "QuestionId":
-							this.getView().byId("questionSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("questionSelectUpdate").setValueState(ValueState.Error);
 							break;
 						case "ScoreId":
-							this.getView().byId("ScoreSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("ScoreSelectUpdate").setValueState(ValueState.Error);
 							break;
 						case "StatusId":
-							this.getView().byId("StatusSelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("StatusSelectUpdate").setValueState(ValueState.Error);
 							break;
 						case "Findings":
-							this.getView().byId("findingTextUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("findingTextUpdate").setValueState(ValueState.Error);
 							break;
 						case "Location":
-							this.getView().byId("LocationfragUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("LocationfragUpdate").setValueState(ValueState.Error);
 							break;
 						case "SupplierRiskCategory":
-							this.getView().byId("RiskCategorySelectUpdate").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("RiskCategorySelectUpdate").setValueState(ValueState.Error);
 							break;
 					}
 				}
@@ -316,7 +320,6 @@ sap.ui.define([
 				this._oDialogUpdate.close();
 			}
 		},
-
 
 		//Save pressed on new Finding Pop-up
 		onAddDialogSubmitButton: function(oEvent) {
@@ -331,49 +334,49 @@ sap.ui.define([
 					switch (property) {
 						case "SubjectId":
 
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("SubjectSelect").setValueState(ValueState.None);
 							oFindingData.Subject = this.getView().byId("SubjectSelect").getSelectedItem().getText();
 							count++;
 							break;
 
 						case "CategoryId":
 
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("CategorySelect").setValueState(ValueState.None);
 							oFindingData.Category = this.getView().byId("CategorySelect").getSelectedItem().getText();
 							count++;
 							break;
 
 						case "QuestionId":
 
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("questionSelect").setValueState(ValueState.None);
 							oFindingData.Question = this.getView().byId("questionSelect").getSelectedItem().getText();
 							count++;
 							break;
 						case "ScoreId":
 
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("ScoreSelect").setValueState(ValueState.None);
 							oFindingData.Score = this.getView().byId("ScoreSelect").getSelectedItem().getText();
 							count++;
 							break;
 
 						case "StatusId":
 
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("StatusSelect").setValueState(ValueState.None);
 							oFindingData.Status = this.getView().byId("StatusSelect").getSelectedItem().getText();
 							count++;
 							break;
 
 						case "Findings":
 
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("findingText").setValueState(ValueState.None);
 							count++;
 							break;
 						case "Location":
-							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("Locationfrag").setValueState(ValueState.None);
 							count++;
 							break;
 						case "SupplierRiskCategory":
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+							this.getView().byId("RiskCategorySelect").setValueState(ValueState.None);
 							count++;
 							break;
 					}
@@ -382,33 +385,33 @@ sap.ui.define([
 					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
 					switch (property) {
 						case "SubjectId":
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("SubjectSelect").setValueState(ValueState.Error);
 							break;
 						case "CategoryId":
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("CategorySelect").setValueState(ValueState.Error);
 							break;
 
 						case "QuestionId":
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("questionSelect").setValueState(ValueState.Error);
 							break;
 
 						case "ScoreId":
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("ScoreSelect").setValueState(ValueState.Error);
 							break;
 
 						case "StatusId":
 
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("StatusSelect").setValueState(ValueState.Error);
 							break;
 						case "Findings":
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("findingText").setValueState(ValueState.Error);
 							break;
 
 						case "Location":
-							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("Locationfrag").setValueState(ValueState.Error);
 							break;
 						case "SupplierRiskCategory":
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							this.getView().byId("RiskCategorySelect").setValueState(ValueState.Error);
 							break;
 					}
 
@@ -437,7 +440,7 @@ sap.ui.define([
 			this._oDialogUpdate.close();
 		},
 		onSubjectChange: function(oEvent) {
-			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
+			oEvent.getSource().setValueState(ValueState.None);
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
@@ -456,7 +459,7 @@ sap.ui.define([
 			}
 		},
 		onCategoryChange: function(oEvent) {
-			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
+			oEvent.getSource().setValueState(ValueState.None);
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
@@ -473,14 +476,14 @@ sap.ui.define([
 			}
 		},
 		onQuestionChange: function(oEvent) {
-			oEvent.getSource().setValueState(sap.ui.core.ValueState.None);
+			oEvent.getSource().setValueState(ValueState.None);
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
 			oEvent.getSource().getParent().getParent().getFormElements()[5].getFields()[0].setValue(QualityCategory); //Quality Category 
 			var oSuppRiskCategory = oEvent.getSource().getParent().getParent().getParent().getFormContainers()[1].getFormElements()[2].getFields()[
 				0];
 			oSuppRiskCategory.setSelectedKey(RiskCategory);
-			oSuppRiskCategory.setValueState(sap.ui.core.ValueState.None);
+			oSuppRiskCategory.setValueState(ValueState.None);
 		},
 		onTableDeletePress: function(oEvent) {
 			var oTable = this.getView().byId("addInspectionTable");
@@ -518,64 +521,64 @@ sap.ui.define([
 
 			if (this.getView().byId("SubjectSelect").getSelectedItem().getKey() !== null && this.getView().byId("SubjectSelect").getSelectedItem()
 				.getKey() !== "") {
-				this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("SubjectSelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("SubjectSelect").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("CategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("CategorySelect").getSelectedItem()
 				.getKey() !== "") {
-				this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("CategorySelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("CategorySelect").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("questionSelect").getSelectedItem().getKey() !== null && this.getView().byId("questionSelect").getSelectedItem()
 				.getKey() !== "") {
-				this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("questionSelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("questionSelect").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("ScoreSelect").getSelectedItem().getKey() !== null && this.getView().byId("ScoreSelect").getSelectedItem().getKey() !==
 				"") {
-				this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("ScoreSelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("ScoreSelect").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("StatusSelect").getSelectedItem().getKey() !== null && this.getView().byId("StatusSelect").getSelectedItem()
 				.getKey() !== "") {
-				this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("StatusSelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("StatusSelect").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("InspectionFindingsText").getValue() !== "") {
-				this.getView().byId("InspectionFindingsText").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("InspectionFindingsText").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("InspectionFindingsText").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("InspectionFindingsText").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("InspectionLocation").getValue() !== "") {
-				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("InspectionLocation").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("InspectionLocation").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("InspectionLocation").setValueState(ValueState.Error);
 			}
 
 			if (this.getView().byId("RiskCategorySelect").getSelectedItem().getKey() !== null && this.getView().byId("RiskCategorySelect").getSelectedItem()
 				.getKey() !== "") {
-				this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+				this.getView().byId("RiskCategorySelect").setValueState(ValueState.None);
 				count++;
 			} else {
-				this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+				this.getView().byId("RiskCategorySelect").setValueState(ValueState.Error);
 			}
 
 			if (count === 8) {

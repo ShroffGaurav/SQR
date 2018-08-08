@@ -27,8 +27,9 @@
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
 												<m:Label text="{i18n>inspectionCOnductedBy}" width="100%" class="sapUiSmallMarginTop"/>
-												<m:Input width="100%" id="InspectionBy" required="true" type="Text" liveChange="removeErrorStateInput" suggest="handleSuggest" maxSuggestionWidth="30%" showSuggestion="true" value="{inspectionModel>/InspectionBy}"
-													suggestionItems="{/ZWM_USER_VH}" startSuggestion="1">
+												<m:Input width="100%" id="InspectionBy" required="true" type="Text" liveChange="setErrorState" 
+													suggest="handleSuggest" maxSuggestionWidth="30%" showSuggestion="true" value="{inspectionModel>/InspectionBy}"
+													suggestionItems="{/ZWM_USER_VH}" startSuggestion="1" suggestionItemSelected="removeErrorState">
 													<m:suggestionItems>
 														<core:ListItem text="{userId}" additionalText="{Name}"/>
 													</m:suggestionItems>
