@@ -6,8 +6,9 @@ sap.ui.define([
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
-	"sap/m/MessageBox"
-], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast, formatter, MessageBox) {
+	"sap/m/MessageBox",
+	"sap/ui/generic/app/navigation/service/NavigationHandler"
+], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast, formatter, MessageBox, NavigationHandler) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
 		formatter: formatter,
@@ -34,7 +35,8 @@ sap.ui.define([
 		},
 		setNavigationParameters: function() {
 
-			var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
+			// var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
+			var oNavigationHandler = new NavigationHandler(this);
 			var oParseNavigationPromise = oNavigationHandler.parseNavigation();
 
 			oParseNavigationPromise.done(function(oAppData, oStartupParameters, sNavType) {

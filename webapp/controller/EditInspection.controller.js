@@ -8,9 +8,10 @@ sap.ui.define([
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
-	"com/sapZSQRMBWA/util/formatter"
+	"com/sapZSQRMBWA/util/formatter",
+	"sap/ui/core/Fragment"
 ], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, BusyDialog, TablePersoController, UploadCollectionParameter, MessageToast,
-	formatter) {
+	formatter, Fragment) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.EditInspection", {
@@ -34,7 +35,20 @@ sap.ui.define([
 				componentName: "PersoApp",
 				persoService: PersoServiceEdit
 			}).activate();
+			
+			//Dialog to edit a Finding
+			this._oDialogEdit = sap.ui.xmlfragment("editFramgmentId", "com.sapZSQRMBWA.fragments.EditFinding", this);
+			this._oDialogEdit.setContentHeight("60%");
+			this._oDialogEdit.setContentWidth("90%");
+			this.getView().addDependent(this._oDialogEdit);
+			
+			//Dialog to create a Finding
+			this._oDialogAdd = sap.ui.xmlfragment("addFragmentId", "com.sapZSQRMBWA.fragments.AddFinding", this);
+			this._oDialogAdd.setContentHeight("60%");
+			this._oDialogAdd.setContentWidth("90%");
+			this.getView().addDependent(this._oDialogAdd);
 		},
+		
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
 
@@ -42,9 +56,7 @@ sap.ui.define([
 			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
-			var oParams = {
-				"expand": "Findings,Findings/Attachments"
-			};
+
 			if (this.getView().getModel().getData()) {
 				this.getView().getModel().setData(null);
 			}
@@ -52,8 +64,7 @@ sap.ui.define([
 			if (oEvent.getParameter("arguments").context) {
 				this.sContext = oEvent.getParameter("arguments").context;
 				var oPath = {
-					path: "/" + encodeURI(this.sContext),
-					parameters: oParams
+					path: "/" + encodeURI(this.sContext)
 				};
 
 				if (this.sContext) {
@@ -63,8 +74,7 @@ sap.ui.define([
 			busyIndicator.destroy();
 		},
 		onDialogCancelButton: function(oEvent) {
-			this._oDialog.destroy();
-			this._oDialog = undefined;
+			this._oDialogEdit.close();
 		},
 
 		//Save pressed on Edit Finding button
@@ -72,7 +82,7 @@ sap.ui.define([
 			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
-			var oFinding = this._oDialog.getBindingContext().getObject();
+			var oFinding = this._oDialogEdit.getBindingContext().getObject();
 			var Inspection = oFinding.InspectionId;
 			var FindingId = oFinding.Id;
 			var Status = oFinding.StatusId;
@@ -93,14 +103,12 @@ sap.ui.define([
 				success: function(data, response) {
 					MessageToast.show("Successfully updated the Finding");
 					busyIndicator.close();
-					this._oDialog.destroy();
-					this._oDialog = undefined;
+					this._oDialogEdit.close();
 				}.bind(this),
 				error: function(error) {
 					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					busyIndicator.close();
-					this._oDialog.destroy();
-					this._oDialog = undefined;
+					this._oDialogEdit.close();
 				}.bind(this)
 
 			});
@@ -110,12 +118,6 @@ sap.ui.define([
 		//New Ispection button pressed
 		onAddDialogPress: function(oEvent) {
 			var supplier = this.getView().getBindingContext().getObject().SupplierId;
-			if (!this._oDialogAdd) {
-				this._oDialogAdd = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.AddFinding", this);
-				this._oDialogAdd.setModel(this.getView().getModel());
-				this._oDialogAdd.setContentHeight("60%");
-				this._oDialogAdd.setContentWidth("90%");
-			}
 			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0, Length);
 			this._oDialogAdd.getContent()[0].getItems()[0].getItems()[0].getContent()[0].getFormContainers()[0].getFormElements()[0].getFields()[
@@ -136,38 +138,38 @@ sap.ui.define([
 			var oFile;
 
 			var array = {
-				"subject": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
-					.getText()),
-				"subject_id": (this.getView().byId("SubjectSelect").getSelectedItem() === null ? "" : this.getView().byId("SubjectSelect").getSelectedItem()
+				"subject": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem()
+					.getText()),					
+				"subject_id": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem()
 					.getKey()),
-				"category": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
+				"category": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem()
 					.getText()),
-				"category_id": (this.getView().byId("CategorySelect").getSelectedItem() === null ? "" : this.getView().byId("CategorySelect").getSelectedItem()
+				"category_id": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem()
 					.getKey()),
-				"question": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
+				"question": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "questionSelect").getSelectedItem()
 					.getText()),
-				"question_id": (this.getView().byId("questionSelect").getSelectedItem() === null ? "" : this.getView().byId("questionSelect").getSelectedItem()
+				"question_id": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "questionSelect").getSelectedItem()
 					.getKey()),
-				"Score": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
+				"Score": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem()
 					.getText()),
-				"Score_id": (this.getView().byId("ScoreSelect").getSelectedItem() === null ? "" : this.getView().byId("ScoreSelect").getSelectedItem()
+				"Score_id": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem()
 					.getKey()),
-				"Status": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
+				"Status": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem()
 					.getText()),
-				"Status_id": (this.getView().byId("StatusSelect").getSelectedItem() === null ? "" : this.getView().byId("StatusSelect").getSelectedItem()
+				"Status_id": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem()
 					.getKey()),
-				"findings": this.getView().byId("findingText").getValue(),
-				"location": this.getView().byId("Locationfrag").getValue(),
-				"RiskCategorySelect": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
+				"findings": Fragment.byId("addFragmentId", "findingText").getValue(),
+				"location": Fragment.byId("addFragmentId", "Locationfrag").getValue(),
+				"RiskCategorySelect": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", 
 						"RiskCategorySelect").getSelectedItem()
 					.getText()),
-				"RiskCategorySelect_id": (this.getView().byId("RiskCategorySelect").getSelectedItem() === null ? "" : this.getView().byId(
+				"RiskCategorySelect_id": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", 
 						"RiskCategorySelect").getSelectedItem()
 					.getKey()),
-				"QualityCategoryInput": (this.getView().byId("QualityCategoryInput").getValue() === null ? "" : this.getView().byId(
+				"QualityCategoryInput": (Fragment.byId("addFragmentId", "QualityCategoryInput").getValue() === null ? "" : Fragment.byId("addFragmentId", 
 					"QualityCategoryInput").getValue()),
-				"ShortTermContainment": this.getView().byId("ShortTermContainment").getValue(),
-				"CasualFactor": this.getView().byId("CasualFactor").getValue(),
+				"ShortTermContainment": Fragment.byId("addFragmentId", "ShortTermContainment").getValue(),
+				"CasualFactor": Fragment.byId("addFragmentId", "CasualFactor").getValue(),
 				"Attachments": []
 			};
 			var aFiles = this.getView().getModel("AttachmentDisplayModel").getData().Attachment;
@@ -189,68 +191,67 @@ sap.ui.define([
 				if (value !== null && value !== "") {
 					switch (index) {
 						case 'subject':
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "SubjectSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'category':
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "CategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'question':
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "questionSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'Score':
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "ScoreSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'Status':
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "StatusSelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'findings':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "findingText").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'location':
-							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "Locationfrag").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 						case 'RiskCategorySelect':
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
+							Fragment.byId("addFragmentId", "RiskCategorySelect").setValueState(sap.ui.core.ValueState.None);
 							count++;
 							break;
 					}
 				} else {
-					this.getView().byId("iconTabBarAdd").setSelectedKey("1");
+					Fragment.byId("addFragmentId", "iconTabBarAdd").setSelectedKey("1");
 					busyIndicator.close();
 					switch (index) {
 						case 'subject':
-							this.getView().byId("SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "SubjectSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'category':
-							this.getView().byId("CategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "CategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'question':
-							this.getView().byId("questionSelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "questionSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'Score':
-							this.getView().byId("ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "ScoreSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'Status':
-							this.getView().byId("StatusSelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "StatusSelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'findings':
-							this.getView().byId("findingText").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "findingText").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'location':
-							this.getView().byId("Locationfrag").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "Locationfrag").setValueState(sap.ui.core.ValueState.Error);
 							break;
 						case 'RiskCategorySelect':
-							this.getView().byId("RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
+							Fragment.byId("addFragmentId", "RiskCategorySelect").setValueState(sap.ui.core.ValueState.Error);
 							break;
 					}
-
 				}
 			}.bind(this));
 
@@ -273,48 +274,42 @@ sap.ui.define([
 
 				var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')/Findings";
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Payload, {
-					// method: "PUT",
 					success: function(data, response) {
 						MessageToast.show("Successfully created the Finding :" + data.Id);
 						Spath = "/Findings(InspectionId='" + data.InspectionId + "',Id='" + data.Id + "')";
 						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = array.Attachments;
 						this._uploadAttachments(UploadURL, oData);
-						//this.getView().getModel().refresh();
-						//this.getView().getModel().updateBindings();
 						busyIndicator.close();
-
-						this._oDialogAdd.destroy();
-						this._oDialogAdd = undefined;
+						this._oDialogAdd.close();
 					}.bind(this),
 					error: function(error) {
 						MessageBox.error(JSON.parse(error.responseText).error.message.value);
 						busyIndicator.close();
-						this._oDialogAdd.destroy();
-						this._oDialogAdd = undefined;
+						this._oDialogAdd.close();
 					}.bind(this)
-
 				});
 				this.getView().getModel().refresh();
 			}
 		},
+		
 		onAddDialogCancelButton: function() {
-			this._oDialogAdd.destroy();
-			this._oDialogAdd = undefined;
+			this._oDialogAdd.close();
 		},
+		
 		dialogAfterclose: function(oEvent) {
-			this._oDialogAdd.destroy();
-			this._oDialogAdd = undefined;
+			this._oDialogAdd.close();
 		},
+		
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
 
 		},
+		
 		onAllInspectionPress: function() {
-
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
-
 		},
+		
 		onSaveInspectionPress: function(oEvent) {
 			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
@@ -325,27 +320,20 @@ sap.ui.define([
 			Payload.OtherContacts = otherContacts;
 			var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')";
 
-			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
-
 					MessageToast.show("Successfully saved the Inspection");
-
 					busyIndicator.close();
 				}.bind(this),
 				error: function(err) {
 					MessageBox.error(JSON.parse(err.responseText).error.message.value);
 					busyIndicator.close();
-				}.bind(this)
-
+				}
 			});
-
 		},
 
 		//Delete pressed on the Finding row
 		onDeletePress: function(oEvent) {
-			//var deleteRecord = oEvent.getSource().getBindingContext().getObject();
-			var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var InspectionId = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;
 			var FindingId = oEvent.getSource().getParent().getBindingContext().getObject().Id;
 
@@ -359,32 +347,23 @@ sap.ui.define([
 							var requestURLStatusUpdate = "/Findings(InspectionId='" + InspectionId + "',Id='" + FindingId + "')";
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
-
 									MessageToast.show("Successfully deleted the Finding");
 									//Refresh the inspection screen
 									this.getView().getModel().refresh();
-
 								}.bind(this),
-
 								error: function(err) {
 									MessageBox.error(JSON.parse(err.responseText).error.message.value);
-
-								}.bind(this)
-
+								}
 							});
 						}
-
 					}.bind(this)
 				}
 			);
-
 		},
+		
+		//Edit pressed against a Finding row
 		onTableEditPress: function(oEvent) {
-			this._oDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
-			this._oDialog.setContentHeight("60%");
-			this._oDialog.setContentWidth("90%");
-			this._oDialog.setModel(this.getView().getModel());
-			this._oDialog.setBindingContext(oEvent.getSource().getParent().getBindingContext());
+			this._oDialogEdit.setBindingContext(oEvent.getSource().getParent().getBindingContext());
 
 			var sPath = oEvent.getSource().getParent().getBindingContext().sPath;
 			var editVisibilityModel = new JSONModel();
@@ -401,47 +380,50 @@ sap.ui.define([
 					"uploadUrl": window.location.origin + (this.getView().getModel().sServiceUrl + sPath) + "/Attachments"
 				});
 			}
-			this._oDialog.setModel(editVisibilityModel, "editVisibilityModel");
+			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialog);
-			this._oDialog.open();
+			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogEdit);
+			this._oDialogEdit.open();
 		},
+		
 		onSubjectChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-				this.getView().byId("CategorySelect").getBinding("items").filter([oFilter]);
-				this.getView().byId("CategorySelect").setSelectedKey("");
-				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategoryInput").setValue("");
-				this.getView().byId("RiskCategorySelect").setSelectedKey("");
-
+				Fragment.byId("addFragmentId", "CategorySelect").getBinding("items").filter([oFilter]);
+				Fragment.byId("addFragmentId", "CategorySelect").setSelectedKey("");
+				Fragment.byId("addFragmentId", "questionSelect").setSelectedKey("");
+				Fragment.byId("addFragmentId", "QualityCategoryInput").setValue("");
+				Fragment.byId("addFragmentId", "RiskCategorySelect").setSelectedKey("");
 			} else {
-				this.getView().byId("CategorySelect").getBinding("items").filter([]);
+				Fragment.byId("addFragmentId", "CategorySelect").getBinding("items").filter([]);
 			}
-
 		},
+		
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
 			if (SelectedKey !== "" || SelectedKey !== null) {
-				this.getView().byId("questionSelect").getBinding("items").filter([oFilter]);
-				this.getView().byId("questionSelect").setSelectedKey("");
-				this.getView().byId("QualityCategoryInput").setValue("");
-				this.getView().byId("RiskCategorySelect").setSelectedKey("");
+				Fragment.byId("addFragmentId", "questionSelect").getBinding("items").filter([oFilter]);
+				Fragment.byId("addFragmentId", "questionSelect").setSelectedKey("");
+				Fragment.byId("addFragmentId", "QualityCategoryInput").setValue("");
+				Fragment.byId("addFragmentId", "RiskCategorySelect").setSelectedKey("");
 			} else {
-				this.getView().byId("questionSelect").getBinding("items").filter([]);
+				Fragment.byId("addFragmentId", "questionSelect").getBinding("items").filter([]);
 			}
 		},
+		
 		onQuestionChange: function(oEvent) {
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
-			this.getView().byId("QualityCategoryInput").setValue(QualityCategory);
-			this.getView().byId("RiskCategorySelect").setSelectedKey(RiskCategory);
+			Fragment.byId("addFragmentId", "QualityCategoryInput").setValue(QualityCategory);
+			Fragment.byId("addFragmentId", "RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
+		
 		onPersoButtonPressed: function(oEvent) {
 			this._oTPC.openDialog();
 		},
+		
 		onTablePersoRefresh: function() {
 			PersoServiceEdit.resetPersData();
 			this._oTPC.refresh();
@@ -450,13 +432,10 @@ sap.ui.define([
 		onTableGrouping: function(oEvent) {
 			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
 		},
+		
 		/// UploadCollection Code 
-
 		_uploadAttachments: function(Url, aAttachments) {
 			var aDeferreds = [];
-			// var sKey = this.oDataModel.createKey("PRs", {
-			// 	PRNumber: sPRNumber
-			// });
 			var sUploadURL = Url;
 			var sToken = this.getView().getModel().getSecurityToken();
 
@@ -487,7 +466,6 @@ sap.ui.define([
 					}));
 				}
 			});
-
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
 
@@ -506,12 +484,10 @@ sap.ui.define([
 				name: "x-csrf-token",
 				value: sToken
 			});
-
 			oUploadCollection.addHeaderParameter(oCustomerHeaderToken);
 		},
 
 		onUploadComplete: function(oEvent) {
-		//	this.getView().getModel().refresh();
 			var sUploadedFileName = oEvent.getParameter("files")[0].fileName;
 			var oUploadCollection = oEvent.getSource();
 			for (var i = 0; i < oUploadCollection.getItems().length; i++) {
@@ -540,12 +516,14 @@ sap.ui.define([
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
 		},
+		
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
 				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
 			sPath = sPath.split("/");
 			sPath = sPath[2];
+			
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
@@ -569,7 +547,5 @@ sap.ui.define([
 				}.bind(this)
 			});
 		}
-
 	});
-
 });
