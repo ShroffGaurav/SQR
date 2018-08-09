@@ -101,7 +101,8 @@
 					"defaultOperationMode": "Server",
 					"defaultBindingMode": "TwoWay",
 					"defaultCountMode": "Inline",
-					"defaultUpdateMethod": "PUT"
+					"defaultUpdateMethod": "PUT",
+					"preliminaryContext": true
 				},
 				"dataSource": "ZSQRMBWA",
 				"preload": true

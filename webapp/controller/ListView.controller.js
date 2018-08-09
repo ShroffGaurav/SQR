@@ -32,21 +32,15 @@ sap.ui.define([
 		onBeforeRendering: function() {
 
 		},
-		setNavigationParameters: function(){
-			var oStartupParameters = this.getMyComponent().getComponentData().startupParameters;
-			var oVal = {};
-			
-			for (var property in oStartupParameters ) {
-    			if (oStartupParameters.hasOwnProperty(property)) {
-        		   //Set filters
-        			oVal[property] = {};
-        			oVal[property].items = [];
-        			for (var i = 0; i < oStartupParameters[property].length; i++){
-        				oVal[property].items.push({key: oStartupParameters[property][i] });
-        			}
-    			}
-			}
-			this.getView().byId("smartFilterBar").setFilterData(oVal);			
+		setNavigationParameters: function() {
+
+			var oNavigationHandler = new sap.ui.generic.app.navigation.service.NavigationHandler(this);
+			var oParseNavigationPromise = oNavigationHandler.parseNavigation();
+
+			oParseNavigationPromise.done(function(oAppData, oStartupParameters, sNavType) {
+				this.getView().byId("smartFilterBar").setDataSuiteFormat(oAppData.selectionVariant);
+			}.bind(this));
+
 		},
 		onSmartTableEdit: function(oEvent) {
 			if (!this._oDialogEdit) {
@@ -66,8 +60,10 @@ sap.ui.define([
 			var editVisibilityModel = new JSONModel({
 				"uploadUrl": window.location.origin + (this._oDialogEdit.getModel().sServiceUrl + readRequestURL) + "/Attachments"
 			});
-			
-			this._oDialogEdit.bindElement(readRequestURL, {"expand": "Attachments"});
+
+			this._oDialogEdit.bindElement(readRequestURL, {
+				"expand": "Attachments"
+			});
 			this._oDialogEdit.setModel(editVisibilityModel, "editVisibilityModel");
 			this._oDialogEdit.open();
 		},
@@ -169,7 +165,7 @@ sap.ui.define([
 
 		onFileDeleted: function(oEvent) {
 			var FileId = oEvent.getParameters("documentId").documentId;
-			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
+			var FindingId = oEvent.getSource().getBindingContext().getObject().Id;
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {

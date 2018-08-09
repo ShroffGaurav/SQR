@@ -10,9 +10,10 @@ sap.ui.define([
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/ui/core/ListItem",
 	"sap/ui/core/message/ControlMessageProcessor",
-	"sap/ui/core/message/Message"
+	"sap/ui/core/message/Message",
+	"sap/ui/core/routing/History"
 ], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, ValueState, MessageToast,
-	formatter, ListItem, ControlMessageProcessor, Message) {
+	formatter, ListItem, ControlMessageProcessor, Message, History) {
 	"use strict";
 
 	return Controller.extend("com.sapZSQRMBWA.controller.CreateInspection", {
@@ -31,11 +32,14 @@ sap.ui.define([
 			//Model for new Finding
 			this.oNewFindingModel = new JSONModel();
 
-			//Ensure that 'Choose a Supplier' dialog comes when this view opens
+			this.supplierDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.Supplier", this);
+			this.getView().addDependent(this.supplierDialog);
+
+			// //Ensure that 'Choose a Supplier' dialog comes when this view opens
 			var oView = this.getView();
 			oView.addEventDelegate({
-				onBeforeShow: function() {
-					this.onSupplierDialog();
+				onAfterShow: function() {
+					this.supplierDialog.open();
 				}.bind(this)
 			}, oView);
 
@@ -77,7 +81,7 @@ sap.ui.define([
 		},
 		setErrorState: function(oEvt) {
 			oEvt.getSource().setValueState(ValueState.Error);
-		},	
+		},
 		removeErrorState: function(oEvt) {
 			oEvt.getSource().setValueState(ValueState.None);
 		},
@@ -85,19 +89,21 @@ sap.ui.define([
 			this.arr = [];
 			this.getView().getModel("inspectionModel").setData(null);
 		},
+		onAfterRendering: function() {
 
-		onSupplierDialog: function() {
-			if (!this.supplierDialog) {
-				this.supplierDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.Supplier", this);
-				this.supplierDialog.setModel(this.getView().getModel());
-			}
-			// clear the old search filter
-			this.supplierDialog.getBinding("items").filter([]);
-
-			// toggle compact style
-			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
-			this.supplierDialog.open();
 		},
+		// onSupplierDialog: function() {
+		// 	if (!this.supplierDialog) {
+		// 		this.supplierDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.Supplier", this);
+		// 		this.supplierDialog.setModel(this.getView().getModel());
+		// 	}
+		// 	// clear the old search filter
+		// 	this.supplierDialog.getBinding("items").filter([]);
+
+		// 	// toggle compact style
+		// 	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
+		// 	this.supplierDialog.open();
+		// },
 
 		handleSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
@@ -146,7 +152,6 @@ sap.ui.define([
 		},
 
 		onSaveInspectionPress: function(oEvent) {
-			// var TableData = this.getView().byId("addInspectionTable").getModel().getData();
 			var InspectionDate = this.getView().byId("InspectionDate").getDateValue();
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
@@ -324,8 +329,8 @@ sap.ui.define([
 		//Save pressed on new Finding Pop-up
 		onAddDialogSubmitButton: function(oEvent) {
 			var count = 0;
-			var iKey;
-			var oFile;
+			// var iKey;
+			// var oFile;
 
 			var oFindingData = this.oNewFindingModel.getData();
 			for (var property in oFindingData) {
@@ -414,7 +419,6 @@ sap.ui.define([
 							this.getView().byId("RiskCategorySelect").setValueState(ValueState.Error);
 							break;
 					}
-
 				}
 			}
 
@@ -427,9 +431,6 @@ sap.ui.define([
 				aFindings.push(oFindingData);
 				this.getView().getModel("inspectionModel").setProperty("/Findings", aFindings);
 				this._oDialogAdd.close();
-
-			} else {
-
 			}
 		},
 		onAddDialogCancelButton: function(oEvent) {
@@ -604,7 +605,6 @@ sap.ui.define([
 					for (iKey = 0; iKey < aFiles.length; iKey++) {
 						oFile = aFiles[iKey];
 						aAttachments.push({
-							PRNumber: "",
 							FileName: oFile.name,
 							mime_type: oFile.type,
 							CreatedAt: new Date(),
@@ -734,7 +734,14 @@ sap.ui.define([
 					styleClass: bCompact ? "sapUiSizeCompact" : "",
 					onClose: function(sAction) {
 						if (sAction === "OK") {
-							this.getOwnerComponent().getRouter().navTo("ListView", {});
+							var oHistory = History.getInstance();
+							var sPreviousHash = oHistory.getPreviousHash();
+							if (sPreviousHash !== undefined) {
+								window.history.go(-1);
+							} else {
+								var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+								oRouter.navTo("ListView", true);
+							}
 						}
 					}.bind(this)
 				}

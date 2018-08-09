@@ -47,7 +47,7 @@
 										<f:FormElement label="Status">
 											<f:fields>
 												<Select id="StatusSelect" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" selectedKey="{StatusId}"
-													items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
+													items="{ path: '/ZWM_STATUS_VH' }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
@@ -69,7 +69,7 @@
 										<f:FormElement label="Supplier Risk Category">
 											<f:fields>
 												<Select id="RiskCategorySelect" enabled="false" selectedKey="{SupplierRiskCategory}" forceSelection="false"
-													items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }">
+													items="{ path: '/ZWM_RISK_CAT_VH' }">
 													<core:Item key="{id}" text="{text}"/>
 												</Select>
 											</f:fields>

@@ -60,7 +60,7 @@
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
-										<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'Findings' }" mode="None">
+										<m:Table width="100%" id="EditInspectionTable" backgroundDesign="Solid" inset="false" items="{ path: 'Findings', sorter: {path: 'Id', descending: false}, usePreliminaryContext: true }" mode="None">
 											<m:headerToolbar>
 												<m:OverflowToolbar>
 													<m:ToolbarSpacer/>

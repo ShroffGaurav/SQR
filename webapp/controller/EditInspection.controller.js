@@ -2,13 +2,14 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	'com/sapZSQRMBWA/Personalization/PersoServiceEdit',
-	'sap/m/MessageBox',
+	"com/sapZSQRMBWA/Personalization/PersoServiceEdit",
+	"sap/m/MessageBox",
+	"sap/m/BusyDialog",
 	'sap/m/TablePersoController',
 	"sap/m/UploadCollectionParameter",
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter"
-], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, TablePersoController, UploadCollectionParameter, MessageToast,
+], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, BusyDialog, TablePersoController, UploadCollectionParameter, MessageToast,
 	formatter) {
 	"use strict";
 
@@ -38,7 +39,7 @@ sap.ui.define([
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
 
 			this.addFindingArr = [];
-			var busyIndicator = new sap.m.BusyDialog();
+			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var oParams = {
@@ -68,7 +69,7 @@ sap.ui.define([
 
 		//Save pressed on Edit Finding button
 		onDialogSubmitButton: function(oEvent) {
-			var busyIndicator = new sap.m.BusyDialog();
+			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var oFinding = this._oDialog.getBindingContext().getObject();
@@ -127,7 +128,7 @@ sap.ui.define([
 
 		//Save pressed on 'Create Finding' pop-up
 		onAddDialogSubmitButton: function(oEvent) {
-			var busyIndicator = new sap.m.BusyDialog();
+			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var count = 0;
@@ -315,7 +316,7 @@ sap.ui.define([
 
 		},
 		onSaveInspectionPress: function(oEvent) {
-			var busyIndicator = new sap.m.BusyDialog();
+			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
 			busyIndicator.open();
 			var otherContacts = this.getView().byId("headerOtherContacts").getValue();
@@ -553,9 +554,11 @@ sap.ui.define([
 			oData.Attachment.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
+		
+		//Delete pressed against the attachment
 		onFileDeleted: function(oEvent) {
 			var FileId = oEvent.getParameters("documentId").documentId;
-			var FindingId = oEvent.getParameters().item.getCustomData()[1].getValue();
+			var FindingId = oEvent.getSource().getBindingContext().getObject().Id;
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
