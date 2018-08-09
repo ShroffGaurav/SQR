@@ -115,8 +115,11 @@ sap.ui.define([
 			this.getView().getModel().refresh();
 		},
 
-		//New Ispection button pressed
+		//New Finding button pressed
 		onAddDialogPress: function(oEvent) {
+			//Ensure Info tab is selected.
+			this._oDialogAdd.setBindingContext(oEvent.getSource().getParent().getBindingContext());
+			
 			var supplier = this.getView().getBindingContext().getObject().SupplierId;
 			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0, Length);
@@ -364,7 +367,9 @@ sap.ui.define([
 		//Edit pressed against a Finding row
 		onTableEditPress: function(oEvent) {
 			this._oDialogEdit.setBindingContext(oEvent.getSource().getParent().getBindingContext());
-
+			
+			//Info tab as the selected tab
+			this._oDialogEdit.getContent()[0].getItems()[0].setSelectedKey("1");
 			var sPath = oEvent.getSource().getParent().getBindingContext().sPath;
 			var editVisibilityModel = new JSONModel();
 			var Status = oEvent.getSource().getParent().getBindingContext().getObject().StatusId;

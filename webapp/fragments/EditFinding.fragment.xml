@@ -3,7 +3,7 @@
 	xmlns:table="sap.ui.table">
 	<Dialog resizable="true" title="Edit Finding" afterClose="dialogAfterClose" draggable="true" contentWidth="70%">
 		<VBox>
-			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange">
+			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange" >
 				<items>
 					<IconTabFilter icon="sap-icon://hint" text="info" key="1">
 						<f:Form editable="true">
