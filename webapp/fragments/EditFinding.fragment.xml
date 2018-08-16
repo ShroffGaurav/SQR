@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:table="sap.ui.table">
-	<Dialog resizable="true" title="Edit Finding" afterClose="dialogAfterClose" draggable="true" contentWidth="70%">
+	<Dialog resizable="true" title="{i18n>editFinding}" afterClose="dialogAfterClose" draggable="true" contentWidth="70%">
 		<VBox>
 			<IconTabBar class="sapUiResponsiveContentPadding" select="onIconTabBarChange" >
 				<items>
@@ -14,37 +14,37 @@
 							<f:formContainers>
 								<f:FormContainer>
 									<f:formElements>
-										<f:FormElement label="Supplier">
+										<f:FormElement label="{i18n>supplier}">
 											<f:fields>
-												<Input value="{SupplierId}" editable="false"/>
+												<Input value="{SupplierName} ({SupplierId})" editable="false"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Subject">
+										<f:FormElement label="{i18n>subject}">
 											<f:fields>
 												<Input enabled="false" value="{Subject}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Category">
+										<f:FormElement label="{i18n>category}">
 											<f:fields>
 												<Input enabled="false" value="{Category}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Question">
+										<f:FormElement label="{i18n>question}">
 											<f:fields>
 												<TextArea enabled="false" rows="3" value="{Question}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Score">
+										<f:FormElement label="{@i18n>score}">
 											<f:fields>
 												<Input enabled="false" value="{Score}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Quality Category">
+										<f:FormElement label="{i18n>qualityCategory}">
 											<f:fields>
 												<Input enabled="false" value="{QualityCategory}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Status">
+										<f:FormElement label="{i18n>status}">
 											<f:fields>
 												<Select id="StatusSelect" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" selectedKey="{StatusId}"
 													items="{ path: '/ZWM_STATUS_VH' }">
@@ -56,17 +56,17 @@
 								</f:FormContainer>
 								<f:FormContainer>
 									<f:formElements>
-										<f:FormElement label="Inspection Findings">
+										<f:FormElement label="{i18n>inspectionFindings}">
 											<f:fields>
 												<TextArea id="InspectionFindingsText" maxLength="256" rows="3" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" value="{Findings}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Inspection Location">
+										<f:FormElement label="{i18n>inspectionLocation}">
 											<f:fields>
 												<Input editable="false" value="{Location}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Risk Category">
+										<f:FormElement label="{i18n>supplierRiskCategory}">
 											<f:fields>
 												<Select id="RiskCategorySelect" enabled="false" selectedKey="{SupplierRiskCategory}" forceSelection="false"
 													items="{ path: '/ZWM_RISK_CAT_VH' }">
@@ -74,12 +74,12 @@
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Short term Containment">
+										<f:FormElement label="{@i18n>shortTermContainment}">
 											<f:fields>
 												<Input id="ContainmentInput" enabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" maxLength="256" value="{ShortTermContainment}"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Causal Factor:">
+										<f:FormElement label="{i18n>supplierCausalFactor}">
 											<f:fields>
 												<Input maxLength="256" editable="false" value="{SupplierCasualFactor}"/>
 											</f:fields>
@@ -90,7 +90,7 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
-						<UploadCollection noDataText="No files found." noDataDescription="Drop files to upload, or use the &quot;+&quot; button."
+						<UploadCollection noDataText="{@i18n>noFilesFound}" noDataDescription="{@i18n>noDataforFileUploader}"
 							uploadEnabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'Attachments', templateShareable: false }"
@@ -118,7 +118,7 @@
 			</Button>
 		</beginButton>
 		<endButton>
-			<Button type="Default" text="Close" icon="sap-icon://sys-cancel" press="onDialogCancelButton">
+			<Button type="Default" text="{i18n>close}" icon="sap-icon://sys-cancel" press="onDialogCancelButton">
 				<customData>
 					<core:CustomData value="{InspectionId}"/>
 					<core:CustomData value="{Findingid}"/>

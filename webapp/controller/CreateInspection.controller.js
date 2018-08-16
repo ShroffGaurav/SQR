@@ -92,18 +92,6 @@ sap.ui.define([
 		onAfterRendering: function() {
 
 		},
-		// onSupplierDialog: function() {
-		// 	if (!this.supplierDialog) {
-		// 		this.supplierDialog = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.Supplier", this);
-		// 		this.supplierDialog.setModel(this.getView().getModel());
-		// 	}
-		// 	// clear the old search filter
-		// 	this.supplierDialog.getBinding("items").filter([]);
-
-		// 	// toggle compact style
-		// 	jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this.supplierDialog);
-		// 	this.supplierDialog.open();
-		// },
 
 		handleSupplierSearch: function(oEvent) {
 			var sValue = oEvent.getParameter("value");
@@ -220,6 +208,7 @@ sap.ui.define([
 			//Create a new empty Finding and add it to the model and assign to the dialog
 			var oFinding = {
 				"SupplierId": oInspectionModel.getProperty("/SupplierId"),
+				"SupplierName": oInspectionModel.getProperty("/SupplierName"),
 				"SubjectId": "",
 				"CategoryId": "",
 				"QuestionId": "",
@@ -729,7 +718,7 @@ sap.ui.define([
 		onNavBack: function(oEvent) {
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			MessageBox.alert(
-				"You will lose the entered information. Do you want to exit this screen ?", {
+				this.getView().getModel("i18n").getResourceBundle().getText("dataLoseConfirmation"), {
 					actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 					styleClass: bCompact ? "sapUiSizeCompact" : "",
 					onClose: function(sAction) {

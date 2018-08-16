@@ -2,8 +2,8 @@
 	xmlns="sap.m"
 	xmlns:core="sap.ui.core">
 	<SelectDialog
-		noDataText="No Supplier Found"
-		title="Choose a Supplier"
+		noDataText="{i18n>noSupplierFound}"
+		title="{i18n>chooseSupplier}"
 		search="handleSupplierSearch"
 		confirm="handleSupplierClose"
 		cancel="handleSupplierCloseNavigate"

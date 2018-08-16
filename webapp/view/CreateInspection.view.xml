@@ -18,7 +18,7 @@
 									<blocks>
 										<m:HBox width="100%">
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="{i18n>supplier}" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplier_1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input id="SupplierID" width="100%" value="{inspectionModel>/SupplierId}" editable="false"/>
 												<m:Label text="{i18n>supplierName}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/SupplierName}" editable="false"/>
@@ -34,21 +34,21 @@
 														<core:ListItem text="{userId}" additionalText="{Name}"/>
 													</m:suggestionItems>
 												</m:Input>
-												<m:Label text="Supplier Category:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplierCategory1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/SupplierCategory}" editable="false"/>
-												<m:Label text="Supplier Contact2:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>supplierContact21}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/SupplierContact2}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="Date of Inspection:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>dateofInspection1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:DatePicker id="InspectionDate" required="true" change="removeErrorStateInput" width="100%" displayFormat="medium" dateValue="{inspectionModel>/InspectionDate}"/>
-												<m:Label text="Commodity:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>commodity1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/Commodity}" editable="false"/>
 											</m:VBox>
 											<m:VBox class="sapUiSmallMarginBegin" width="25%">
-												<m:Label text="Other Contacts:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>otherContacts1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input id="OtherContacts" width="100%" value="{inspectionModel>/OtherContacts}"/>
-												<m:Label text="Country:" width="100%" class="sapUiSmallMarginTop"/>
+												<m:Label text="{i18n>country1}" width="100%" class="sapUiSmallMarginTop"/>
 												<m:Input width="100%" value="{inspectionModel>/SupplierDetail/Country}" editable="false"/>
 											</m:VBox>
 										</m:HBox>
@@ -56,7 +56,7 @@
 								</ObjectPageSubSection>
 							</subSections>
 						</ObjectPageSection>
-						<ObjectPageSection title="Findings" titleUppercase="false">
+						<ObjectPageSection title="{i18n>findings}" titleUppercase="false">
 							<subSections>
 								<ObjectPageSubSection>
 									<blocks>
@@ -64,7 +64,7 @@
 											<m:headerToolbar>
 												<m:OverflowToolbar>
 													<m:ToolbarSpacer/>
-													<m:Button text="Add Finding" type="Transparent" press="onNewFindingPress" icon="sap-icon://add" id="oButtonAddFinding"/>
+													<m:Button text="{i18n>addFinding}" type="Transparent" press="onNewFindingPress" icon="sap-icon://add" id="oButtonAddFinding"/>
 													<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
 														<m:layoutData>
 															<m:OverflowToolbarLayoutData priority="AlwaysOverflow"/>
@@ -74,35 +74,35 @@
 											</m:headerToolbar>
 											<m:columns>
 												<m:Column id="Subject" width="12em">
-													<m:Text text="Subject"/>
+													<m:Text text="{i18n>subject}"/>
 												</m:Column>
 												<m:Column id="Category">
-													<m:Text text="Category"/>
+													<m:Text text="{i18n>category}"/>
 												</m:Column>
 												<m:Column id="Question" minScreenWidth="Desktop">
-													<m:Text text="Question"/>
+													<m:Text text="{i18n>question}"/>
 												</m:Column>
 												<m:Column id="Score" minScreenWidth="Desktop">
-													<m:Text text="Score"/>
+													<m:Text text="{i18n>score}"/>
 												</m:Column>
 												<m:Column id="Status" hAlign="End">
-													<m:Text text="Status">
+													<m:Text text="{i18n>status}">
 														<m:customData>
 															<core:CustomData key="colorClass" value="{ path:'Status', formatter: '.formatter.stringCheck'}" writeToDom="true"/>
 														</m:customData>
 													</m:Text>
 												</m:Column>
 												<m:Column id="Findings" hAlign="End">
-													<m:Text text="Findings"/>
+													<m:Text text="{@i18n>findings}"/>
 												</m:Column>
 												<m:Column id="Location" hAlign="End">
-													<m:Text text="Inspection Location"/>
+													<m:Text text="{i18n>inspectionLocation}"/>
 												</m:Column>
 												<m:Column id="Edit" hAlign="End" width="5rem">
-													<m:Text text="Edit"/>
+													<m:Text text="{i18n>edit}"/>
 												</m:Column>
 												<m:Column id="Delete" hAlign="End" width="5rem">
-													<m:Text text="Delete"/>
+													<m:Text text="{i18n>delete}"/>
 												</m:Column>
 											</m:columns>
 											<m:items>
@@ -119,8 +119,8 @@
 														</m:Text>
 														<m:Text text="{inspectionModel>Findings}"/>
 														<m:Text text="{inspectionModel>Location}"/>
-														<m:Button icon="sap-icon://edit" tooltip="Edit" press="onTableEditPress"/>
-														<m:Button icon="sap-icon://delete" tooltip="Delete" press="onTableDeletePress"/>
+														<m:Button icon="sap-icon://edit" tooltip="{i18n>edit}" press="onTableEditPress"/>
+														<m:Button icon="sap-icon://delete" tooltip="{i18n>delete}" press="onTableDeletePress"/>
 													</m:cells>
 												</m:ColumnListItem>
 											</m:items>
@@ -134,8 +134,8 @@
 				<m:footer>
 					<m:Toolbar>
 						<m:ToolbarSpacer/>
-						<m:Button type="Accept" text="Save" press="onSaveInspectionPress"/>
-						<m:Button type="Reject" text="Cancel" press="onNavBack"/>
+						<m:Button type="Accept" text="{i18n>save}" press="onSaveInspectionPress"/>
+						<m:Button type="Reject" text="{i18n>cancel}" press="onNavBack"/>
 					</m:Toolbar>
 				</m:footer>
 			</m:Page>

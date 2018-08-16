@@ -101,7 +101,7 @@ sap.ui.define([
 			var requestURLStatusUpdate = "/Findings(InspectionId='" + Inspection + "',Id='" + FindingId + "')";
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
-					MessageToast.show("Successfully updated the Finding");
+					MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("findingUpdateSuccess"));
 					busyIndicator.close();
 					this._oDialogEdit.close();
 				}.bind(this),
@@ -112,7 +112,7 @@ sap.ui.define([
 				}.bind(this)
 
 			});
-			this.getView().getModel().refresh();
+			//this.getView().getModel().refresh();
 		},
 
 		//New Finding button pressed
@@ -278,7 +278,7 @@ sap.ui.define([
 				var requestURLStatusUpdate = "/Inspections('" + InspectionId + "')/Findings";
 				this.getOwnerComponent().getModel().create(requestURLStatusUpdate, Payload, {
 					success: function(data, response) {
-						MessageToast.show("Successfully created the Finding :" + data.Id);
+						MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("findingCreateSuccess") + data.Id);
 						Spath = "/Findings(InspectionId='" + data.InspectionId + "',Id='" + data.Id + "')";
 						UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 						var oData = array.Attachments;
@@ -292,7 +292,7 @@ sap.ui.define([
 						this._oDialogAdd.close();
 					}.bind(this)
 				});
-				this.getView().getModel().refresh();
+			//	this.getView().getModel().refresh();
 			}
 		},
 		
@@ -306,7 +306,6 @@ sap.ui.define([
 		
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
-
 		},
 		
 		onAllInspectionPress: function() {
@@ -325,7 +324,7 @@ sap.ui.define([
 
 			this.getOwnerComponent().getModel().update(requestURLStatusUpdate, Payload, {
 				success: function(data, response) {
-					MessageToast.show("Successfully saved the Inspection");
+					MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("updateInspectionSuccess"));
 					busyIndicator.close();
 				}.bind(this),
 				error: function(err) {
@@ -342,7 +341,7 @@ sap.ui.define([
 
 			var bCompact = !!this.getView().$().closest(".sapUiSizeCompact").length;
 			MessageBox.warning(
-				"Are you sure you want to Delete this Finding ?", {
+				this.getView().getModel("i18n").getResourceBundle().getText("deleteConfirm"), {
 					actions: [sap.m.MessageBox.Action.OK, sap.m.MessageBox.Action.CANCEL],
 					styleClass: bCompact ? "sapUiSizeCompact" : "",
 					onClose: function(sAction) {
@@ -350,9 +349,9 @@ sap.ui.define([
 							var requestURLStatusUpdate = "/Findings(InspectionId='" + InspectionId + "',Id='" + FindingId + "')";
 							this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 								success: function(data, response) {
-									MessageToast.show("Successfully deleted the Finding");
+									MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("deleteSuccess"));
 									//Refresh the inspection screen
-									this.getView().getModel().refresh();
+									//this.getView().getModel().refresh();
 								}.bind(this),
 								error: function(err) {
 									MessageBox.error(JSON.parse(err.responseText).error.message.value);
@@ -483,7 +482,7 @@ sap.ui.define([
 			var oModel = this.getView().getModel();
 			oModel.refreshSecurityToken();
 			var oHeaders = oModel.oHeaders;
-			var sToken = oHeaders['x-csrf-token'];
+			var sToken = oHeaders["x-csrf-token"];
 			var oUploadCollection = oEvent.getSource();
 			var oCustomerHeaderToken = new sap.m.UploadCollectionParameter({
 				name: "x-csrf-token",
@@ -545,7 +544,7 @@ sap.ui.define([
 			var requestURLStatusUpdate = "/Attachments(FindingId='" + FindingId + "',Id='" + encodeURI(FileId) + "')";
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
-					MessageToast.show("Successfully deleted the attachment");
+					MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("deleteAttachmentSuccess"));
 				}.bind(this),
 				error: function(err) {
 					MessageBox.error(JSON.parse(err.responseText).error.message.value);

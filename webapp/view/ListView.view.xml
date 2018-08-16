@@ -10,11 +10,19 @@
 					<VBox fitContainer="true" displayInline="false" direction="Column" renderType="Div" justifyContent="Start" alignItems="Stretch"
 						wrap="NoWrap" alignContent="Stretch">
 						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"
-							liveMode="true" showFilterConfiguration="false" useDateRangeType="true" initialized="setNavigationParameters"></smartFilterBar:SmartFilterBar>
+							liveMode="true" showClearOnFB="true" showClearButton="true" showFilterConfiguration="false" useDateRangeType="true"
+							initialized="setNavigationParameters">
+							<smartFilterBar:controlConfiguration>
+								<!--Ensure that within the value help, list is loaded rightaway when the pop-up opens. Without this, you need to hit 'Go' for the list to populate.-->
+								<!--COmplete documentation here https://sapui5.hana.ondemand.com/resources/sap/ui/comp/smartfilterbar/ControlConfiguration-dbg.js -->
+								<smartFilterBar:ControlConfiguration key="supplier_id"  preventInitialDataFetchInValueHelpDialog="false"/>
+								<smartFilterBar:ControlConfiguration key="zsqemgr" preventInitialDataFetchInValueHelpDialog="false"/>
+							</smartFilterBar:controlConfiguration>
+						</smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
 							smartFilterId="smartFilterBar" persistencyKey="tableasf" useVariantManagement="false" useTablePersonalisation="true" fitContainer="true"
 							tableType="Table" beforeRebindTable="onBeforeRebindTableExtension" showFullScreenButton="true" enableAutoBinding="true"
-							entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding">
+							entitySet="ZWM_FINDINGS_C" class="sapUiResponsiveContentPadding" showRowCount="true" header="{i18n>findings}">
 							<!--'customData' is used to disbale 'Filter' in the View Settings-->
 							<smartTable:customData>
 								<core:CustomData key="p13nDialogSettings"
@@ -122,7 +130,7 @@
 											<core:CustomData key="p13nData"
 												value='\{"columnKey": "supplier_risk_category", "columnIndex":"8", "leadingProperty": "supplier_risk_category","type":"numeric"}'/>
 										</table:customData>
-										<Text text="Supp. Risk Cat." wrapping="true"/>
+										<Text text="{i18n>supp.RiskCat.}" wrapping="true"/>
 										<table:template>
 											<Text text="{supplier_risk_category}" wrapping="true"/>
 										</table:template>

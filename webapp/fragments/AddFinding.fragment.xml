@@ -1,11 +1,11 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:smartTable="sap.ui.comp.smarttable" xmlns:l="sap.ui.layout"
 	xmlns:f="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:customData="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 	xmlns:table="sap.ui.table" xmlns:custom="com.sapZSQRMBWA.control">
-	<Dialog resizable="true" title="Add Finding" afterClose="dialogAfterClose" contentWidth="70%" draggable="true">
+	<Dialog resizable="true" title="{i18n>addFinding}" afterClose="dialogAfterClose" contentWidth="70%" draggable="true">
 		<VBox>
 			<IconTabBar class="sapUiResponsiveContentPadding" id="iconTabBarAdd">
 				<items>
-					<IconTabFilter icon="sap-icon://hint" text="Info" key="1">
+					<IconTabFilter icon="sap-icon://hint" text="{i18n>info}" key="1">
 						<f:Form editable="true">
 							<f:layout>
 								<f:ResponsiveGridLayout labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="0"
@@ -14,12 +14,12 @@
 							<f:formContainers>
 								<f:FormContainer>
 									<f:formElements>
-										<f:FormElement label="Supplier">
+										<f:FormElement label="{i18n>supplier}">
 											<f:fields>
 												<Input editable="false" required="true"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Subject">
+										<f:FormElement label="{i18n>subject}">
 											<f:fields>
 												<Select id="SubjectSelect" forceSelection="false" change="onSubjectChange" 
 													items="{ path: '/ZWM_SUBJECTS_VH', sorter: { path: 'name' } }">
@@ -27,7 +27,7 @@
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Category">
+										<f:FormElement label="{i18n>category}">
 											<f:fields>
 												<Select forceSelection="false" id="CategorySelect" change="onCategoryChange"
 													items="{ path: '/ZWM_CAT_VH', sorter: { path: 'name' } }">
@@ -35,7 +35,7 @@
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Question">
+										<f:FormElement label="{i18n>question}">
 											<f:fields>
 												<Select id="questionSelect" change="onQuestionChange" forceSelection="false"
 													items="{ path: '/ZWM_QUESTIONS_VH', sorter: { path: 'question_content' } }">
@@ -43,19 +43,19 @@
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Score">
+										<f:FormElement label="{i18n>score}">
 											<f:fields>
 												<Select id="ScoreSelect" forceSelection="false" items="{ path: '/ZWM_SCORE_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Quality Category">
+										<f:FormElement label="{i18n>qualityCategory}">
 											<f:fields>
 												<Input id="QualityCategoryInput" enabled="false"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Status">
+										<f:FormElement label="{@i18n>status}">
 											<f:fields>
 												<Select id="StatusSelect" forceSelection="false" items="{ path: '/ZWM_STATUS_VH', sorter: { path: 'Text' } }">
 													<core:Item key="{Id}" text="{Text}"/>
@@ -66,29 +66,29 @@
 								</f:FormContainer>
 								<f:FormContainer>
 									<f:formElements>
-										<f:FormElement label="Inspection Findings">
+										<f:FormElement label="{i18n>inspectionFindings}">
 											<f:fields>
 												<TextArea id="findingText" maxLength="256" rows="3"  required="true"></TextArea>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Inspection Location">
+										<f:FormElement label="{i18n>inspectionLocation}">
 											<f:fields>
 												<Input id="Locationfrag"  required="true"/>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Risk Category">
+										<f:FormElement label="{i18n>supplierRiskCategory}">
 											<f:fields>
 												<Select id="RiskCategorySelect" forceSelection="false" items="{ path: '/ZWM_RISK_CAT_VH', sorter: { path: 'text' } }">
 													<core:Item key="{id}" text="{text}"/>
 												</Select>
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Short term Containment">
+										<f:FormElement label="{i18n>shortTermContainment}">
 											<f:fields>
 												<Input id="ShortTermContainment" />
 											</f:fields>
 										</f:FormElement>
-										<f:FormElement label="Supplier Causal Factor">
+										<f:FormElement label="{i18n>supplierCausalFactor}">
 											<f:fields>
 												<Input id="CasualFactor" />
 											</f:fields>
@@ -98,10 +98,10 @@
 							</f:formContainers>
 						</f:Form>
 					</IconTabFilter>
-					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
+					<IconTabFilter icon="sap-icon://attachment" text="{i18n>attachments}" key="2">
 						<List mode="Delete" delete="onDeletePressAdd"
 							items="{ path: 'AttachmentDisplayModel>/Attachment', parameters: { operationMode: 'Client'}}"
-							noDataText="{No Data}" >
+							noDataText="{@i18n>noFilesFound}" >
 							<headerToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
@@ -117,10 +117,10 @@
 			</IconTabBar>
 		</VBox>
 		<beginButton>
-			<Button type="Accept" text="Save" icon="sap-icon://accept" press="onAddDialogSubmitButton"/>
+			<Button type="Accept" text="{i18n>save}" icon="sap-icon://accept" press="onAddDialogSubmitButton"/>
 		</beginButton>
 		<endButton>
-			<Button type="Default" text="Cancel" icon="sap-icon://sys-cancel" press="onAddDialogCancelButton"/>
+			<Button type="Default" text="{i18n>cancel}" icon="sap-icon://sys-cancel" press="onAddDialogCancelButton"/>
 		</endButton>
 	</Dialog>
 </core:FragmentDefinition>

@@ -5,10 +5,10 @@
 span[data-colorclass="Late"] {
 color:red !important;
 }
-span[data-colorclass="In-Progress"] {
+span[data-colorclass="Open"] {
 color: #5496cd !important;
 }
-span[data-colorclass="Closed"] {
+span[data-colorclass="In-Progress"] {
 color:green !important;
 }
 
@@ -16,10 +16,9 @@ color:green !important;
 div[data-colorclass="Late"] .sapMTextLineClamp.sapMTextMaxLine{
 color:red !important;
 }
-div[data-colorclass="In-Progress"] .sapMTextLineClamp.sapMTextMaxLine{
+div[data-colorclass="Open"] .sapMTextLineClamp.sapMTextMaxLine{
 color:#5496cd !important;
 }
-div[data-colorclass="Closed"] .sapMTextLineClamp.sapMTextMaxLine{
+div[data-colorclass="In-Progress"] .sapMTextLineClamp.sapMTextMaxLine{
 color:green !important;
 }
-
