@@ -9,65 +9,63 @@ sap.ui.define([
 	"sap/m/MessageBox",
 	"sap/ui/generic/app/navigation/service/NavigationHandler",
 	"sap/ui/generic/app/navigation/service/SelectionVariant"
-], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast, formatter, MessageBox, NavigationHandler, SelectionVariant) {
+], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast, formatter, MessageBox, NavigationHandler,
+	SelectionVariant) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
-			formatter: formatter,
-			onInit: function() {
-				this.getOwnerComponent().getRouter().getRoute("ListView").attachPatternMatched(this.onHandleRouteMatched, this);
-				this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
+		formatter: formatter,
+		onInit: function() {
+			this.getOwnerComponent().getRouter().getRoute("ListView").attachPatternMatched(this.onHandleRouteMatched, this);
+			this.getView().byId("inspectionTable").getTable().setSelectionMode(sap.ui.table.SelectionMode.None);
 
-				//Dialog for editing a Finding
-				this._oDialogEdit = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
+			//Dialog for editing a Finding
+			this._oDialogEdit = sap.ui.xmlfragment(this.getView().getId(), "com.sapZSQRMBWA.fragments.EditFinding", this);
 
-				this.getView().addDependent(this._oDialogEdit);
-				this._oDialogEdit.setContentHeight("60%");
-				this._oDialogEdit.setContentWidth("90%");
+			this.getView().addDependent(this._oDialogEdit);
+			this._oDialogEdit.setContentHeight("60%");
+			this._oDialogEdit.setContentWidth("90%");
 
-				//For controlling the editable fields
-				this.editVisibilityModel = new JSONModel();
-				this._oDialogEdit.setModel(this.editVisibilityModel, "editVisibilityModel");
-			},
+			//For controlling the editable fields
+			this.editVisibilityModel = new JSONModel();
+			this._oDialogEdit.setModel(this.editVisibilityModel, "editVisibilityModel");
+		},
 
-			onAfterRendering: function() {
-				// this._oDialogEdit.setModel(this.getView().getModel());			
-			},
+		onHandleRouteMatched: function(oEvent) {
+			this.getView().byId("inspectionTable").rebindTable();
+		},
 
-			onHandleRouteMatched: function(oEvent) {
-				this.getView().byId("inspectionTable").rebindTable();
-			},
+		onBeforeRebindTableExtension: function(oEvent) {
+			var oBindingParams = oEvent.getParameter("bindingParams");
+			//initially sort the table finding id descending
+			if (!oBindingParams.sorter.length) {
+				oBindingParams.sorter.push(new sap.ui.model.Sorter("id", true));
+			}
+		},
 
-			onBeforeRebindTableExtension: function(oEvent) {
-				var oBindingParams = oEvent.getParameter("bindingParams");
-				//initially sort the table finding id descending
-				if (!oBindingParams.sorter.length) {
-					oBindingParams.sorter.push(new sap.ui.model.Sorter("id", true));
-				}
-			},
+		setNavigationParameters: function() {
+			var oNavigationHandler = new NavigationHandler(this); //Note: This will not work in WebIDE
+			var oParseNavigationPromise = oNavigationHandler.parseNavigation();
+			var oSmartFilter = this.getView().byId("smartFilterBar");
 
-			setNavigationParameters: function() {
-				var oNavigationHandler = new NavigationHandler(this); //Note: This will not work in WebIDE
-				var oParseNavigationPromise = oNavigationHandler.parseNavigation();
-				var oSmartFilter = this.getView().byId("smartFilterBar");
-
-				oParseNavigationPromise.done(function(oAppData, oStartupParameters, sNavType) {
-						if (sNavType !== "xAppState") {
-							//If this was a direct load of the app, without navigation
-							var oToday = new Date();
-							var o90DayesEarlier =  new Date();
-							o90DayesEarlier.setDate(o90DayesEarlier.getDate() - 90);
-							var oDefaultFilter = {InspectionDate: {
-								high: oToday,
-								low: o90DayesEarlier
-							}};
-						oSmartFilter.setFilterData(oDefaultFilter);   
-						return;
-						// var oNewSelVariant = new SelectionVariant();
-						// oNewSelVariant.addSelectOption("InspectionDate", "I", "BT", "2018-01-01T18:30:00.000", "2019-08-21T18:30:00.000");
-						// oAppData.oSelectionVariant = oNewSelVariant;
+			oParseNavigationPromise.done(function(oAppData, oStartupParameters, sNavType) {
+				if (sNavType !== "xAppState") {
+					//If this was a direct load of the app, without navigation
+					var oToday = new Date();
+					var o90DayesEarlier = new Date();
+					o90DayesEarlier.setDate(o90DayesEarlier.getDate() - 90);
+					var oDefaultFilter = {
+						InspectionDate: {
+							ranges: [{
+								value2: oToday,
+								value1: o90DayesEarlier
+							}]
 						}
-					oSmartFilter.setDataSuiteFormat(oAppData.selectionVariant);
-				}.bind(this));
+					};
+					oSmartFilter.setFilterData(oDefaultFilter);
+					return;
+				}
+				oSmartFilter.setDataSuiteFormat(oAppData.selectionVariant, true); //true ensures that existing filters are overwritten
+			}.bind(this));
 		},
 
 		//Edit pressed on the Finding row
