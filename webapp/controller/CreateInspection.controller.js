@@ -174,7 +174,13 @@ sap.ui.define([
 					}.bind(this),
 					error: function(error) {
 						this.getView().setBusy(false);
-						MessageBox.error(JSON.parse(error.responseText).error.message.value);
+						//If error code is 500, then message is in XML. Otherwise in JSON
+						if (error.statusCode === 500) {
+							var sMessage = error.responseText.split("<message xml:lang=\"en\">")[1].split("</message>")[0];
+							MessageBox.error(sMessage);
+						} else {
+							MessageBox.error(JSON.parse(error.responseText).error.message.value);
+						}
 					}.bind(this)
 				});
 			} else {

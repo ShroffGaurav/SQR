@@ -11,12 +11,13 @@
 						wrap="NoWrap" alignContent="Stretch">
 						<smartFilterBar:SmartFilterBar id="smartFilterBar" entitySet="ZWM_FINDINGS_C" persistencyKey="SmartFilter_Explored" enableBasicSearch="true"
 							liveMode="true" showClearOnFB="true" showClearButton="true" showFilterConfiguration="false" useDateRangeType="true"
-							initialized="setNavigationParameters">
+							initialized="setNavigationParameters" clear="clearButtonWasPressed">
 							<smartFilterBar:controlConfiguration>
 								<!--Ensure that within the value help, list is loaded rightaway when the pop-up opens. Without this, you need to hit 'Go' for the list to populate.-->
 								<!--COmplete documentation here https://sapui5.hana.ondemand.com/resources/sap/ui/comp/smartfilterbar/ControlConfiguration-dbg.js -->
 								<smartFilterBar:ControlConfiguration key="supplier_id"  preventInitialDataFetchInValueHelpDialog="false"/>
 								<smartFilterBar:ControlConfiguration key="zsqemgr" preventInitialDataFetchInValueHelpDialog="false"/>
+								<smartFilterBar:ControlConfiguration key="SupplierEngineerId" preventInitialDataFetchInValueHelpDialog="false"/>								
 							</smartFilterBar:controlConfiguration>
 						</smartFilterBar:SmartFilterBar>
 						<smartTable:SmartTable dataReceived="onDataReceived" height="100%" id="inspectionTable" width="100%" direction="Column"
@@ -31,7 +32,7 @@
 							<smartTable:customToolbar>
 								<Toolbar>
 									<ToolbarSpacer/>
-									<Button type="Emphasized" text="New Inspection" press="onNewInspectionPress"/>
+									<Button type="Emphasized" text="New Inspection" press="onNewInspectionPress" icon="sap-icon://add"/>
 								</Toolbar>
 							</smartTable:customToolbar>
 							<smartTable:layoutData>

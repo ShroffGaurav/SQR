@@ -65,7 +65,7 @@
 												<m:OverflowToolbar>
 													<m:ToolbarSpacer/>
 													<m:Button text="{i18n>addFinding}" type="Transparent" press="onAddDialogPress" icon="sap-icon://add" id="oButtonAddFinding"/>
-													<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
+													<m:Button icon="sap-icon://action-settings" press="onPersoButtonPressed" type="Emphasized">
 														<m:layoutData>
 															<m:OverflowToolbarLayoutData priority="NeverOverflow"/>
 														</m:layoutData>

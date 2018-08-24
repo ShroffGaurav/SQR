@@ -27,8 +27,9 @@
 				<Annotation Term="UI.SelectionFields">
 					<Collection>
 						<PropertyPath>supplier_id</PropertyPath>
+						<PropertyPath>SupplierEngineerId</PropertyPath>
+						<PropertyPath>zsqemgr</PropertyPath>						
 						<PropertyPath>CommodityCode</PropertyPath>
-						<PropertyPath>zsqemgr</PropertyPath>
 						<PropertyPath>InspectionDate</PropertyPath>
 						<PropertyPath>StatusId</PropertyPath>
 						<PropertyPath>ScoreId</PropertyPath>

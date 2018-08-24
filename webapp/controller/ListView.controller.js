@@ -41,6 +41,10 @@ sap.ui.define([
 				oBindingParams.sorter.push(new sap.ui.model.Sorter("id", true));
 			}
 		},
+		
+		clearButtonWasPressed: function(){
+			this.getView().byId("inspectionTable").rebindTable();
+		},
 
 		setNavigationParameters: function() {
 			var oNavigationHandler = new NavigationHandler(this); //Note: This will not work in WebIDE
@@ -131,8 +135,14 @@ sap.ui.define([
 					this.getView().byId("inspectionTable").rebindTable();
 				}.bind(this),
 				error: function(error) {
-					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					busyIndicator.close();
+					//If error code is 500, then message is in XML. Otherwise in JSON
+					if (error.statusCode === 500) {
+						var sMessage = error.responseText.split("<message xml:lang=\"en\">")[1].split("</message>")[0];
+						MessageBox.error(sMessage);
+					} else {
+						MessageBox.error(JSON.parse(error.responseText).error.message.value);
+					}
 					this._oDialogEdit.close();
 				}.bind(this)
 			});

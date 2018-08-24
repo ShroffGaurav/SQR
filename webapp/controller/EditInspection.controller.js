@@ -10,7 +10,8 @@ sap.ui.define([
 	"sap/m/MessageToast",
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/ui/core/Fragment"
-], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, BusyDialog, TablePersoController, UploadCollectionParameter, MessageToast,
+], function(Controller, JSONModel, Filter, PersoServiceEdit, MessageBox, BusyDialog, TablePersoController, UploadCollectionParameter,
+	MessageToast,
 	formatter, Fragment) {
 	"use strict";
 
@@ -35,20 +36,20 @@ sap.ui.define([
 				componentName: "PersoApp",
 				persoService: PersoServiceEdit
 			}).activate();
-			
+
 			//Dialog to edit a Finding
 			this._oDialogEdit = sap.ui.xmlfragment("editFramgmentId", "com.sapZSQRMBWA.fragments.EditFinding", this);
 			this._oDialogEdit.setContentHeight("60%");
 			this._oDialogEdit.setContentWidth("90%");
 			this.getView().addDependent(this._oDialogEdit);
-			
+
 			//Dialog to create a Finding
 			this._oDialogAdd = sap.ui.xmlfragment("addFragmentId", "com.sapZSQRMBWA.fragments.AddFinding", this);
 			this._oDialogAdd.setContentHeight("60%");
 			this._oDialogAdd.setContentWidth("90%");
 			this.getView().addDependent(this._oDialogAdd);
 		},
-		
+
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
 
@@ -90,7 +91,6 @@ sap.ui.define([
 			var RiskCategory = oFinding.SupplierRiskCategory;
 			var Containment = oFinding.ShortTermContainment;
 
-
 			var Payload = {};
 			Payload.StatusId = Status;
 			Payload.Findings = Findings;
@@ -106,8 +106,14 @@ sap.ui.define([
 					this._oDialogEdit.close();
 				}.bind(this),
 				error: function(error) {
-					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 					busyIndicator.close();
+					//If error code is 500, then message is in XML. Otherwise in JSON
+					if (error.statusCode === 500) {
+						var sMessage = error.responseText.split("<message xml:lang=\"en\">")[1].split("</message>")[0];
+						MessageBox.error(sMessage);
+					} else {
+						MessageBox.error(JSON.parse(error.responseText).error.message.value);
+					}
 					this._oDialogEdit.close();
 				}.bind(this)
 
@@ -119,7 +125,7 @@ sap.ui.define([
 		onAddDialogPress: function(oEvent) {
 			//Ensure Info tab is selected.
 			this._oDialogAdd.setBindingContext(oEvent.getSource().getParent().getBindingContext());
-			
+
 			var supplier = this.getView().getBindingContext().getObject().SupplierId;
 			var Length = this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").length;
 			this.getView().getModel("AttachmentDisplayModel").getProperty("/Attachment").splice(0, Length);
@@ -141,35 +147,48 @@ sap.ui.define([
 			var oFile;
 
 			var array = {
-				"subject": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem()
-					.getText()),					
-				"subject_id": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem()
-					.getKey()),
-				"category": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem()
+				"subject": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"SubjectSelect").getSelectedItem()
 					.getText()),
-				"category_id": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem()
+				"subject_id": (Fragment.byId("addFragmentId", "SubjectSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"SubjectSelect").getSelectedItem()
 					.getKey()),
-				"question": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "questionSelect").getSelectedItem()
+				"category": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"CategorySelect").getSelectedItem()
 					.getText()),
-				"question_id": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "questionSelect").getSelectedItem()
+				"category_id": (Fragment.byId("addFragmentId", "CategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"CategorySelect").getSelectedItem()
 					.getKey()),
-				"Score": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem()
+				"question": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"questionSelect").getSelectedItem()
 					.getText()),
-				"Score_id": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem()
+				"question_id": (Fragment.byId("addFragmentId", "questionSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"questionSelect").getSelectedItem()
 					.getKey()),
-				"Status": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem()
+				"Score": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"ScoreSelect").getSelectedItem()
 					.getText()),
-				"Status_id": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem()
+				"Score_id": (Fragment.byId("addFragmentId", "ScoreSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"ScoreSelect").getSelectedItem()
+					.getKey()),
+				"Status": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"StatusSelect").getSelectedItem()
+					.getText()),
+				"Status_id": (Fragment.byId("addFragmentId", "StatusSelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId",
+						"StatusSelect").getSelectedItem()
 					.getKey()),
 				"findings": Fragment.byId("addFragmentId", "findingText").getValue(),
 				"location": Fragment.byId("addFragmentId", "Locationfrag").getValue(),
-				"RiskCategorySelect": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", 
+				"RiskCategorySelect": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId(
+						"addFragmentId",
 						"RiskCategorySelect").getSelectedItem()
 					.getText()),
-				"RiskCategorySelect_id": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId("addFragmentId", 
+				"RiskCategorySelect_id": (Fragment.byId("addFragmentId", "RiskCategorySelect").getSelectedItem() === null ? "" : Fragment.byId(
+						"addFragmentId",
 						"RiskCategorySelect").getSelectedItem()
 					.getKey()),
-				"QualityCategoryInput": (Fragment.byId("addFragmentId", "QualityCategoryInput").getValue() === null ? "" : Fragment.byId("addFragmentId", 
+				"QualityCategoryInput": (Fragment.byId("addFragmentId", "QualityCategoryInput").getValue() === null ? "" : Fragment.byId(
+					"addFragmentId",
 					"QualityCategoryInput").getValue()),
 				"ShortTermContainment": Fragment.byId("addFragmentId", "ShortTermContainment").getValue(),
 				"CasualFactor": Fragment.byId("addFragmentId", "CasualFactor").getValue(),
@@ -292,26 +311,26 @@ sap.ui.define([
 						this._oDialogAdd.close();
 					}.bind(this)
 				});
-			//	this.getView().getModel().refresh();
+				//	this.getView().getModel().refresh();
 			}
 		},
-		
+
 		onAddDialogCancelButton: function() {
 			this._oDialogAdd.close();
 		},
-		
+
 		dialogAfterclose: function(oEvent) {
 			this._oDialogAdd.close();
 		},
-		
+
 		onNavBack: function(oEvent) {
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
 		},
-		
+
 		onAllInspectionPress: function() {
 			this.getOwnerComponent().getRouter().navTo("ListView", {});
 		},
-		
+
 		onSaveInspectionPress: function(oEvent) {
 			var busyIndicator = new BusyDialog();
 			busyIndicator.setBusyIndicatorDelay(0);
@@ -362,11 +381,11 @@ sap.ui.define([
 				}
 			);
 		},
-		
+
 		//Edit pressed against a Finding row
 		onTableEditPress: function(oEvent) {
 			this._oDialogEdit.setBindingContext(oEvent.getSource().getParent().getBindingContext());
-			
+
 			//Info tab as the selected tab
 			this._oDialogEdit.getContent()[0].getItems()[0].setSelectedKey("1");
 			var sPath = oEvent.getSource().getParent().getBindingContext().sPath;
@@ -389,7 +408,7 @@ sap.ui.define([
 			jQuery.sap.syncStyleClass("sapUiSizeCompact", this.getView(), this._oDialogEdit);
 			this._oDialogEdit.open();
 		},
-		
+
 		onSubjectChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("subject_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
@@ -403,7 +422,7 @@ sap.ui.define([
 				Fragment.byId("addFragmentId", "CategorySelect").getBinding("items").filter([]);
 			}
 		},
-		
+
 		onCategoryChange: function(oEvent) {
 			var SelectedKey = oEvent.getParameters().selectedItem.getKey();
 			var oFilter = new Filter("category_id", sap.ui.model.FilterOperator.EQ, SelectedKey);
@@ -416,18 +435,18 @@ sap.ui.define([
 				Fragment.byId("addFragmentId", "questionSelect").getBinding("items").filter([]);
 			}
 		},
-		
+
 		onQuestionChange: function(oEvent) {
 			var QualityCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().quality_category;
 			var RiskCategory = oEvent.getParameters().selectedItem.getBindingContext().getObject().default_risk_category;
 			Fragment.byId("addFragmentId", "QualityCategoryInput").setValue(QualityCategory);
 			Fragment.byId("addFragmentId", "RiskCategorySelect").setSelectedKey(RiskCategory);
 		},
-		
+
 		onPersoButtonPressed: function(oEvent) {
 			this._oTPC.openDialog();
 		},
-		
+
 		onTablePersoRefresh: function() {
 			PersoServiceEdit.resetPersData();
 			this._oTPC.refresh();
@@ -436,7 +455,7 @@ sap.ui.define([
 		onTableGrouping: function(oEvent) {
 			this._oTPC.setHasGrouping(oEvent.getSource().getSelected());
 		},
-		
+
 		/// UploadCollection Code 
 		_uploadAttachments: function(Url, aAttachments) {
 			var aDeferreds = [];
@@ -520,14 +539,14 @@ sap.ui.define([
 				oEvent.getSource().getParent().getParent().getBeginButton().setVisible(true);
 			}
 		},
-		
+
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem"),
 				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
 			sPath = sPath.split("/");
 			sPath = sPath[2];
-			
+
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
@@ -536,7 +555,7 @@ sap.ui.define([
 			oData.Attachment.splice(sPath, 1);
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
-		
+
 		//Delete pressed against the attachment
 		onFileDeleted: function(oEvent) {
 			var FileId = oEvent.getParameters("documentId").documentId;
