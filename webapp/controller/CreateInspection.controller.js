@@ -630,8 +630,8 @@ sap.ui.define([
 				var sFileName;
 				var sFileType;
 
-				if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
-					sFileName = oAttachment.file.name;
+				// if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
+					sFileName = oAttachment.name;
 					sFileType = sFileName.split(".").pop();
 					aDeferreds.push(jQuery.ajax({
 						url: sUploadURL,
@@ -651,7 +651,7 @@ sap.ui.define([
 							}
 						}
 					}));
-				}
+				// }
 			});
 
 			return jQuery.when.apply(jQuery, aDeferreds);
@@ -686,25 +686,25 @@ sap.ui.define([
 			oList.getModel("AttachmentDisplayModel").refresh();
 		},
 
-		handleDelete: function(oEvent) {
-			var oList = oEvent.getSource(),
-				oItem = oEvent.getParameter("listItem"),
-				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
-			var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
-			rowIndex = rowIndex.split("/");
-			rowIndex = rowIndex[1];
-			sPath = sPath.split("/");
-			sPath = sPath[2];
-			// after deletion put the focus back to the list
-			oList.attachEventOnce("updateFinished", oList.focus, oList);
-			var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
-			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
+		// handleDelete: function(oEvent) {
+		// 	var oList = oEvent.getSource(),
+		// 		oItem = oEvent.getParameter("listItem"),
+		// 		sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+		// 	var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
+		// 	rowIndex = rowIndex.split("/");
+		// 	rowIndex = rowIndex[1];
+		// 	sPath = sPath.split("/");
+		// 	sPath = sPath[2];
+		// 	// after deletion put the focus back to the list
+		// 	oList.attachEventOnce("updateFinished", oList.focus, oList);
+		// 	var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
+		// 	var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
 
-			// send a delete request to the odata service
-			oData.Attachment.splice(sPath, 1);
-			oTableData[rowIndex].Attachments.splice(sPath, 1);
-			oList.getModel("AttachmentDisplayModel").refresh();
-		},
+		// 	// send a delete request to the odata service
+		// 	oData.Attachment.splice(sPath, 1);
+		// 	oTableData[rowIndex].Attachments.splice(sPath, 1);
+		// 	oList.getModel("AttachmentDisplayModel").refresh();
+		// },
 
 		// Table Personalization 
 		onPersoButtonPressed: function(oEvent) {
