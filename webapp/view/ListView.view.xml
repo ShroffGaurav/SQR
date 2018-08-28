@@ -38,7 +38,7 @@
 							<smartTable:layoutData>
 								<FlexItemData growFactor="1" baseSize="0%"/>
 							</smartTable:layoutData>
-							<table:Table rowSelectionChange="onSmartTableSelectionChange" threshold="100" visibleRowCountMode="Auto" rowActionCount="1">
+							<table:Table rowSelectionChange="onSmartTableSelectionChange" threshold="100" visibleRowCountMode="Auto" rowActionCount="1" rowHeight="34px">
 								<table:rowActionTemplate>
 									<table:RowAction>
 										<table:items>
@@ -73,7 +73,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Subject/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{Subject}" wrapping="true"/>
+											<Text text="{Subject}" tooltip="{Subject}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 									<table:Column width="9rem">
@@ -82,7 +82,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/Category/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{Category}" wrapping="true"/>
+											<Text text="{Category}" tooltip="{Category}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 									<table:Column >
@@ -92,7 +92,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/question_content/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{question_content}" wrapping="flase"/>
+											<Text text="{question_content}" tooltip="{question_content}" wrapping="flase"/>
 										</table:template>
 									</table:Column>
 									<table:Column width="11rem" sortProperty="Score">
@@ -123,7 +123,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/location/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{location}" wrapping="true"/>
+											<Text text="{location}" tooltip="{location}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 									<table:Column width="8rem">
@@ -143,7 +143,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/short_term_containment/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{short_term_containment}" wrapping="true"/>
+											<Text text="{short_term_containment}" tooltip="{short_term_containment}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 									<table:Column width="6rem" visible="False">
@@ -153,7 +153,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/supplier_casual_factor/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{supplier_casual_factor}" wrapping="true"/>
+											<Text text="{supplier_casual_factor}" tooltip="{supplier_casual_factor}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 									<table:Column width="6rem" visible="False">
@@ -162,7 +162,7 @@
 										</table:customData>
 										<Text text="{/#ZWM_FINDINGS_CType/findings/@sap:label}" wrapping="true"/>
 										<table:template>
-											<Text text="{findings}" wrapping="true"/>
+											<Text text="{findings}" tooltip="{findings}" wrapping="true"/>
 										</table:template>
 									</table:Column>
 								</table:columns>

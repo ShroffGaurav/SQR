@@ -41,8 +41,8 @@ sap.ui.define([
 				oBindingParams.sorter.push(new sap.ui.model.Sorter("id", true));
 			}
 		},
-		
-		clearButtonWasPressed: function(){
+
+		clearButtonWasPressed: function() {
 			this.getView().byId("inspectionTable").rebindTable();
 		},
 
@@ -69,7 +69,7 @@ sap.ui.define([
 					return;
 				}
 				oSmartFilter.setDataSuiteFormat(oAppData.selectionVariant, true); //true ensures that existing filters are overwritten
-			}.bind(this));
+			});
 		},
 
 		//Edit pressed on the Finding row
@@ -83,15 +83,25 @@ sap.ui.define([
 				"uploadUrl": window.location.origin + (this._oDialogEdit.getModel().sServiceUrl + readRequestURL) + "/Attachments"
 			});
 
-			this._oDialogEdit.bindElement(readRequestURL, {
-				// "expand": "Attachments"
+			this.getView().setBusy(true);
+			this._oDialogEdit.bindElement({
+				path: readRequestURL,
+				events: {
+					dataReceived: function(rData) {
+						this.getView().setBusy(false);
+					}.bind(this)
+				}
 			});
-
 			this._oDialogEdit.open();
 		},
 
 		//New Inspection icon pressed
 		onNewInspectionPress: function(oEvent) {
+			
+			//If the Table was maximised, minimise it first
+			this.getView().byId("inspectionTable")._toggleFullScreen(false);
+			
+			//Navigate to New Inspection screen
 			var sPath = "";
 			this.getOwnerComponent().getRouter().getTargetHandler().setCloseDialogs(false);
 			this.getOwnerComponent().getRouter().navTo("AddInspection", {

@@ -49,7 +49,11 @@ sap.ui.define([
 			this._oDialogAdd.setContentWidth("90%");
 			this.getView().addDependent(this._oDialogAdd);
 		},
-
+		
+		onExit: function() {
+			this._oTPC.destroy();
+		},
+		
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
 

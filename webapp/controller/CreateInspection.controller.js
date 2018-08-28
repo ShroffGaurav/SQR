@@ -66,6 +66,10 @@ sap.ui.define([
 
 		},
 
+		onExit: function() {
+			this._oTPCCreate.destroy();
+		},
+
 		handleSuggest: function(oEvent) {
 			var sTerm = oEvent.getParameter("suggestValue");
 			var oFilter;
