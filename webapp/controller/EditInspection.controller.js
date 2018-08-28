@@ -469,7 +469,7 @@ sap.ui.define([
 				var sFileName;
 				var sFileType;
 
-				if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
+				// if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
 					sFileName = oAttachment.file.name;
 					sFileType = sFileName.split(".").pop();
 					aDeferreds.push(jQuery.ajax({
@@ -490,7 +490,7 @@ sap.ui.define([
 							}
 						}
 					}));
-				}
+				// }
 			});
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},

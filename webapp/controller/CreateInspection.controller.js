@@ -647,7 +647,7 @@ sap.ui.define([
 							if (sFileType === "msg") {
 								oXhr.setRequestHeader("Content-Type", "application/vnd.ms-outlook");
 							} else {
-								oXhr.setRequestHeader("Content-Type", oAttachment.file.type);
+								oXhr.setRequestHeader("Content-Type", oAttachment.type);
 							}
 						}
 					}));
@@ -673,17 +673,25 @@ sap.ui.define([
 
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
-				oItem = oEvent.getParameter("listItem"),
-				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
-			sPath = sPath.split("/");
-			sPath = sPath[2];
+				oItem = oEvent.getParameter("listItem");
+				
+			var sModelName;
+			if (oItem.getBindingContext("inspectionModel")){
+				sModelName = "inspectionModel";
+			} else{
+				sModelName = "NewFindingModel";
+			}
+			
+			var sPath = oItem.getBindingContext(sModelName).getPath();			
+			var aPath = sPath.split("Attachments/");
+			sPath = aPath[0] + "Attachments";
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
-			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
 
-			// send a delete request to the odata service
-			oData.Attachment.splice(sPath, 1);
-			oList.getModel("AttachmentDisplayModel").refresh();
+			//Remove the deleted attachment from the list
+			var oDataAttachments = oEvent.getSource().getModel(sModelName).getProperty(sPath);			
+			oDataAttachments.splice(aPath[1], 1);
+			oList.getModel(sModelName).refresh();
 		},
 
 		// handleDelete: function(oEvent) {
