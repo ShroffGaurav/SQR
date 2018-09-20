@@ -41,7 +41,7 @@ sap.ui.define([
 			this._oDialogEdit = sap.ui.xmlfragment("editFramgmentId", "com.sapZSQRMBWA.fragments.EditFinding", this);
 			this._oDialogEdit.setContentHeight("60%");
 			this._oDialogEdit.setContentWidth("90%");
-			this.getView().addDependent(this._oDialogEdit);
+			// this.getView().addDependent(this._oDialogEdit);
 
 			//Dialog to create a Finding
 			this._oDialogAdd = sap.ui.xmlfragment("addFragmentId", "com.sapZSQRMBWA.fragments.AddFinding", this);
@@ -49,11 +49,11 @@ sap.ui.define([
 			this._oDialogAdd.setContentWidth("90%");
 			this.getView().addDependent(this._oDialogAdd);
 		},
-		
+
 		onExit: function() {
 			this._oTPC.destroy();
 		},
-		
+
 		onHandleRouteMatched: function(oEvent) {
 			this.getView().getModel().setDeferredGroups(["deferredGroup", "changes"]);
 
@@ -314,7 +314,6 @@ sap.ui.define([
 						this._oDialogAdd.close();
 					}.bind(this)
 				});
-				//	this.getView().getModel().refresh();
 			}
 		},
 
@@ -387,6 +386,10 @@ sap.ui.define([
 
 		//Edit pressed against a Finding row
 		onTableEditPress: function(oEvent) {
+			// this._oDialogEdit.setModel(this.getView().getModel());
+			// this._oDialogEdit.setModel(this.getView().getModel("i18n"), "i18n");
+			this.getView().addDependent(this._oDialogEdit);
+
 			this._oDialogEdit.setBindingContext(oEvent.getSource().getParent().getBindingContext());
 
 			//Info tab as the selected tab
@@ -469,28 +472,26 @@ sap.ui.define([
 				var sFileName;
 				var sFileType;
 
-				// if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
-					sFileName = oAttachment.file.name;
-					sFileType = sFileName.split(".").pop();
-					aDeferreds.push(jQuery.ajax({
-						url: sUploadURL,
-						cache: false,
-						processData: false,
-						contentType: false,
-						data: oAttachment.file,
-						type: "POST",
-						beforeSend: function(oXhr) {
-							oXhr.setRequestHeader("accept", "application/json");
-							oXhr.setRequestHeader("X-CSRF-Token", sToken);
-							oXhr.setRequestHeader("slug", sFileName);
-							if (sFileType === "msg") {
-								oXhr.setRequestHeader("Content-Type", "application/vnd.ms-outlook");
-							} else {
-								oXhr.setRequestHeader("Content-Type", oAttachment.file.type);
-							}
+				sFileName = oAttachment.file.name;
+				sFileType = sFileName.split(".").pop();
+				aDeferreds.push(jQuery.ajax({
+					url: sUploadURL,
+					cache: false,
+					processData: false,
+					contentType: false,
+					data: oAttachment.file,
+					type: "POST",
+					beforeSend: function(oXhr) {
+						oXhr.setRequestHeader("accept", "application/json");
+						oXhr.setRequestHeader("X-CSRF-Token", sToken);
+						oXhr.setRequestHeader("slug", sFileName);
+						if (sFileType === "msg") {
+							oXhr.setRequestHeader("Content-Type", "application/vnd.ms-outlook");
+						} else {
+							oXhr.setRequestHeader("Content-Type", oAttachment.file.type);
 						}
-					}));
-				// }
+					}
+				}));
 			});
 			return jQuery.when.apply(jQuery, aDeferreds);
 		},
@@ -544,21 +545,21 @@ sap.ui.define([
 			}
 		},
 
-		onDeletePressAdd: function(oEvent) {
-			var oList = oEvent.getSource(),
-				oItem = oEvent.getParameter("listItem"),
-				sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
-			sPath = sPath.split("/");
-			sPath = sPath[2];
+		// onDeletePressAdd: function(oEvent) {
+		// 	var oList = oEvent.getSource(),
+		// 		oItem = oEvent.getParameter("listItem"),
+		// 		sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
+		// 	sPath = sPath.split("/");
+		// 	sPath = sPath[2];
 
-			// after deletion put the focus back to the list
-			oList.attachEventOnce("updateFinished", oList.focus, oList);
-			var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
+		// 	// after deletion put the focus back to the list
+		// 	oList.attachEventOnce("updateFinished", oList.focus, oList);
+		// 	var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
 
-			// send a delete request to the odata service
-			oData.Attachment.splice(sPath, 1);
-			oList.getModel("AttachmentDisplayModel").refresh();
-		},
+		// 	// send a delete request to the odata service
+		// 	oData.Attachment.splice(sPath, 1);
+		// 	oList.getModel("AttachmentDisplayModel").refresh();
+		// },
 
 		//Delete pressed against the attachment
 		onFileDeleted: function(oEvent) {
@@ -568,6 +569,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function(data, response) {
 					MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("deleteAttachmentSuccess"));
+					// Fragment.byId("editFramgmentId", "editAttachmentsId").getBinding("items").refresh();
+					Fragment.byId("editFramgmentId", "editAttachmentsId").rerender();
 				}.bind(this),
 				error: function(err) {
 					MessageBox.error(JSON.parse(err.responseText).error.message.value);

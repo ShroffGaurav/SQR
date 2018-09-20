@@ -90,7 +90,7 @@
 						</f:Form>
 					</IconTabFilter>
 					<IconTabFilter icon="sap-icon://attachment" text="Attachments" key="2">
-						<UploadCollection noDataText="{@i18n>noFilesFound}" noDataDescription="{@i18n>noDataforFileUploader}"
+						<UploadCollection id="editAttachmentsId" noDataText="{@i18n>noFilesFound}" noDataDescription="{@i18n>noDataforFileUploader}"
 							uploadEnabled="{path: 'StatusId', formatter:'.formatter.isItClosed'}" uploadComplete="onUploadComplete" fileDeleted="onFileDeleted"
 							beforeUploadStarts="onBeforeUploadStarts" uploadTerminated="onUploadTerminated" change="onChange"
 							items="{ path: 'Attachments', templateShareable: false }"

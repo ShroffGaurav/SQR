@@ -8,9 +8,10 @@ sap.ui.define([
 	"com/sapZSQRMBWA/util/formatter",
 	"sap/m/MessageBox",
 	"sap/ui/generic/app/navigation/service/NavigationHandler",
-	"sap/ui/generic/app/navigation/service/SelectionVariant"
+	"sap/ui/generic/app/navigation/service/SelectionVariant",
+	"sap/ui/core/Fragment"
 ], function(jquery, Component, Controller, JSONModel, UploadCollectionParameter, MessageToast, formatter, MessageBox, NavigationHandler,
-	SelectionVariant) {
+	SelectionVariant, Fragment) {
 	"use strict";
 	return Controller.extend("com.sapZSQRMBWA.controller.ListView", {
 		formatter: formatter,
@@ -89,18 +90,22 @@ sap.ui.define([
 				events: {
 					dataReceived: function(rData) {
 						this.getView().setBusy(false);
+					}.bind(this),
+					change: function(rData) {
+						this.getView().setBusy(false);
 					}.bind(this)
 				}
 			});
+
 			this._oDialogEdit.open();
 		},
 
 		//New Inspection icon pressed
 		onNewInspectionPress: function(oEvent) {
-			
+
 			//If the Table was maximised, minimise it first
 			this.getView().byId("inspectionTable")._toggleFullScreen(false);
-			
+
 			//Navigate to New Inspection screen
 			var sPath = "";
 			this.getOwnerComponent().getRouter().getTargetHandler().setCloseDialogs(false);
@@ -215,7 +220,8 @@ sap.ui.define([
 			this.getOwnerComponent().getModel().remove(requestURLStatusUpdate, {
 				success: function() {
 					MessageToast.show(this.getView().getModel("i18n").getResourceBundle().getText("attachmentDeleted"));
-				},
+					Fragment.byId(this.getView().getId(), "editAttachmentsId").rerender();
+				}.bind(this),
 				error: function(error) {
 					MessageBox.error(JSON.parse(error.responseText).error.message.value);
 				}

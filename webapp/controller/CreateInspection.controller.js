@@ -1,3 +1,4 @@
+/* global _:true */
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/model/json/JSONModel",
@@ -11,7 +12,8 @@ sap.ui.define([
 	"sap/ui/core/ListItem",
 	"sap/ui/core/message/ControlMessageProcessor",
 	"sap/ui/core/message/Message",
-	"sap/ui/core/routing/History"
+	"sap/ui/core/routing/History",
+	"com/sapZSQRMBWA/external/lodash"
 ], function(Controller, JSONModel, Filter, PersoServiceAdd, MessageBox, TablePersoController, ValueState, MessageToast,
 	formatter, ListItem, ControlMessageProcessor, Message, History) {
 	"use strict";
@@ -148,9 +150,16 @@ sap.ui.define([
 			var InspectionBy = this.getView().byId("InspectionBy").getValue();
 			if (InspectionBy !== null && InspectionBy !== "" && InspectionDate !== null) {
 
-				var requestData = this.getView().getModel("inspectionModel").getData();
+				//Get object with NO referece
+				var modelData = this.getView().getModel("inspectionModel").getProperty("/");
+				var requestData = _.cloneDeep(modelData);
 				//Get rid of __metadata
 				delete requestData.__metadata;
+				
+				//Get rid of attachment
+				for (var i in requestData.Findings){
+					delete requestData.Findings[i].Attachments;
+				}
 
 				var requestURLStatusUpdate = "/Inspections";
 				this.getView().setBusy(true);
@@ -162,7 +171,7 @@ sap.ui.define([
 							this.getView().getModel("i18n").getResourceBundle().getText("createdInspection") + data.Id, {
 								styleClass: bCompact ? "sapUiSizeCompact" : "",
 								onClose: function(sAction) {
-									this.getOwnerComponent().getRouter().navTo("ListView", {});
+									this.getOwnerComponent().getRouter().navTo("ListView", {refresh: true});
 								}.bind(this)
 							}
 						);
@@ -173,7 +182,12 @@ sap.ui.define([
 							Spath = "/Findings(InspectionId='" + data.Id + "',Id='" + data.Findings.results[index].Id + "')";
 							UploadURL = window.location.origin + (this.getView().getModel().sServiceUrl + Spath) + "/Attachments";
 							var aAttachments = this.getView().getModel("inspectionModel").getData().Findings[index].Attachments;
-							this._uploadAttachments(UploadURL, aAttachments);
+							this._uploadAttachments(UploadURL, aAttachments).then(function(ovt){
+								//You can use this place to inform the user about the status
+								
+								// var sURL = "/Findings(InspectionId='" + ovt.data.Id + "',Id='" + ovt.data.FindingId + "')/Attachments";
+								// this.getView().getModel().read(sURL);
+							}.bind(this));
 						}.bind(this));
 					}.bind(this),
 					error: function(error) {
@@ -630,28 +644,26 @@ sap.ui.define([
 				var sFileName;
 				var sFileType;
 
-				// if (!oAttachment.Id && oAttachment.file && oAttachment.PRNumber !== "delete") {
-					sFileName = oAttachment.name;
-					sFileType = sFileName.split(".").pop();
-					aDeferreds.push(jQuery.ajax({
-						url: sUploadURL,
-						cache: false,
-						processData: false,
-						contentType: false,
-						data: oAttachment.file,
-						type: "POST",
-						beforeSend: function(oXhr) {
-							oXhr.setRequestHeader("accept", "application/json");
-							oXhr.setRequestHeader("X-CSRF-Token", sToken);
-							oXhr.setRequestHeader("slug", sFileName);
-							if (sFileType === "msg") {
-								oXhr.setRequestHeader("Content-Type", "application/vnd.ms-outlook");
-							} else {
-								oXhr.setRequestHeader("Content-Type", oAttachment.type);
-							}
+				sFileName = oAttachment.name;
+				sFileType = sFileName.split(".").pop();
+				aDeferreds.push(jQuery.ajax({
+					url: sUploadURL,
+					cache: false,
+					processData: false,
+					contentType: false,
+					data: oAttachment.file,
+					type: "POST",
+					beforeSend: function(oXhr) {
+						oXhr.setRequestHeader("accept", "application/json");
+						oXhr.setRequestHeader("X-CSRF-Token", sToken);
+						oXhr.setRequestHeader("slug", sFileName);
+						if (sFileType === "msg") {
+							oXhr.setRequestHeader("Content-Type", "application/vnd.ms-outlook");
+						} else {
+							oXhr.setRequestHeader("Content-Type", oAttachment.type);
 						}
-					}));
-				// }
+					}
+				}));
 			});
 
 			return jQuery.when.apply(jQuery, aDeferreds);
@@ -674,45 +686,25 @@ sap.ui.define([
 		onDeletePressAdd: function(oEvent) {
 			var oList = oEvent.getSource(),
 				oItem = oEvent.getParameter("listItem");
-				
+
 			var sModelName;
-			if (oItem.getBindingContext("inspectionModel")){
+			if (oItem.getBindingContext("inspectionModel")) {
 				sModelName = "inspectionModel";
-			} else{
+			} else {
 				sModelName = "NewFindingModel";
 			}
-			
-			var sPath = oItem.getBindingContext(sModelName).getPath();			
+
+			var sPath = oItem.getBindingContext(sModelName).getPath();
 			var aPath = sPath.split("Attachments/");
 			sPath = aPath[0] + "Attachments";
 			// after deletion put the focus back to the list
 			oList.attachEventOnce("updateFinished", oList.focus, oList);
 
 			//Remove the deleted attachment from the list
-			var oDataAttachments = oEvent.getSource().getModel(sModelName).getProperty(sPath);			
+			var oDataAttachments = oEvent.getSource().getModel(sModelName).getProperty(sPath);
 			oDataAttachments.splice(aPath[1], 1);
 			oList.getModel(sModelName).refresh();
 		},
-
-		// handleDelete: function(oEvent) {
-		// 	var oList = oEvent.getSource(),
-		// 		oItem = oEvent.getParameter("listItem"),
-		// 		sPath = oItem.getBindingContext("AttachmentDisplayModel").getPath();
-		// 	var rowIndex = this._oDialog.getModel("SelectedValueHelp").getData().rowIndex;
-		// 	rowIndex = rowIndex.split("/");
-		// 	rowIndex = rowIndex[1];
-		// 	sPath = sPath.split("/");
-		// 	sPath = sPath[2];
-		// 	// after deletion put the focus back to the list
-		// 	oList.attachEventOnce("updateFinished", oList.focus, oList);
-		// 	var oTableData = this.getView().byId("addInspectionTable").getModel().getData();
-		// 	var oData = oEvent.getSource().getModel("AttachmentDisplayModel").getData();
-
-		// 	// send a delete request to the odata service
-		// 	oData.Attachment.splice(sPath, 1);
-		// 	oTableData[rowIndex].Attachments.splice(sPath, 1);
-		// 	oList.getModel("AttachmentDisplayModel").refresh();
-		// },
 
 		// Table Personalization 
 		onPersoButtonPressed: function(oEvent) {
