@@ -69,7 +69,7 @@ sap.ui.define([
 					oSmartFilter.setFilterData(oDefaultFilter);
 					return;
 				}
-				oSmartFilter.setDataSuiteFormat(oAppData.selectionVariant, true); //true ensures that existing filters are overwritten
+				oSmartFilter.setDataSuiteFormat(oAppData.selectionVariant, true); //true ensures that existing filters are overwritten (90days defualt filter)
 			});
 		},
 
